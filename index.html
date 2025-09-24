@@ -9,37 +9,52 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
   <style>
-    :root{
-      --primary: #005b96;
-      --accent: #ff6a00;
-      --bg: #e6f4ff;
-      --text: #333;
-    }
-    *{box-sizing:border-box;margin:0;padding:0;font-family:"Segoe UI",Tahoma,Geneva,Verdana,sans-serif;color:var(--text)}
-    body{background:linear-gradient(to bottom, var(--bg), #fff);text-align:center;line-height:1.6}
-    header{padding:40px 20px 20px;animation:fade .8s ease}
-    @keyframes fade{from{opacity:0;transform:translateY(-15px)}}
-    header img{max-width:240px;border-radius:50%;box-shadow:0 6px 18px rgba(0,0,0,.15)}
-    h1{margin-top:20px;font-size:2.2rem;color:var(--primary)}
-    p{margin:10px auto 30px;font-size:1.15rem;max-width:650px}
-    .social-links{display:flex;justify-content:center;gap:25px;margin:30px 0 50px}
-    .social-links a{
-      text-decoration:none;
-      font-size:2rem;
-      color:#fff;
-      background:var(--primary);
-      width:60px;height:60px;border-radius:50%;
-      display:flex;align-items:center;justify-content:center;
-      transition:.3s;
-    }
-    .social-links a:hover{transform:scale(1.12);background:var(--accent)}
-    .map-container{
-      width:90%;max-width:700px;margin:0 auto 50px;
-      border-radius:12px;overflow:hidden;box-shadow:0 6px 18px rgba(0,0,0,.15)
-    }
-    .map-container iframe{width:100%;height:320px;border:0}
-    footer{padding:20px;font-size:.85rem;background:#f0f8ff;color:#666}
-  </style>
+  :root{
+    --primary: #2a9df4;  /* azzurro più brillante */
+    --accent: #ff7b25;   /* arancio acceso “Napoli” */
+    --bg: #e6f4ff;
+    --text: #222;        /* nero leggermente più scuro */
+  }
+
+  *{box-sizing:border-box;margin:0;padding:0;font-family:"Segoe UI",Tahoma,Geneva,Verdana,sans-serif;color:var(--text)}
+
+  body{background:linear-gradient(to bottom, var(--bg), #fff);text-align:center;line-height:1.6}
+
+  header{padding:40px 20px 20px;animation:fade .8s ease}
+  @keyframes fade{from{opacity:0;transform:translateY(-15px)}}
+
+  header img{max-width:240px;border-radius:50%;box-shadow:0 6px 18px rgba(0,0,0,.15)}
+
+  h1{margin-top:20px;font-size:2.2rem;color:var(--primary)}
+
+  p{margin:10px auto 30px;font-size:1.15rem;max-width:650px}
+
+  /* icone social: cerchi più chiari */
+  .social-links{display:flex;justify-content:center;gap:25px;margin:30px 0 50px}
+  .social-links a{
+    text-decoration:none;
+    font-size:2rem;
+    color:#fff;
+    background:var(--primary);
+    width:60px;height:60px;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    box-shadow:0 4px 10px rgba(42,157,244,.35);
+    transition:transform .25s, background .25s, box-shadow .25s;
+  }
+  .social-links a:hover{
+    transform:scale(1.12);
+    background:var(--accent);
+    box-shadow:0 6px 20px rgba(255,123,37,.45);
+  }
+
+  .map-container{
+    width:90%;max-width:700px;margin:0 auto 50px;
+    border-radius:12px;overflow:hidden;box-shadow:0 6px 18px rgba(0,0,0,.15)
+  }
+  .map-container iframe{width:100%;height:320px;border:0}
+
+  footer{padding:20px;font-size:.85rem;background:#f0f8ff;color:#666}
+</style>
 </head>
 <body>
 
