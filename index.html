@@ -79,16 +79,42 @@
 .review-btn.b{background:#003580}   /* Booking blu notte */
 .review-btn.a{background:#FF5A5F}   /* Airbnb coral */
 .review-btn:hover{transform:scale(1.05);box-shadow:0 6px 18px rgba(0,0,0,.25)}
+/* bandierine */
+  .lang-switch{position:absolute;top:15px;right:15px;display:flex;gap:8px}
+  .lang-switch button{
+    width:34px;height:24px;border:none;border-radius:4px;cursor:pointer;
+    background-size:cover;background-position:center;box-shadow:0 2px 4px rgba(0,0,0,.25)
+  }
+  .it-btn{background:url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBmaWxsPSIjMDA5MjQ2IiBkPSJNMCAwaDE3MHY1MTJIMHoiLz48L3N2Zz4=')}
+  .en-btn{background:url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBmaWxsPSIjMDEyMTY5IiBkPSJNMCAwaDUxMnYyMjRIMHoiLz48cGF0aCBmaWxsPSIjQ0UxMTI2IiBkPSJNMCAyODhoNTEydjIyNEgweiIvPjwvc3ZnPg==')}
+  .es-btn{background:url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBmaWxsPSIjQzYwYjFlIiBkPSJNMCAwaDUxMnYxMjhIMHoiLz48cGF0aCBmaWxsPSIjRkZDNzAwIiBkPSJNMCAxMjhoNTEydjI1NkgweiIvPjxwYXRoIGZpbGw9IiNDNjBiMWUiIGQ9Ik0wIDM4NGg1MTJ2MTI4SDB6Ii8+PC9zdmc+')}
+
+  /* mostra/nascondi lingua */
+  .lang{display:block}
+  .lang.hidden{display:none}
 </style>
 </head>
 <body>
-
+  <!-- SWITCH LINGUA -->
+  <div class="lang-switch">
+    <button class="it-btn" onclick="setLang('it')" title="Italiano"></button>
+    <button class="en-btn" onclick="setLang('en')" title="English"></button>
+    <button class="es-btn" onclick="setLang('es')" title="Español"></button>
+  </div>
   <header>
     <img src="logoB&b.png" alt="Rooms Add'e Criature">
-    <h1>Benvenuti a Rooms Add'e Criature</h1>
-    <p>
+    <!--<h1>Benvenuti a Rooms Add'e Criature</h1>-->  
+    <p class="lang it">
       Un B&B nel cuore di Napoli, dove l’ospitalità incontra la tradizione.<br>
       Relax, sole e magia partenopea ti aspettano.
+    </p>
+    <p class="lang en hidden">
+      A B&B in the heart of Naples where hospitality meets tradition.<br>
+      Relax, sunshine and Neapolitan magic await you.
+    </p>
+    <p class="lang es hidden">
+      Un B&B en el corazón de Nápoles donde la hospitalidad se encuentra con la tradición.<br>
+      Relajación, sol y magia napolitana te esperan.
     </p>
   </header>
 
@@ -113,8 +139,10 @@
     <iframe width="425" height="350" src="https://www.openstreetmap.org/export/embed.html?bbox=14.243372082710268%2C40.854317615648725%2C14.246912598609926%2C40.856224619347564&amp;layer=mapnik&amp;marker=40.85527112435992%2C14.245142340660095" style="border: 1px solid black"></iframe><br/><small><a href="https://www.openstreetmap.org/?mlat=40.855271&amp;mlon=14.245142#map=19/40.855271/14.245142">Visualizza mappa ingrandita</a></small> 
   </div>
 <!-- ===== RECENSIONI ===== -->
-<div class="review-buttons">
-  <a href="https://www.google.com/local/business/2933506296284337297/customers/reviews"  class="review-btn g">
+<!-- ===== RECENSIONI ===== -->
+<!-- Italiano -->
+<div class="review-buttons lang it">
+  <a href="https://www.google.com/local/business/2933506296284337297/customers/reviews" target="_blank" class="review-btn g">
     <i class="fab fa-google"></i> Recensioni Google
   </a>
   <a href="https://www.booking.com/hotel/it/rooms-ad-e-criatur.it.html#tab-reviews" target="_blank" class="review-btn b">
@@ -124,9 +152,43 @@
     <i class="fab fa-airbnb"></i> Recensioni Airbnb
   </a>
 </div>
+
+<!-- English -->
+<div class="review-buttons lang en hidden">
+  <a href="https://www.google.com/local/business/2933506296284337297/customers/reviews" target="_blank" class="review-btn g">
+    <i class="fab fa-google"></i> Google Reviews
+  </a>
+  <a href="https://www.booking.com/hotel/it/rooms-ad-e-criatur.it.html#tab-reviews" target="_blank" class="review-btn b">
+    <i class="fas fa-bed"></i> Booking Reviews
+  </a>
+  <a href="https://www.airbnb.it/rooms/784407996587642336/reviews" target="_blank" class="review-btn a">
+    <i class="fab fa-airbnb"></i> Airbnb Reviews
+  </a>
+</div>
+
+<!-- Español -->
+<div class="review-buttons lang es hidden">
+  <a href="https://www.google.com/local/business/2933506296284337297/customers/reviews" target="_blank" class="review-btn g">
+    <i class="fab fa-google"></i> Opiniones Google
+  </a>
+  <a href="https://www.booking.com/hotel/it/rooms-ad-e-criatur.it.html#tab-reviews" target="_blank" class="review-btn b">
+    <i class="fas fa-bed"></i> Opiniones Booking
+  </a>
+  <a href="https://www.airbnb.it/rooms/784407996587642336/reviews" target="_blank" class="review-btn a">
+    <i class="fab fa-airbnb"></i> Opiniones Airbnb
+  </a>
+</div>
   <footer>
     &copy; 2025 Rooms Add'e Criature – Napoli<br>
   </footer>
-
+<script>
+  function setLang(l){
+    document.querySelectorAll('.lang').forEach(e=>e.classList.add('hidden'));
+    document.querySelectorAll('.'+l).forEach(e=>e.classList.remove('hidden'));
+    localStorage.setItem('lang',l);              // ricorda la scelta
+  }
+  // imposta la lingua salvata (o italiano di default)
+  setLang(localStorage.getItem('lang')||'it');
+</script>
 </body>
 </html>
