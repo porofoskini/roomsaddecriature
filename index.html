@@ -85,10 +85,9 @@
     width:34px;height:24px;border:none;border-radius:4px;cursor:pointer;
     background-size:cover;background-position:center;box-shadow:0 2px 4px rgba(0,0,0,.25)
   }
-  .it-btn{background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cpath fill='%23009246' d='M0 0h170v512H0z'/%3E%3Cpath fill='%23fff' d='M170 0h170v512H170z'/%3E%3Cpath fill='%23CE1126' d='M340 0h172v512H340z'/%3E%3C/svg%3E")}
-.en-btn{background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cpath fill='%23012169' d='M0 0h512v224H0z'/%3E%3Cpath fill='%23fff' d='M0 224h512v64H0z'/%3E%3Cpath fill='%23CE1126' d='M0 288h512v224H0z'/%3E%3C/svg%3E")}
-.es-btn{background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cpath fill='%23C60B1E' d='M0 0h512v128H0z'/%3E%3Cpath fill='%23FFC400' d='M0 128h512v256H0z'/%3E%3Cpath fill='%23C60B1E' d='M0 384h512v128H0z'/%3E%3C/svg%3E")}
-  /* mostra/nascondi lingua */
+ .it-btn{background-image:url(img/it.svg)}
+ .en-btn{background-image:url(img/gb.svg)} /* United-Kingdom flag */
+ .es-btn{background-image:url(img/es.svg)}  /* mostra/nascondi lingua */
   .lang{display:block}
   .lang.hidden{display:none}
 </style>
@@ -97,8 +96,8 @@
   <!-- SWITCH LINGUA -->
   <div class="lang-switch">
     <button class="it-btn" onclick="setLang('it')" title="Italiano"></button>
-    <button class="en-btn" onclick="setLang('en')" title="English"></button>
     <button class="es-btn" onclick="setLang('es')" title="Español"></button>
+    <button class="en-btn" onclick="setLang('en')" title="English"></button>
   </div>
   <header>
     <img src="logoB&b.png" alt="Rooms Add'e Criature">
