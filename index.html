@@ -1,108 +1,87 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
-  <link rel="apple-touch-icon" sizes="180x180" href="favicon.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Rooms Add'e Criature - B&B Napoli</title>
+  <title>Rooms Add'e Criature – B&B Napoli</title>
+
+  <!-- Font Awesome (CDN gratuito) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
   <style>
-    body {
-      margin: 0;
-      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(to bottom, #e6f4ff, #ffffff);
-      color: #333;
-      text-align: center;
+    :root{
+      --primary: #005b96;
+      --accent: #ff6a00;
+      --bg: #e6f4ff;
+      --text: #333;
     }
-
-    header {
-      padding: 30px 20px 10px;
+    *{box-sizing:border-box;margin:0;padding:0;font-family:"Segoe UI",Tahoma,Geneva,Verdana,sans-serif;color:var(--text)}
+    body{background:linear-gradient(to bottom, var(--bg), #fff);text-align:center;line-height:1.6}
+    header{padding:40px 20px 20px;animation:fade .8s ease}
+    @keyframes fade{from{opacity:0;transform:translateY(-15px)}}
+    header img{max-width:240px;border-radius:50%;box-shadow:0 6px 18px rgba(0,0,0,.15)}
+    h1{margin-top:20px;font-size:2.2rem;color:var(--primary)}
+    p{margin:10px auto 30px;font-size:1.15rem;max-width:650px}
+    .social-links{display:flex;justify-content:center;gap:25px;margin:30px 0 50px}
+    .social-links a{
+      text-decoration:none;
+      font-size:2rem;
+      color:#fff;
+      background:var(--primary);
+      width:60px;height:60px;border-radius:50%;
+      display:flex;align-items:center;justify-content:center;
+      transition:.3s;
     }
-
-    header img {
-      max-width: 280px;
-      border-radius: 50%;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    .social-links a:hover{transform:scale(1.12);background:var(--accent)}
+    .map-container{
+      width:90%;max-width:700px;margin:0 auto 50px;
+      border-radius:12px;overflow:hidden;box-shadow:0 6px 18px rgba(0,0,0,.15)
     }
-
-    h1 {
-      margin-top: 20px;
-      font-size: 2rem;
-      color: #005b96;
-    }
-
-    p {
-      margin: 10px auto 25px;
-      font-size: 1.2rem;
-      max-width: 600px;
-      line-height: 1.6;
-    }
-
-    .social-links {
-      display: flex;
-      justify-content: center;
-      gap: 25px;
-      margin-bottom: 40px;
-    }
-
-    .social-links a {
-      text-decoration: none;
-      font-size: 2rem;
-      color: white;
-      background: #005b96;
-      width: 60px;
-      height: 60px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.3s ease;
-    }
-
-    .social-links a:hover {
-      background: #0088cc;
-      transform: scale(1.1);
-    }
-
-    footer {
-      font-size: 0.9rem;
-      padding: 20px;
-      background: #f0f8ff;
-      color: #666;
-    }
+    .map-container iframe{width:100%;height:320px;border:0}
+    footer{padding:20px;font-size:.85rem;background:#f0f8ff;color:#666}
   </style>
-
-  <!-- Icone Font Awesome -->
-  <script src="https://kit.fontawesome.com/your-kit-id.js" crossorigin="anonymous"></script>
 </head>
 <body>
+
   <header>
-    <img src="logoB&b.png" alt="Rooms Add'e Criature Logo">
+    <img src="logoB&b.png" alt="Rooms Add'e Criature">
     <h1>Benvenuti a Rooms Add'e Criature</h1>
-    <p>Un B&amp;B nel cuore di Napoli, dove l’ospitalità incontra la tradizione. 
-       Relax, sole e magia partenopea ti aspettano.</p>
+    <p>
+      Un B&B nel cuore di Napoli, dove l’ospitalità incontra la tradizione.<br>
+      Relax, sole e magia partenopea ti aspettano.
+    </p>
   </header>
 
+  <!-- SOCIAL (metti i tuoi link reali) -->
   <div class="social-links">
-    <a href="https://wa.me/393xxxxxxxxx" target="_blank" title="WhatsApp">
+    <a href="https://wa.me/393291234567" target="_blank" title="WhatsApp">
       <i class="fab fa-whatsapp"></i>
     </a>
-    <a href="https://instagram.com/tuoprofilo" target="_blank" title="Instagram">
+    <a href="https://instagram.com/roomsaddecriature" target="_blank" title="Instagram">
       <i class="fab fa-instagram"></i>
     </a>
-    <a href="https://t.me/tuo_username" target="_blank" title="Telegram">
+    <a href="https://t.me/roomsaddecriature" target="_blank" title="Telegram">
       <i class="fab fa-telegram"></i>
     </a>
-    <a href="mailto:tuamail@example.com" target="_blank" title="Email">
+    <a href="mailto:info@roomsaddecriature.it" target="_blank" title="Email">
       <i class="fas fa-envelope"></i>
     </a>
   </div>
 
+  <!-- GOOGLE MAPS -->
+  <div class="map-container">
+    <iframe
+      src="https://www.google.com/maps/embed/v1/place?q=Vico+San+Gennaro+a+Materdei+15,+Napoli&key=YOUR_GOOGLE_KEY"
+      allowfullscreen
+      loading="lazy"
+      referrerpolicy="no-referrer-when-downgrade">
+    </iframe>
+  </div>
+
   <footer>
-    &copy; 2025 Rooms Add'e Criature - Naples <br>
+    &copy; 2025 Rooms Add'e Criature – Napoli<br>
     CIN: IT063049C2UUTMPOCJ
   </footer>
+
 </body>
 </html>
