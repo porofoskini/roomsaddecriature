@@ -35,9 +35,9 @@ Sezioni, dall'alto:
 3. **Contatti:** WhatsApp, Telegram, email e Instagram, appesi a un filo come il bucato dei vicoli napoletani.
 4. **Le nostre stanze:** carosello 3D con 7 foto.
 5. **In ogni camera:** servizi inclusi.
-6. **Disponibilità:** calendario di Camera 1 e Camera 2.
+6. **Disponibilità:** l'ospite sceglie arrivo e partenza e vede quante camere restano (vedi sezione 4).
 7. **Noi siamo qui:** indirizzo, distanze, mappa.
-8. **Da sapere:** arrivo, partenza, bambini, animali, fumo, feste.
+8. **Da sapere:** arrivo, partenza, bambini, animali, fumo.
 9. **Cosa dicono gli ospiti:** link a Google, Booking, Airbnb.
 10. **Footer:** copyright e CIN.
 
@@ -66,7 +66,8 @@ Per ogni modifica di testo vanno aggiornati **due posti**: l'HTML (italiano) e i
 |---|---|
 | Servizi delle camere | chiavi `sv0`…`sv7` (HTML e le 3 lingue) |
 | Distanze | `n0`…`n7` per i nomi; i metri stanno in `data-m="150"` sull'HTML, il formato (m/km, virgola o punto) è automatico |
-| Da sapere | `k0t`/`k0d`…`k5t`/`k5d` (titolo e testo di ogni voce) |
+| Da sapere | `k0t`/`k0d`…`k4t`/`k4d` (titolo e testo di ogni voce) |
+| Calendario (testi) | `availSub`, `hint1`, `hint2`, `rooms2`, `rooms1`, `full`, `askStay`, `waStay`, `noData` e le altre chiavi del blocco "Disponibilità" |
 | CIN | in due punti: sotto il nome in alto (`<small>` dentro `.brand`) e nel footer. Non è nelle traduzioni: è lo stesso in tutte le lingue |
 | Anno del copyright | chiave `copy` (HTML e 3 lingue). Oggi: 2023 |
 | Punteggi | chiavi `rn1`, `rn2`, `rating`, `ratingAb`, `revB`, `revA` (HTML e 3 lingue). **A mano**: vanno aggiornati se cambiano |
@@ -111,7 +112,17 @@ Google Calendar          GitHub Actions (ogni ora)            Pagina del sito
 1. Il workflow `Aggiorna disponibilità` parte **ogni ora al minuto 17** (GitHub può ritardare di 5-15 minuti) o a mano da Actions > Run workflow.
 2. Lo script scarica il calendario usando il secret `CALENDAR_ICS_URL` e lo trasforma in periodi di notti occupate per camera.
 3. Il passo successivo salva `disponibilita.json` sul ramo `dati`, solo se qualcosa è cambiato oppure se l'ultimo salvataggio ha più di 12 ore.
-4. La pagina legge il file (cache circa 5 minuti) e disegna il calendario. Fino a 12 mesi avanti.
+4. La pagina legge il file (cache circa 5 minuti) e disegna il calendario, da oggi per **15 mesi** (`MONTHS_SHOWN` in `index.html`). Lo script scrive dati fino a 18 mesi.
+
+### Cosa vede l'ospite
+
+Le due camere sono **identiche**, quindi il calendario non parla di "Camera 1/2": conta quante ne restano.
+
+- Ogni giorno è **bianco** (2 camere libere), **giallo** (1 camera libera) o **a righe blu** (completo). Il giorno passato è sbiadito.
+- L'ospite tocca il **giorno di arrivo** e poi il **giorno di partenza**. Un giorno completo non si può scegliere come arrivo; come partenza sì, perché è il giorno in cui si parte. La partenza si può scegliere solo finché c'è almeno una camera libera per tutte le notti.
+- Sotto il calendario compare la risposta ("13–16 ottobre · 3 notti · 1 camera libera") e il pulsante **Chiedi queste date su WhatsApp**, con il messaggio già scritto (date, notti, lingua). "Cambia date" azzera la scelta.
+- Su schermo largo si vedono due mesi affiancati, su telefono uno. Si naviga con le frecce o con la tastiera (frecce per muoversi tra i giorni, Invio per scegliere).
+- Il calendario non è vincolante: la conferma resta tua.
 
 ### Come segnare le prenotazioni sul calendario
 
@@ -148,7 +159,7 @@ Nel calendario Google **"Rooms Add'e Criature"** (solo quello, non quello person
 | `Cannot create ref due to creations being restricted` | Il ramo `dati` non esiste: crealo a mano (vedi Prima configurazione, punto 3) |
 | `Cannot update this protected ref` | `dati` è coperto da una regola: escludilo dal ruleset |
 | La pagina dice "il calendario non è disponibile" | Dati assenti o con più di 72 ore. Controlla Actions: l'ultima esecuzione è verde? I workflow pianificati si disattivano dopo 60 giorni senza attività nel repo: va riattivato da Actions |
-| Una camera risulta occupata senza motivo | C'è un evento senza "Camera 1/2" nel titolo che blocca entrambe |
+| Un giorno risulta "Completo" o "1 camera libera" senza motivo | C'è un evento senza "Camera 1/2" nel titolo, che blocca entrambe le camere |
 | Un giorno risulta libero ma non lo è | La prenotazione arriva da Booking o Airbnb e non è stata segnata a mano sul calendario, oppure l'ultimo aggiornamento è di meno di un'ora fa |
 
 ### Limiti da conoscere
