@@ -98,14 +98,31 @@ function merge(ranges) {
   return out;
 }
 
+// Spiega cosa non torna nell'indirizzo SENZA mostrarlo (nei log di un repo pubblico non deve comparire).
+function diagnoseUrl(url) {
+  let u;
+  try { u = new URL(url); } catch { return "Il valore del segreto non è un indirizzo valido: deve iniziare con https://"; }
+  const tips = [];
+  if (u.hostname !== "calendar.google.com") tips.push(`il dominio è "${u.hostname}" invece di calendar.google.com`);
+  if (!u.pathname.startsWith("/calendar/ical/")) tips.push("il percorso non comincia con /calendar/ical/ (hai copiato un altro link, ad esempio quello di condivisione o l'ID del calendario?)");
+  if (!u.pathname.endsWith(".ics")) tips.push("non finisce con .ics (indirizzo incompleto?)");
+  if (u.pathname.includes("/public/")) tips.push("è l'indirizzo PUBBLICO, che funziona solo se il calendario è pubblico: serve l'indirizzo SEGRETO in formato iCal");
+  else if (!u.pathname.includes("/private-")) tips.push("non contiene la parte segreta (/private-...): serve l'indirizzo SEGRETO in formato iCal");
+  if (!tips.length) tips.push("il formato sembra corretto: l'indirizzo potrebbe essere stato reimpostato in Google Calendar, oppure appartiene a un calendario diverso o eliminato. Copialo di nuovo");
+  return "Controlli: " + tips.join("; ") + ".";
+}
+
 async function loadIcs() {
   if (process.env.ICS_FILE) return readFile(process.env.ICS_FILE, "utf8");
-  const url = process.env.CALENDAR_ICS_URL;
+  // toglie spazi, a capo e virgolette incollati per sbaglio; accetta anche webcal://
+  let url = (process.env.CALENDAR_ICS_URL || "").trim().replace(/^["']+|["']+$/g, "");
+  if (url.startsWith("webcal://")) url = "https://" + url.slice("webcal://".length);
   if (!url) throw new Error("Manca CALENDAR_ICS_URL (o ICS_FILE per una prova locale).");
+  try { new URL(url); } catch { throw new Error(diagnoseUrl(url)); }
   const res = await fetch(url, { redirect: "follow" });
-  if (!res.ok) throw new Error(`Calendario non raggiungibile: HTTP ${res.status}`);
+  if (!res.ok) throw new Error(`Calendario non raggiungibile: HTTP ${res.status}. ${diagnoseUrl(url)}`);
   const text = await res.text();
-  if (!text.includes("BEGIN:VCALENDAR")) throw new Error("La risposta non è un calendario iCal.");
+  if (!text.includes("BEGIN:VCALENDAR")) throw new Error(`La risposta non è un calendario iCal. ${diagnoseUrl(url)}`);
   return text;
 }
 
