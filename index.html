@@ -6,6 +6,7 @@
 <title>Rooms Add'e Criature – B&B a Napoli, Materdei</title>
 <meta name="description" content="B&B a Materdei, Napoli: camere con bagno privato, aria condizionata e WiFi gratuito. Scrivici su WhatsApp e ti confermiamo la disponibilità in pochi minuti.">
 <link rel="canonical" href="https://www.roomsaddecriature.it/">
+<meta name="google-site-verification" content="oJ3kx130gS5OKJctr_yp3S5lf9EEvf7bGfxgxGuYv64" />
 <meta name="theme-color" content="#17386b">
 
 <meta property="og:type" content="website">
@@ -277,7 +278,48 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
   .know dl { grid-template-columns: 1fr 1fr; }
   .wa { left: 1rem; text-align: center; }
 }
-@media (max-width: 480px) { .know dl { grid-template-columns: 1fr; } }
+/* Telefono: contenuti centrati e comodi da toccare */
+@media (max-width: 800px) {
+  html { -webkit-text-size-adjust: 100%; }
+  .wrap { width: min(1100px, 100% - 2rem - env(safe-area-inset-left) - env(safe-area-inset-right)); }
+  .top { flex-direction: column; gap: .5rem; padding-block: 1rem .25rem; }
+  .brand { justify-content: center; }
+  .langs { justify-content: center; }
+  .langs button { min-height: 44px; padding: .5rem 1rem; }
+  .intro { text-align: center; justify-items: center; gap: 1.25rem; }
+  .seal-wrap { justify-self: center; width: min(76%, 300px); }
+  .hero h1 { max-width: none; }
+  .ratings { flex-direction: column; align-items: stretch; max-width: 420px; margin-inline: auto; }
+  .rating { flex-direction: column; align-items: center; gap: .15rem; text-align: center; }
+  .cloth { text-align: center; }
+  .c1 { min-height: 150px; } .c2 { min-height: 130px; } .c3 { min-height: 160px; } .c4 { min-height: 140px; }
+  .wa { left: 1rem; right: 1rem; margin-inline: auto; width: max-content; max-width: calc(100% - 2rem); padding: .75rem 1.25rem; }
+  .hero .reply { text-align: center; margin-inline: auto; }
+  .gallery .wrap, .avail .wrap, .where .wrap, .know .wrap, .reviews .wrap, .section > .wrap > h2, footer .wrap { text-align: center; }
+  p, .where address { margin-inline: auto; }
+  .amen, .dist { text-align: left; }
+  .gcontrols { align-items: center; }
+  .rtabs { justify-content: center; }
+  .rtabs button { min-height: 44px; }
+  .cal { margin-inline: auto; }
+  .legend { justify-content: center; }
+  .map { height: 320px; min-height: 320px; }
+  .reviews a { flex-direction: column; align-items: center; gap: .1rem; text-align: center; padding-block: .85rem; }
+  footer .wrap { flex-direction: column; align-items: center; gap: .35rem; }
+}
+@media (max-width: 480px) {
+  .know dl { grid-template-columns: 1fr 1fr; gap: 1.5rem 1rem; }
+  .know dl > div:nth-child(3), .know dl > div:nth-child(6) { grid-column: 1 / -1; }
+}
+@media (max-width: 340px) {
+  .cloth { padding-inline: .6rem; }
+  .cloth .tel { white-space: normal; }
+}
+@media (max-width: 360px) {
+  .hero h1 { font-size: 2.2rem; }
+  .cloth strong { font-size: 1.15rem; }
+  .cloth span { font-size: .85rem; }
+}
 @media (prefers-reduced-motion: reduce) {
   .cloth { animation: none; transition: none; }
   .seal, .card, .wa { transition: none; }
@@ -319,7 +361,7 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
       <div class="cloths">
         <a class="cloth c1" data-wa href="https://wa.me/393404845299"><strong>WhatsApp</strong><span class="tel">+39 340 484 5299</span></a>
         <a class="cloth c2" href="https://t.me/+393404845299"><strong>Telegram</strong><span class="tel">+39 340 484 5299</span></a>
-        <a class="cloth c3" href="mailto:info@roomsaddecriature.it"><strong>Email</strong><span>info@roomsaddecriature.it</span></a>
+        <a class="cloth c3" href="mailto:info@roomsaddecriature.it"><strong>Email</strong><span>info@<wbr>roomsaddecriature.it</span></a>
         <a class="cloth c4" href="https://instagram.com/porofoskini12"><strong>Instagram</strong><span>@porofoskini12</span></a>
       </div>
     </div>
@@ -760,12 +802,15 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
   }
 
   /* WhatsApp fisso: compare quando i contatti in alto escono dallo schermo */
-  var wa = document.getElementById("wa");
-  if ("IntersectionObserver" in window) {
-    new IntersectionObserver(function (es) {
-      wa.classList.toggle("show", !es[0].isIntersecting && es[0].boundingClientRect.top < 0);
-    }).observe(document.getElementById("prenota"));
-  } else { wa.classList.add("show"); }
+  var wa = document.getElementById("wa"), contacts = document.getElementById("prenota"), waTick = false;
+  function updateWa() {
+    waTick = false;
+    wa.classList.toggle("show", contacts.getBoundingClientRect().bottom < 0);
+  }
+  window.addEventListener("scroll", function () {
+    if (!waTick) { waTick = true; requestAnimationFrame(updateWa); }
+  }, { passive: true });
+  updateWa();
 
   /* Calendario disponibilità (dati da disponibilita.json, aggiornato dal calendario Gmail) */
   var avail = null, availState = "loading", availRoom = "1", ym = null;
