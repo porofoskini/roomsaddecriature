@@ -97,6 +97,8 @@ a { color: inherit; }
 .hero { background: var(--maiolica); color: var(--calce); padding-bottom: clamp(3rem, 8vw, 6rem); overflow: hidden; }
 .top { display: flex; justify-content: space-between; align-items: center; gap: 1rem; padding-block: 1.25rem; flex-wrap: wrap; }
 .brand { display: inline-flex; align-items: center; gap: .75rem; font-family: var(--display); font-size: 1.25rem; text-decoration: none; }
+.brand span { display: block; line-height: 1.15; }
+.brand small { display: block; margin-top: .2rem; font: 600 .75rem/1 var(--text); letter-spacing: .02em; color: var(--cielo); }
 .brand img { width: 44px; height: 44px; border-radius: 50%; background: var(--calce); padding: 2px; }
 .langs { display: flex; gap: .35rem; }
 .langs button {
@@ -259,7 +261,7 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
 <header class="hero">
   <div class="wrap">
     <div class="top">
-      <a class="brand" href="#"><img src="img/logo-small.png" alt="" width="44" height="44">Rooms Add'e Criature</a>
+      <a class="brand" href="#"><img src="img/logo-small.png" alt="" width="44" height="44"><span>Rooms Add'e Criature<small>CIN: IT063049C2UUTMPOCJ</small></span></a>
       <div class="langs" role="group" aria-label="Lingua / Language / Idioma">
         <button type="button" data-lang="it" aria-pressed="true"><img src="img/it.svg" alt="" width="20" height="14">IT</button>
         <button type="button" data-lang="en" aria-pressed="false"><img src="img/gb.svg" alt="" width="20" height="14">EN</button>
@@ -364,7 +366,7 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
       <dl>
         <div class="flip"><dt data-i18n="k0t">Arrivo</dt><dd data-i18n="k0d">Dalle 14:00 alle 00:00</dd></div>
         <div class="flip"><dt data-i18n="k1t">Partenza</dt><dd data-i18n="k1d">Dalle 06:00 alle 10:30</dd></div>
-        <div class="flip"><dt data-i18n="k2t">Bambini</dt><dd data-i18n="k2d">Benvenuti di tutte le età. Culle su richiesta; letti aggiuntivi non disponibili.</dd></div>
+        <div class="flip"><dt data-i18n="k2t">Bambini</dt><dd data-i18n="k2d">Benvenuti di tutte le età. Culle su richiesta; letti aggiuntivi disponibili.</dd></div>
         <div class="flip"><dt data-i18n="k3t">Animali</dt><dd data-i18n="k3d">Non ammessi</dd></div>
         <div class="flip"><dt data-i18n="k4t">Fumo</dt><dd data-i18n="k4d">Non è consentito fumare</dd></div>
         <div class="flip"><dt data-i18n="k5t">Feste</dt><dd data-i18n="k5d">Non sono ammesse feste ed eventi</dd></div>
@@ -386,7 +388,7 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
 
 <footer>
   <div class="wrap">
-    <span data-i18n="copy">© 2025 Rooms Add'e Criature – Napoli</span>
+    <span data-i18n="copy">© 2023 Rooms Add'e Criature – Napoli</span>
     <span>CIN: IT063049C2UUTMPOCJ</span>
   </div>
 </footer>
@@ -442,12 +444,12 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
       knowH: "Da sapere",
       k0t: "Arrivo", k0d: "Dalle 14:00 alle 00:00",
       k1t: "Partenza", k1d: "Dalle 06:00 alle 10:30",
-      k2t: "Bambini", k2d: "Benvenuti di tutte le età. Culle su richiesta; letti aggiuntivi non disponibili.",
+      k2t: "Bambini", k2d: "Benvenuti di tutte le età. Culle su richiesta; letti aggiuntivi disponibili.",
       k3t: "Animali", k3d: "Non ammessi",
       k4t: "Fumo", k4d: "Non è consentito fumare",
       k5t: "Feste", k5d: "Non sono ammesse feste ed eventi",
       revH: "Cosa dicono gli ospiti", read: "Leggi le recensioni",
-      copy: "© 2025 Rooms Add'e Criature – Napoli",
+      copy: "© 2023 Rooms Add'e Criature – Napoli",
       waBtn: "Scrivici su WhatsApp",
       waMsg: "Ciao! Vorrei informazioni sulla disponibilità di una camera."
     },
@@ -497,12 +499,12 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
       knowH: "Good to know",
       k0t: "Check-in", k0d: "From 2:00 pm to midnight",
       k1t: "Check-out", k1d: "From 6:00 am to 10:30 am",
-      k2t: "Children", k2d: "Children of all ages are welcome. Cots on request; extra beds are not available.",
+      k2t: "Children", k2d: "Children of all ages are welcome. Cots on request; extra beds available.",
       k3t: "Pets", k3d: "Not allowed",
       k4t: "Smoking", k4d: "Smoking is not allowed",
       k5t: "Parties", k5d: "Parties and events are not allowed",
       revH: "What our guests say", read: "Read reviews",
-      copy: "© 2025 Rooms Add'e Criature – Naples",
+      copy: "© 2023 Rooms Add'e Criature – Naples",
       waBtn: "Message us on WhatsApp",
       waMsg: "Hi! I'd like to ask about room availability."
     },
@@ -552,12 +554,12 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
       knowH: "Conviene saber",
       k0t: "Llegada", k0d: "De 14:00 a 00:00",
       k1t: "Salida", k1d: "De 06:00 a 10:30",
-      k2t: "Niños", k2d: "Niños de todas las edades bienvenidos. Cunas bajo petición; no hay camas supletorias.",
+      k2t: "Niños", k2d: "Niños de todas las edades bienvenidos. Cunas bajo petición; camas supletorias disponibles.",
       k3t: "Mascotas", k3d: "No se admiten",
       k4t: "Fumar", k4d: "No se permite fumar",
       k5t: "Fiestas", k5d: "No se permiten fiestas ni eventos",
       revH: "Qué dicen los huéspedes", read: "Leer reseñas",
-      copy: "© 2025 Rooms Add'e Criature – Nápoles",
+      copy: "© 2023 Rooms Add'e Criature – Nápoles",
       waBtn: "Escríbenos por WhatsApp",
       waMsg: "¡Hola! Quisiera información sobre la disponibilidad de una habitación."
     }
