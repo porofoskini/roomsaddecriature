@@ -33,7 +33,7 @@ Sul ramo `dati` ci sono due file, che non esistono su `main`: `disponibilita.jso
 Sezioni, dall'alto:
 
 1. **Intestazione:** logo, nome, **CIN**, selettore lingua IT/EN/ES.
-2. **Presentazione:** titolo, frase d'apertura, logo grande e, sotto, i punteggi di Booking e Airbnb: ciascuno con il numero dentro una stella, il logo della piattaforma e il numero di recensioni, con il mese di aggiornamento (vedi sezione 5). Toccando un punteggio si apre la pagina delle recensioni.
+2. **Presentazione:** titolo, frase d'apertura, logo grande e, sotto, i punteggi di Booking e Airbnb: il numero di Booking dentro una **stella** gialla e quello di Airbnb dentro una **medaglia a onde** azzurra, con accanto il nome della piattaforma e il numero di recensioni, e sotto il mese di aggiornamento (vedi sezione 5). Toccando un punteggio si apre la pagina delle recensioni.
 3. **Contatti:** WhatsApp, Telegram, Signal, email e Instagram, appesi a un filo come il bucato dei vicoli napoletani (su tablet vanno su due righe, su telefono su tre). Il numero di telefono è lo stesso per WhatsApp, Telegram e Signal.
 4. **Le nostre stanze:** carosello 3D con 11 foto, in quest'ordine: camere, bagni, corridoio e angolo ristoro.
 5. **In ogni camera:** servizi inclusi.
@@ -49,7 +49,7 @@ In più, un pulsante **WhatsApp fisso** compare quando i contatti in alto escono
 
 **Effetti 3D** (tutti spenti se il sistema ha "riduci movimento"):
 - il logo si inclina seguendo il mouse e fluttua piano;
-- le stelle dei punteggi ruotano un poco al passaggio del mouse;
+- la stella e la medaglia dei punteggi ruotano un poco al passaggio del mouse;
 - i panni dei contatti oscillano all'ingresso e si inclinano al passaggio del mouse;
 - il carosello delle foto ruota in prospettiva;
 - il cambio mese del calendario gira come una pagina;
@@ -320,7 +320,7 @@ Nell'`<head>` di `index.html`: titolo e descrizione nelle tre lingue (si aggiorn
 - **Perché il calendario passa dal ramo `dati`:** `main` richiede pull request e non permette push al bot di GitHub. Un ramo separato, escluso dalle regole, evita pull request ogni ora e non sporca la cronologia del sito.
 - **Perché un evento senza camera blocca entrambe:** un errore di battitura nel titolo deve mostrare "occupato", mai "libero", per non causare doppie prenotazioni.
 - **Perché arrivo e partenza sono due campi grandi:** il calendario non deve spiegarsi a parole. Il campo da riempire è evidenziato, e la risposta (date, notti, camere libere) compare solo quando le date sono complete, con il pulsante WhatsApp già compilato.
-- **Perché il numero sta in una stella e i loghi solo nella striscia in fondo:** il numero è la prova più forte e deve restare piccolo e leggibile accanto al nome della piattaforma; i loghi servono a riconoscere dove si aprono le recensioni.
+- **Perché il numero sta dentro una forma (stella per Booking, medaglia a onde per Airbnb) e i loghi solo nella striscia in fondo:** il numero è la prova più forte e deve restare piccolo e leggibile accanto al nome della piattaforma; i loghi servono a riconoscere dove si aprono le recensioni.
 - **Perché due eventi sulla stessa notte bloccano entrambe le camere:** con due sole camere, due prenotazioni insieme le riempiono; di solito una è la 1 e l'altra la 2, ma il titolo può essere scritto in modo diverso o sbagliato. Si guardano le notti e non i giorni, così un cambio in giornata non fa risultare tutto occupato.
 - **Perché i titoli sono letti con tolleranza:** `Camera 1 e 2` e `Camera 1/2` sono modi naturali di scrivere "tutte e due", mentre `camera 2 persone` non è la camera 2. Sbagliare in questi due casi faceva risultare libera una camera occupata, che è l'errore più costoso.
 - **Perché i punteggi stanno in un file con la data:** non c'è un modo affidabile e consentito per leggerli in automatico da Booking e Airbnb; tenerli in un file separato li rende modificabili in un minuto senza toccare il sito, e la data li rende onesti anche se ti dimentichi di aggiornarli.
