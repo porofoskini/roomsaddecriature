@@ -112,12 +112,7 @@ a { color: inherit; }
 .intro { display: grid; grid-template-columns: 1.35fr 1fr; gap: clamp(1.5rem, 5vw, 4rem); align-items: center; margin-top: clamp(1.5rem, 4vw, 3rem); }
 .hero h1 { font-size: clamp(2.6rem, 7vw, 5.5rem); max-width: 12ch; }
 .hero .lead { font-size: 1.25rem; margin-top: 1.5rem; color: var(--cielo); }
-.ratings { display: flex; flex-wrap: wrap; gap: .5rem .75rem; margin-top: 1.5rem; }
-.rating { display: inline-flex; align-items: baseline; gap: .6rem; padding: .5rem 1rem; background: var(--tufo); color: var(--ink); text-decoration: none; font-weight: 600; max-width: none; }
-.rating b { font-family: var(--display); font-weight: 400; font-size: 1.6rem; line-height: 1; }
-.rating:hover { background: var(--calce); }
-.asof { font-size: .85rem; margin-top: .6rem; color: var(--cielo); max-width: none; }
-.reviews .asof { color: var(--ink); margin-top: .9rem; }
+.asof { font-size: .85rem; margin-top: .85rem; color: var(--cielo); max-width: none; }
 .seal-wrap { justify-self: center; width: min(100%, 400px); perspective: 900px; }
 .seal { aspect-ratio: 1; border-radius: 50%; background: var(--calce); padding: 6px; box-shadow: 0 0 0 6px var(--tufo), 0 30px 50px rgba(0,0,0,.35);
   transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)); transition: transform .2s ease-out; transform-style: preserve-3d; }
@@ -160,6 +155,18 @@ a { color: inherit; }
 }
 .hero .reply { margin-top: 2.5rem; font-size: 1.05rem; }
 .hero .reply b { font-family: var(--display); font-weight: 400; font-size: 1.5rem; display: block; margin-bottom: .25rem; }
+
+/* Punteggi di Booking e Airbnb: il numero dentro una stella */
+.ratings { display: flex; flex-wrap: wrap; gap: 1rem 2rem; margin-top: 1.75rem; }
+.rating { display: inline-flex; align-items: center; gap: .9rem; color: var(--calce); text-decoration: none; }
+.rating .star { position: relative; width: 88px; height: 88px; display: grid; place-items: center; flex: none; transition: transform .3s cubic-bezier(.2,.7,.2,1); }
+.rating .star svg { position: absolute; inset: 0; width: 100%; height: 100%; fill: var(--tufo); }
+.rating .star b { position: relative; font-family: var(--display); font-weight: 400; font-size: 1.5rem; line-height: 1; color: var(--ink); }
+.rating:hover .star, .rating:focus-visible .star { transform: rotate(14deg) scale(1.07); }
+.rating .meta { display: grid; gap: .35rem; justify-items: start; }
+.rating .pname { font-size: 1.1rem; font-weight: 700; line-height: 1.1; }
+.rating .txt { font-size: .95rem; font-weight: 600; color: var(--cielo); }
+.logo { width: 28px; height: 28px; fill: currentColor; display: block; }
 
 /* Galleria 3D */
 .gallery { background: var(--maiolica-deep); color: var(--calce); padding-block: clamp(3rem, 8vw, 5rem); overflow: hidden; }
@@ -225,13 +232,24 @@ a { color: inherit; }
 .d.can-out:hover { background: var(--tufo); color: var(--ink); }
 .mode-out .d.dis:not(.past):not(.s-start) { opacity: .4; }
 .d:focus-visible { outline: 3px solid var(--ink); outline-offset: 2px; position: relative; z-index: 1; }
-.pick { margin-top: 1rem; padding: 1rem 1.25rem; background: #fff; border: 2px solid var(--ink); display: grid; gap: .5rem; justify-items: start; min-height: 7.5rem; align-content: start; }
+.pick { margin-top: 1rem; padding: 1rem 1.25rem; background: #fff; border: 2px solid var(--ink); display: grid; gap: .5rem; justify-items: start; }
 .pick p { margin: 0; }
 .pick .stay { font-family: var(--display); font-size: 1.35rem; line-height: 1.15; }
 .pick .avl { font-weight: 700; }
-.pick .hint { font-weight: 600; }
 .pick .cta { margin-top: .25rem; }
-.linkbtn { background: none; border: 0; padding: 0; font: inherit; font-weight: 600; text-decoration: underline; text-underline-offset: 3px; color: inherit; cursor: pointer; }
+.pick[hidden] { display: none; }
+.dates { display: grid; grid-template-columns: 1fr 1fr auto; gap: .6rem; align-items: center; margin-bottom: 1.25rem; }
+.dfield { text-align: left; background: #fff; color: var(--ink); border: 2px solid var(--ink); padding: .65rem .9rem; cursor: pointer; font: inherit; display: grid; gap: .1rem; min-height: 64px; align-content: center; }
+.dfield .dl { font-size: .8rem; font-weight: 700; opacity: .7; }
+.dfield .dv { font-weight: 700; font-size: 1.05rem; opacity: .55; }
+.dfield.set .dv { opacity: 1; }
+.dfield.on { box-shadow: 0 0 0 4px var(--tufo); }
+.dfield:hover { background: var(--tufo); }
+.dclear { width: 44px; height: 44px; border: 2px solid var(--ink); background: #fff; color: var(--ink); font: 700 1.2rem/1 var(--text); cursor: pointer; border-radius: 50%; }
+.dclear:hover { background: var(--tufo); }
+.dclear[hidden] { display: none; }
+.calbody { position: relative; }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 .legend { display: flex; flex-wrap: wrap; gap: .5rem 1.5rem; list-style: none; margin: 1rem 0 0; padding: 0; font-weight: 600; }
 .legend li { display: inline-flex; align-items: center; gap: .5rem; }
 .legend i { width: 1.1rem; height: 1.1rem; display: inline-block; border: 2px solid var(--ink); background: #fff; }
@@ -266,13 +284,14 @@ a { color: inherit; }
 .know dd { margin: 0; }
 
 /* Recensioni */
-.reviews { background: var(--tufo); padding-block: clamp(2.5rem, 6vw, 4.5rem); }
-.reviews h2 { font-size: clamp(1.75rem, 4vw, 2.5rem); margin-bottom: 1.5rem; }
-.reviews ul { list-style: none; margin: 0; padding: 0; border-top: 2px solid var(--ink); }
-.reviews li { border-bottom: 2px solid var(--ink); }
-.reviews a { display: flex; justify-content: space-between; gap: 1rem; padding: 1rem .25rem; text-decoration: none; font-weight: 700; font-size: 1.15rem; }
-.reviews a:hover { background: var(--ink); color: var(--tufo); }
-.reviews a span { font-weight: 400; }
+.reviews { background: var(--tufo); padding-block: clamp(1.75rem, 4vw, 2.5rem); }
+.reviews .wrap { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1rem 2rem; }
+.reviews h2 { font-size: clamp(1.4rem, 3vw, 1.9rem); }
+.revlinks { display: flex; flex-wrap: wrap; gap: .6rem; }
+.revlinks { gap: 1.25rem; align-items: center; }
+.revlinks a { display: block; color: var(--ink); padding: .25rem; transition: transform .25s cubic-bezier(.2,.7,.2,1); }
+.revlinks .logo { width: 48px; height: 48px; }
+.revlinks a:hover, .revlinks a:focus-visible { transform: translateY(-4px) rotate(-5deg); }
 
 footer { background: var(--maiolica-deep); color: var(--cielo); padding-block: 1.75rem 6rem; font-size: .95rem; }
 footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: .5rem 2rem; }
@@ -326,8 +345,6 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
   .intro { text-align: center; justify-items: center; gap: 1.25rem; }
   .seal-wrap { justify-self: center; width: min(76%, 300px); }
   .hero h1 { max-width: none; }
-  .ratings { flex-direction: column; align-items: stretch; max-width: 420px; margin-inline: auto; }
-  .rating { flex-direction: column; align-items: center; gap: .15rem; text-align: center; }
   .cloth { text-align: center; }
   .c1 { min-height: 150px; } .c2 { min-height: 130px; } .cs { min-height: 140px; } .c3 { min-height: 160px; } .c4 { min-height: 140px; }
   .cloth:last-child { grid-column: 1 / -1; width: calc(50% - .375rem); justify-self: center; }
@@ -341,7 +358,12 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
   .pick { justify-items: center; }
   .legend { justify-content: center; }
   .map { height: 320px; min-height: 320px; }
-  .reviews a { flex-direction: column; align-items: center; gap: .1rem; text-align: center; padding-block: .85rem; }
+  .reviews .wrap { justify-content: center; }
+  .revlinks { justify-content: center; }
+  .ratings { flex-direction: column; align-items: center; gap: 1.25rem; }
+  .rating { width: min(100%, 290px); }
+  .rating .meta { justify-items: start; text-align: left; }
+  .dfield { text-align: center; }
   footer .wrap { flex-direction: column; align-items: center; gap: .35rem; }
 }
 @media (max-width: 480px) {
@@ -359,7 +381,7 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
 }
 @media (prefers-reduced-motion: reduce) {
   .cloth { animation: none; transition: none; }
-  .seal, .card, .wa { transition: none; }
+  .seal, .card, .wa, .rating .star, .revlinks a { transition: none; }
   .months.turn { animation: none; }
   .seal img { animation: none; transform: translateZ(30px); }
   .js .flip { opacity: 1; transform: none; transition: none; }
@@ -368,6 +390,11 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
 </style>
 </head>
 <body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <symbol id="lg-google" viewBox="0 0 24 24"><path d="M12.48 10.92v3.28h7.84c-.24 1.84-.853 3.187-1.787 4.133-1.147 1.147-2.933 2.4-6.053 2.4-4.827 0-8.6-3.893-8.6-8.72s3.773-8.72 8.6-8.72c2.6 0 4.507 1.027 5.907 2.347l2.307-2.307C18.747 1.44 16.133 0 12.48 0 5.867 0 .307 5.387.307 12s5.56 12 12.173 12c3.573 0 6.267-1.173 8.373-3.36 2.16-2.16 2.84-5.213 2.84-7.667 0-.76-.053-1.467-.173-2.053H12.48z"/></symbol>
+  <symbol id="lg-airbnb" viewBox="0 0 24 24"><path d="M12.001 18.275c-1.353-1.697-2.148-3.184-2.413-4.457-.263-1.027-.16-1.848.291-2.465.477-.71 1.188-1.056 2.121-1.056s1.643.345 2.12 1.063c.446.61.558 1.432.286 2.465-.291 1.298-1.085 2.785-2.412 4.458zm9.601 1.14c-.185 1.246-1.034 2.28-2.2 2.783-2.253.98-4.483-.583-6.392-2.704 3.157-3.951 3.74-7.028 2.385-9.018-.795-1.14-1.933-1.695-3.394-1.695-2.944 0-4.563 2.49-3.927 5.382.37 1.565 1.352 3.343 2.917 5.332-.98 1.085-1.91 1.856-2.732 2.333-.636.344-1.245.558-1.828.609-2.679.399-4.778-2.2-3.825-4.88.132-.345.395-.98.845-1.961l.025-.053c1.464-3.178 3.242-6.79 5.285-10.795l.053-.132.58-1.116c.45-.822.635-1.19 1.351-1.643.346-.21.77-.315 1.246-.315.954 0 1.698.558 2.016 1.007.158.239.345.557.582.953l.558 1.089.08.159c2.041 4.004 3.821 7.608 5.279 10.794l.026.025.533 1.22.318.764c.243.613.294 1.222.213 1.858zm1.22-2.39c-.186-.583-.505-1.271-.9-2.094v-.03c-1.889-4.006-3.642-7.608-5.307-10.844l-.111-.163C15.317 1.461 14.468 0 12.001 0c-2.44 0-3.476 1.695-4.535 3.898l-.081.16c-1.669 3.236-3.421 6.843-5.303 10.847v.053l-.559 1.22c-.21.504-.317.768-.345.847C-.172 20.74 2.611 24 5.98 24c.027 0 .132 0 .265-.027h.372c1.75-.213 3.554-1.325 5.384-3.317 1.829 1.989 3.635 3.104 5.382 3.317h.372c.133.027.239.027.265.027 3.37.003 6.152-3.261 4.802-6.975z"/></symbol>
+  <symbol id="lg-booking" viewBox="0 0 24 24"><path d="M24 0H0v24h24ZM8.575 6.563h2.658c2.108 0 3.473 1.15 3.473 2.898 0 1.15-.575 1.82-.91 2.108l-.287.263.335.192c.815.479 1.318 1.389 1.318 2.395 0 1.988-1.51 3.257-3.857 3.257H7.449V7.713c0-.623.503-1.126 1.126-1.15zm1.7 1.868c-.479.024-.694.264-.694.79v1.893h1.676c.958 0 1.294-.743 1.294-1.365 0-.815-.503-1.318-1.318-1.318zm-.096 4.36c-.407.071-.598.31-.598.79v2.251h1.868c.934 0 1.509-.55 1.509-1.533 0-.934-.599-1.509-1.51-1.509zm7.737 2.394c.743 0 1.341.599 1.341 1.342a1.34 1.34 0 0 1-1.341 1.341 1.355 1.355 0 0 1-1.341-1.341c0-.743.598-1.342 1.34-1.342z"/></symbol>
+</svg>
 <a class="skip" href="#foto" data-i18n="skip">Vai al contenuto</a>
 
 <header class="hero">
@@ -385,9 +412,15 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
       <div>
         <h1 data-i18n="h1">Un B&B nel cuore di Napoli</h1>
         <p class="lead" data-i18n="lead">Dove l'ospitalità incontra la tradizione. Relax, sole e magia partenopea ti aspettano.</p>
-        <div class="ratings">
-          <a class="rating" data-r="booking" href="https://www.booking.com/hotel/it/rooms-ad-e-criatur.it.html#tab-reviews"><b>9,8</b><span>su 10 · 139 recensioni su Booking.com</span></a>
-          <a class="rating" data-r="airbnb" href="https://www.airbnb.it/rooms/784407996587642336/reviews"><b>4,99</b><span>su 5 · 69 recensioni su Airbnb</span></a>
+        <div class="ratings" role="group" data-i18n-label="scoresLabel" aria-label="Punteggi degli ospiti">
+          <a class="rating" data-r="booking" href="https://www.booking.com/hotel/it/rooms-ad-e-criatur.it.html#tab-reviews">
+            <span class="star"><svg viewBox="0 0 100 100" aria-hidden="true" focusable="false"><polygon points="50.0,0.0 58.1,9.3 69.1,3.8 73.1,15.5 85.4,14.6 84.5,26.9 96.2,30.9 90.7,41.9 100.0,50.0 90.7,58.1 96.2,69.1 84.5,73.1 85.4,85.4 73.1,84.5 69.1,96.2 58.1,90.7 50.0,100.0 41.9,90.7 30.9,96.2 26.9,84.5 14.6,85.4 15.5,73.1 3.8,69.1 9.3,58.1 0.0,50.0 9.3,41.9 3.8,30.9 15.5,26.9 14.6,14.6 26.9,15.5 30.9,3.8 41.9,9.3"/></svg><b>9,8</b></span>
+            <span class="meta"><span class="pname">Booking.com</span><span class="txt">su 10 · 139 recensioni</span></span>
+          </a>
+          <a class="rating" data-r="airbnb" href="https://www.airbnb.it/rooms/784407996587642336/reviews">
+            <span class="star"><svg viewBox="0 0 100 100" aria-hidden="true" focusable="false"><polygon points="50.0,0.0 58.1,9.3 69.1,3.8 73.1,15.5 85.4,14.6 84.5,26.9 96.2,30.9 90.7,41.9 100.0,50.0 90.7,58.1 96.2,69.1 84.5,73.1 85.4,85.4 73.1,84.5 69.1,96.2 58.1,90.7 50.0,100.0 41.9,90.7 30.9,96.2 26.9,84.5 14.6,85.4 15.5,73.1 3.8,69.1 9.3,58.1 0.0,50.0 9.3,41.9 3.8,30.9 15.5,26.9 14.6,14.6 26.9,15.5 30.9,3.8 41.9,9.3"/></svg><b>4,99</b></span>
+            <span class="meta"><span class="pname">Airbnb</span><span class="txt">su 5 · 69 recensioni</span></span>
+          </a>
         </div>
         <p class="asof" data-asof>Punteggi aggiornati a ottobre 2026</p>
       </div>
@@ -458,18 +491,24 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
       <h2 id="av-t" data-i18n="availH">Disponibilità</h2>
       <p class="sub" data-i18n="availSub">Tocca il giorno di arrivo e poi quello di partenza: ti diciamo subito se c'è posto.</p>
       <div class="cal" id="cal" hidden>
-        <div class="calnav">
-          <button type="button" id="mprev" data-i18n-label="prevM" aria-label="Mese precedente">&larr;</button>
-          <button type="button" id="mnext" data-i18n-label="nextM" aria-label="Mese successivo">&rarr;</button>
+        <div class="dates" id="dates">
+          <button type="button" class="dfield" id="f-from"><span class="dl" data-i18n="fieldFrom">Arrivo</span><span class="dv" id="v-from"></span></button>
+          <button type="button" class="dfield" id="f-to"><span class="dl" data-i18n="fieldTo">Partenza</span><span class="dv" id="v-to"></span></button>
+          <button type="button" class="dclear" id="clear" data-i18n-label="clear" aria-label="Cambia date" hidden>&times;</button>
         </div>
-        <div class="calwrap"><div class="months" id="months"></div></div>
-        <div class="pick" id="pick" aria-live="polite">
-          <p class="stay" id="stay" hidden></p>
-          <p class="avl" id="avl" hidden></p>
-          <p class="hint" id="hint"></p>
-          <a class="cta" id="askwa" href="https://wa.me/393404845299" hidden></a>
-          <button type="button" class="linkbtn" id="clear" data-i18n="clear" hidden>Cambia date</button>
+        <div class="calbody">
+          <div class="calnav">
+            <button type="button" id="mprev" data-i18n-label="prevM" aria-label="Mese precedente">&larr;</button>
+            <button type="button" id="mnext" data-i18n-label="nextM" aria-label="Mese successivo">&rarr;</button>
+          </div>
+          <div class="calwrap"><div class="months" id="months"></div></div>
         </div>
+        <div class="pick" id="pick" hidden>
+          <p class="stay" id="stay"></p>
+          <p class="avl" id="avl"></p>
+          <a class="cta" id="askwa" href="https://wa.me/393404845299"></a>
+        </div>
+        <p class="sr" id="status" aria-live="polite"></p>
         <ul class="legend">
           <li><i></i><span data-i18n="rooms2">2 camere libere</span></li>
           <li><i class="f1"></i><span data-i18n="rooms1">1 camera libera</span></li>
@@ -522,13 +561,12 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
 
   <section class="reviews" aria-labelledby="rec">
     <div class="wrap">
-      <h2 id="rec" data-i18n="revH">Cosa dicono gli ospiti</h2>
-      <ul>
-        <li class="flip"><a href="https://www.google.com/local/business/2933506296284337297/customers/reviews">Google <span data-i18n="read">Leggi le recensioni</span></a></li>
-        <li class="flip" style="--fd:.12s"><a href="https://www.booking.com/hotel/it/rooms-ad-e-criatur.it.html#tab-reviews">Booking.com <span data-rv="booking">9,8 su 10 · 139 recensioni</span></a></li>
-        <li class="flip" style="--fd:.24s"><a href="https://www.airbnb.it/rooms/784407996587642336/reviews">Airbnb <span data-rv="airbnb">4,99 su 5 · 69 recensioni</span></a></li>
-      </ul>
-      <p class="asof" data-asof>Punteggi aggiornati a ottobre 2026</p>
+      <h2 id="rec" data-i18n="revH">Leggi le recensioni</h2>
+      <div class="revlinks">
+        <a data-p="Google" href="https://www.google.com/local/business/2933506296284337297/customers/reviews"><svg class="logo" aria-hidden="true"><use href="#lg-google"/></svg></a>
+        <a data-p="Booking.com" href="https://www.booking.com/hotel/it/rooms-ad-e-criatur.it.html#tab-reviews"><svg class="logo" aria-hidden="true"><use href="#lg-booking"/></svg></a>
+        <a data-p="Airbnb" href="https://www.airbnb.it/rooms/784407996587642336/reviews"><svg class="logo" aria-hidden="true"><use href="#lg-airbnb"/></svg></a>
+      </div>
     </div>
   </section>
 </main>
@@ -551,7 +589,8 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
       skip: "Vai al contenuto",
       h1: "Un B&B nel cuore di Napoli",
       lead: "Dove l'ospitalità incontra la tradizione. Relax, sole e magia partenopea ti aspettano.",
-      ratingLine: "su {s} · {n} recensioni su {p}", revLine: "{score} su {s} · {n} recensioni",
+      scoreScale: "su {s}", scoreReviews: "{n} recensioni",
+      scoreLabel: "{p}: punteggio {score} su {s}, {n} recensioni. Apri le recensioni.", scoresLabel: "Punteggi degli ospiti",
       asOf: "Punteggi aggiornati a {m}",
       sealAlt: "Logo Rooms Add'e Criature: tre bambini giocano su una terrazza con vista sul Vesuvio",
       replyT: "Prenota subito!",
@@ -596,20 +635,19 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
       k2t: "Bambini", k2d: "Benvenuti di tutte le età. Culle su richiesta; letti aggiuntivi disponibili.",
       k3t: "Animali", k3d: "Non ammessi",
       k4t: "Fumo", k4d: "Non è consentito fumare",
-      revH: "Cosa dicono gli ospiti", read: "Leggi le recensioni",
+      revH: "Leggi le recensioni", revOn: "Recensioni su {p}",
       copy: "© 2023 Rooms Add'e Criature – Napoli",
       waBtn: "Scrivici su WhatsApp",
       waMsg: "Ciao! Vorrei informazioni sulla disponibilità di una camera.",
       availH: "Disponibilità",
-      availSub: "Tocca il giorno di arrivo e poi quello di partenza: ti diciamo subito se c'è posto.",
+      availSub: "Scegli arrivo e partenza e vedi subito quante camere sono libere.",
       past: "passato",
       prevM: "Mese precedente", nextM: "Mese successivo",
       rooms2: "2 camere libere", rooms1: "1 camera libera", full: "Completo",
-      hint1: "Tocca il giorno di arrivo.",
-      hint2: "Ora tocca il giorno di partenza. Puoi scegliere anche un giorno già occupato: è il giorno in cui parti.",
-      from: "Arrivo: {a}", arrival: "arrivo", departure: "partenza", canDepart: "partenza possibile",
+      arrival: "arrivo", departure: "partenza", canDepart: "partenza possibile",
       stay: "Dal {a} al {b}", night1: "1 notte", nights: "{n} notti",
       clear: "Cambia date",
+      fieldFrom: "Arrivo", fieldTo: "Partenza", dateAdd: "Scegli la data", srNext: "Ora scegli la partenza.",
       updated: "Aggiornato il {d}",
       noData: "Il calendario non è disponibile in questo momento. Scrivici e ti rispondiamo subito.",
       askWa: "Chiedi le date su WhatsApp",
@@ -622,7 +660,8 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
       skip: "Skip to content",
       h1: "A B&B in the heart of Naples",
       lead: "Where hospitality meets tradition. Relax, sunshine and Neapolitan magic await you.",
-      ratingLine: "out of {s} · {n} reviews on {p}", revLine: "{score} out of {s} · {n} reviews",
+      scoreScale: "out of {s}", scoreReviews: "{n} reviews",
+      scoreLabel: "{p}: score {score} out of {s}, {n} reviews. Open the reviews.", scoresLabel: "Guest scores",
       asOf: "Scores updated {m}",
       sealAlt: "Rooms Add'e Criature logo: three children playing on a terrace with a view of Vesuvius",
       replyT: "Book now!",
@@ -667,20 +706,19 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
       k2t: "Children", k2d: "Children of all ages are welcome. Cots on request; extra beds available.",
       k3t: "Pets", k3d: "Not allowed",
       k4t: "Smoking", k4d: "Smoking is not allowed",
-      revH: "What our guests say", read: "Read reviews",
+      revH: "Read the reviews", revOn: "Reviews on {p}",
       copy: "© 2023 Rooms Add'e Criature – Naples",
       waBtn: "Message us on WhatsApp",
       waMsg: "Hi! I'd like to ask about room availability.",
       availH: "Availability",
-      availSub: "Tap your arrival day, then your departure day: we'll tell you right away if there's room.",
+      availSub: "Choose your arrival and departure and see right away how many rooms are free.",
       past: "past",
       prevM: "Previous month", nextM: "Next month",
       rooms2: "2 rooms available", rooms1: "1 room available", full: "Full",
-      hint1: "Tap your arrival day.",
-      hint2: "Now tap your departure day. You can pick a booked day: it's the day you leave.",
-      from: "Arrival: {a}", arrival: "arrival", departure: "departure", canDepart: "possible departure",
+      arrival: "arrival", departure: "departure", canDepart: "possible departure",
       stay: "From {a} to {b}", night1: "1 night", nights: "{n} nights",
       clear: "Change dates",
+      fieldFrom: "Arrival", fieldTo: "Departure", dateAdd: "Add date", srNext: "Now choose your departure.",
       updated: "Updated {d}",
       noData: "The calendar isn't available right now. Message us and we'll reply right away.",
       askWa: "Ask about dates on WhatsApp",
@@ -693,7 +731,8 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
       skip: "Ir al contenido",
       h1: "Un B&B en el corazón de Nápoles",
       lead: "Donde la hospitalidad se encuentra con la tradición. Relax, sol y magia partenopea te esperan.",
-      ratingLine: "sobre {s} · {n} reseñas en {p}", revLine: "{score} sobre {s} · {n} reseñas",
+      scoreScale: "sobre {s}", scoreReviews: "{n} reseñas",
+      scoreLabel: "{p}: puntuación {score} sobre {s}, {n} reseñas. Abrir las reseñas.", scoresLabel: "Puntuaciones de los huéspedes",
       asOf: "Puntuaciones actualizadas a {m}",
       sealAlt: "Logo de Rooms Add'e Criature: tres niños juegan en una terraza con vistas al Vesubio",
       replyT: "¡Reserva ya!",
@@ -738,20 +777,19 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
       k2t: "Niños", k2d: "Niños de todas las edades bienvenidos. Cunas bajo petición; camas supletorias disponibles.",
       k3t: "Mascotas", k3d: "No se admiten",
       k4t: "Fumar", k4d: "No se permite fumar",
-      revH: "Qué dicen los huéspedes", read: "Leer reseñas",
+      revH: "Lee las reseñas", revOn: "Reseñas en {p}",
       copy: "© 2023 Rooms Add'e Criature – Nápoles",
       waBtn: "Escríbenos por WhatsApp",
       waMsg: "¡Hola! Quisiera información sobre la disponibilidad de una habitación.",
       availH: "Disponibilidad",
-      availSub: "Toca el día de llegada y luego el de salida: te decimos enseguida si hay sitio.",
+      availSub: "Elige llegada y salida y mira enseguida cuántas habitaciones hay libres.",
       past: "pasado",
       prevM: "Mes anterior", nextM: "Mes siguiente",
       rooms2: "2 habitaciones libres", rooms1: "1 habitación libre", full: "Completo",
-      hint1: "Toca el día de llegada.",
-      hint2: "Ahora toca el día de salida. Puedes elegir un día ocupado: es el día en que te vas.",
-      from: "Llegada: {a}", arrival: "llegada", departure: "salida", canDepart: "salida posible",
+      arrival: "llegada", departure: "salida", canDepart: "salida posible",
       stay: "Del {a} al {b}", night1: "1 noche", nights: "{n} noches",
       clear: "Cambiar fechas",
+      fieldFrom: "Llegada", fieldTo: "Salida", dateAdd: "Añadir fecha", srNext: "Ahora elige la salida.",
       updated: "Actualizado el {d}",
       noData: "El calendario no está disponible ahora. Escríbenos y te respondemos enseguida.",
       askWa: "Pregunta por las fechas en WhatsApp",
@@ -975,15 +1013,22 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
     return html + "</tr></tbody></table></div>";
   }
 
+  function dateLabel(ds) {
+    var o = { weekday: "short", day: "numeric", month: "short", timeZone: "UTC" };
+    if (+ds.slice(0, 4) !== tY) o.year = "numeric";
+    return new Date(ds + "T00:00:00Z").toLocaleDateString(lang, o);
+  }
   function renderPick() {
     var t = T[lang], a = $("askwa"), done = sel.from && sel.to, n = done ? diffDays(sel.from, sel.to) : 0;
-    $("stay").hidden = !sel.from;
-    $("avl").hidden = !done;
+    var ff = $("f-from"), ft = $("f-to");
+    $("v-from").textContent = sel.from ? dateLabel(sel.from) : t.dateAdd;
+    $("v-to").textContent = sel.to ? dateLabel(sel.to) : t.dateAdd;
+    ff.classList.toggle("set", !!sel.from); ft.classList.toggle("set", !!sel.to);
+    ff.classList.toggle("on", !sel.from); ft.classList.toggle("on", !!sel.from && !sel.to);
+    ff.setAttribute("aria-label", t.fieldFrom + ": " + (sel.from ? fmt(sel.from) : t.dateAdd));
+    ft.setAttribute("aria-label", t.fieldTo + ": " + (sel.to ? fmt(sel.to) : t.dateAdd));
     $("clear").hidden = !sel.from;
-    a.hidden = !done;
-    $("hint").textContent = !sel.from ? t.hint1 : done ? "" : t.hint2;
-    $("hint").hidden = done;
-    if (sel.from && !done) $("stay").textContent = t.from.replace("{a}", fmt(sel.from));
+    $("pick").hidden = !done;
     if (done) {
       $("stay").textContent = rangeText(sel.from, sel.to) + " · " + nightsText(n);
       $("avl").textContent = roomsText(freeFor(sel.from, sel.to));
@@ -991,6 +1036,8 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
       a.href = "https://wa.me/393404845299?text=" + encodeURIComponent(
         t.waStay.replace("{a}", fmt(sel.from, true)).replace("{b}", fmt(sel.to, true)).replace("{n}", nightsText(n)));
     }
+    $("status").textContent = done ? $("stay").textContent + ", " + $("avl").textContent
+      : sel.from ? t.fieldFrom + ": " + fmt(sel.from) + ". " + t.srNext : "";
   }
 
   function renderCal() {
@@ -1058,6 +1105,8 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
   $("mprev").addEventListener("click", function () { shift(-1); });
   $("mnext").addEventListener("click", function () { shift(1); });
   $("clear").addEventListener("click", function () { sel = { from: null, to: null }; renderCal(); });
+  $("f-from").addEventListener("click", function () { sel = { from: null, to: null }; renderCal(); });
+  $("f-to").addEventListener("click", function () { if (sel.from) { sel.to = null; renderCal(); } });
   if (twoCols.addEventListener) {
     twoCols.addEventListener("change", function () { viewIdx = Math.min(viewIdx, maxView()); renderCal(); });
   }
@@ -1092,12 +1141,13 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
     var u = ratings.updated.length === 7 ? ratings.updated + "-01" : ratings.updated;
     var month = new Date(u + "T00:00:00Z").toLocaleDateString(lang, { month: "long", year: "numeric", timeZone: "UTC" });
     ["booking", "airbnb"].forEach(function (k) {
-      var r = ratings[k], vars = { score: nf.format(r.score), s: nf.format(r.scale), n: nf.format(r.reviews), p: PROVIDERS[k] };
-      var pill = document.querySelector('.rating[data-r="' + k + '"]');
-      pill.querySelector("b").textContent = vars.score;
-      pill.querySelector("span").textContent = fill(t.ratingLine, vars);
-      document.querySelector('[data-rv="' + k + '"]').textContent = fill(t.revLine, vars);
+      var r = ratings[k], v = { score: nf.format(r.score), s: nf.format(r.scale), n: nf.format(r.reviews), p: PROVIDERS[k] };
+      var card = document.querySelector('.rating[data-r="' + k + '"]');
+      card.querySelector("b").textContent = v.score;
+      card.querySelector(".txt").textContent = fill(t.scoreScale, v) + " · " + fill(t.scoreReviews, v);
+      card.setAttribute("aria-label", fill(t.scoreLabel, v));
     });
+    document.querySelectorAll(".revlinks a").forEach(function (a) { a.setAttribute("aria-label", fill(t.revOn, { p: a.dataset.p })); });
     document.querySelectorAll("[data-asof]").forEach(function (e) { e.textContent = fill(t.asOf, { m: month }); });
   }
   var RATINGS_URL = /^(localhost|127\.0\.0\.1)$/.test(location.hostname)

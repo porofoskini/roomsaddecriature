@@ -33,15 +33,17 @@ Sul ramo `dati` ci sono due file, che non esistono su `main`: `disponibilita.jso
 Sezioni, dall'alto:
 
 1. **Intestazione:** logo, nome, **CIN**, selettore lingua IT/EN/ES.
-2. **Presentazione:** titolo, frase d'apertura, punteggi Booking e Airbnb, logo grande.
+2. **Presentazione:** titolo, frase d'apertura, logo grande e, sotto, i punteggi di Booking e Airbnb: ciascuno con il numero dentro una stella, il logo della piattaforma e il numero di recensioni, con il mese di aggiornamento (vedi sezione 5). Toccando un punteggio si apre la pagina delle recensioni.
 3. **Contatti:** WhatsApp, Telegram, Signal, email e Instagram, appesi a un filo come il bucato dei vicoli napoletani (su tablet vanno su due righe, su telefono su tre). Il numero di telefono è lo stesso per WhatsApp, Telegram e Signal.
 4. **Le nostre stanze:** carosello 3D con 11 foto, in quest'ordine: camere, bagni, corridoio e angolo ristoro.
 5. **In ogni camera:** servizi inclusi.
 6. **Disponibilità:** l'ospite sceglie arrivo e partenza e vede quante camere restano (vedi sezione 4).
 7. **Noi siamo qui:** indirizzo, distanze, mappa.
 8. **Da sapere:** arrivo, partenza, bambini, animali, fumo.
-9. **Cosa dicono gli ospiti:** link a Google, Booking, Airbnb.
+9. **Recensioni:** una striscia sottile con i loghi di Google, Booking e Airbnb, che portano alle recensioni.
 10. **Footer:** copyright e CIN.
+
+I loghi di Google, Booking.com e Airbnb sono icone di [Simple Icons](https://simpleicons.org) (licenza CC0) inserite nel codice come immagini vettoriali; i marchi appartengono ai rispettivi proprietari.
 
 In più, un pulsante **WhatsApp fisso** compare quando i contatti in alto escono dallo schermo, con un messaggio già scritto nella lingua scelta.
 
@@ -121,8 +123,8 @@ Google Calendar          GitHub Actions (ogni ora)            Pagina del sito
 Le due camere sono **identiche**, quindi il calendario non parla di "Camera 1/2": conta quante ne restano.
 
 - Ogni giorno è **bianco** (2 camere libere), **giallo** (1 camera libera) o **a righe blu** (completo). Il giorno passato è sbiadito.
-- L'ospite tocca il **giorno di arrivo** e poi il **giorno di partenza**. Un giorno completo non si può scegliere come arrivo; come partenza sì, perché è il giorno in cui si parte. La partenza si può scegliere solo finché c'è almeno una camera libera per tutte le notti.
-- Sotto il calendario compare la risposta ("13–16 ottobre · 3 notti · 1 camera libera") e il pulsante **Chiedi queste date su WhatsApp**, con il messaggio già scritto (date, notti, lingua). "Cambia date" azzera la scelta.
+- In alto ci sono due campi, **Arrivo** e **Partenza**: quello da compilare è evidenziato e si riempie scegliendo i giorni sul calendario, prima l'arrivo e poi la partenza, senza istruzioni scritte. Un giorno completo non si può scegliere come arrivo; come partenza sì, perché è il giorno in cui si parte. La partenza si può scegliere solo finché c'è almeno una camera libera per tutte le notti. La ✕ accanto ai campi azzera la scelta, e toccare un campo lo ripulisce.
+- Quando le date sono complete compare, sotto il calendario, la risposta ("10–14 novembre · 4 notti · 2 camere libere") e il pulsante **Chiedi queste date su WhatsApp**, con il messaggio già scritto (date, notti, lingua). Finché le date non sono scelte, quella barra è nascosta. Per i lettori di schermo c'è un annuncio con lo stesso testo.
 - Su schermo largo si vedono due mesi affiancati, su telefono uno. Si naviga con le frecce o con la tastiera (frecce per muoversi tra i giorni, Invio per scegliere).
 - Il calendario non è vincolante: la conferma resta tua.
 
