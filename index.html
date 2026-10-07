@@ -189,6 +189,38 @@ a { color: inherit; }
 .amen li { padding: 1rem .25rem 1rem 1.75rem; border-bottom: 2px solid var(--ink); position: relative; font-weight: 600; }
 .amen li::before { content: ""; position: absolute; left: .25rem; top: 1.45rem; width: .7rem; height: .7rem; background: var(--tufo); border: 2px solid var(--ink); }
 
+/* Disponibilità */
+.avail { background: #e4edf8; }
+.avail .sub { max-width: 60ch; margin-top: -.75rem; }
+.rtabs { display: flex; gap: .5rem; margin-top: 1.75rem; }
+.rtabs button { border: 2px solid var(--ink); background: #fff; color: var(--ink); padding: .6rem 1.4rem; font: 700 1rem var(--text); cursor: pointer; }
+.rtabs button:hover { background: var(--tufo); }
+.rtabs button[aria-checked="true"] { background: var(--ink); color: var(--calce); }
+.cal { margin-top: 1.5rem; max-width: 640px; }
+.calnav { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-bottom: .75rem; }
+.calnav h3 { font-size: 1.5rem; text-transform: capitalize; text-align: center; flex: 1; }
+.calnav button { width: 44px; height: 44px; border: 2px solid var(--ink); background: #fff; color: var(--ink); font: 700 1.3rem/1 var(--text); cursor: pointer; border-radius: 50%; }
+.calnav button:hover:not(:disabled) { background: var(--tufo); }
+.calnav button:disabled { opacity: .3; cursor: default; }
+.calwrap { perspective: 1100px; }
+.month { width: 100%; table-layout: fixed; border-collapse: separate; border-spacing: 5px; transform-origin: 50% 50%; }
+.month.turn { animation: turn .55s cubic-bezier(.2,.7,.2,1); }
+@keyframes turn { from { transform: rotateY(calc(var(--dir, 1) * 55deg)); opacity: .2; } to { transform: none; opacity: 1; } }
+.month th { font-size: .85rem; font-weight: 700; padding-bottom: .25rem; text-transform: capitalize; }
+.month td { text-align: center; padding: .7rem 0; font-weight: 700; }
+.month td.free { background: #fff; border: 2px solid var(--ink); }
+.month td.busy { background: repeating-linear-gradient(135deg, var(--maiolica) 0 6px, #234b8a 6px 12px); color: var(--calce); border: 2px solid var(--maiolica); text-decoration: line-through; }
+.month td.past { opacity: .35; border: 2px dashed var(--ink); }
+.month td.today { outline: 3px solid var(--tufo); outline-offset: 1px; }
+.legend { display: flex; flex-wrap: wrap; gap: .5rem 1.5rem; list-style: none; margin: 1rem 0 0; padding: 0; font-weight: 600; }
+.legend li { display: inline-flex; align-items: center; gap: .5rem; }
+.legend i { width: 1.1rem; height: 1.1rem; display: inline-block; border: 2px solid var(--ink); background: #fff; }
+.legend i.b { background: repeating-linear-gradient(135deg, var(--maiolica) 0 4px, #234b8a 4px 8px); border-color: var(--maiolica); }
+.avail .note { margin-top: .75rem; }
+.avmsg { margin-top: 1.5rem; font-weight: 600; max-width: 50ch; }
+.cta { display: inline-block; margin-top: 1.5rem; background: var(--ink); color: var(--calce); padding: .8rem 1.4rem; font-weight: 700; text-decoration: none; }
+.cta:hover { background: var(--tufo); color: var(--ink); }
+
 /* Dove */
 .where { background: #fff; }
 .where .wrap { display: grid; grid-template-columns: 1fr 1.2fr; gap: clamp(1.5rem, 5vw, 4rem); align-items: start; }
@@ -249,6 +281,7 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
 @media (prefers-reduced-motion: reduce) {
   .cloth { animation: none; transition: none; }
   .seal, .card, .wa { transition: none; }
+  .month.turn { animation: none; }
   .seal img { animation: none; transform: translateZ(30px); }
   .js .flip { opacity: 1; transform: none; transition: none; }
   html { scroll-behavior: auto; }
@@ -332,6 +365,33 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
         <li class="flip" data-i18n="sv6">Camere per famiglie</li>
         <li class="flip" data-i18n="sv7">Struttura interamente non fumatori</li>
       </ul>
+    </div>
+  </section>
+
+  <section class="section avail" id="disponibilita" aria-labelledby="av-t">
+    <div class="wrap">
+      <h2 id="av-t" data-i18n="availH">Disponibilità</h2>
+      <p class="sub" data-i18n="availSub">Scegli la camera e guarda i giorni liberi. È indicativa: la conferma te la diamo noi.</p>
+      <div class="rtabs" id="rtabs" role="radiogroup" data-i18n-label="roomsLabel" aria-label="Camera">
+        <button type="button" role="radio" aria-checked="true" data-room="1" data-i18n="room1">Camera 1</button>
+        <button type="button" role="radio" aria-checked="false" data-room="2" data-i18n="room2">Camera 2</button>
+      </div>
+      <div class="cal" id="cal" hidden>
+        <div class="calnav">
+          <button type="button" id="mprev" data-i18n-label="prevM" aria-label="Mese precedente">&larr;</button>
+          <h3 id="mtitle" aria-live="polite"></h3>
+          <button type="button" id="mnext" data-i18n-label="nextM" aria-label="Mese successivo">&rarr;</button>
+        </div>
+        <div class="calwrap"><table class="month" id="month"></table></div>
+        <ul class="legend">
+          <li><i></i><span data-i18n="free">Libero</span></li>
+          <li><i class="b"></i><span data-i18n="busy">Occupato</span></li>
+        </ul>
+        <p class="note" data-i18n="legendNote">Un giorno è libero se puoi dormire quella notte: il giorno di partenza risulta libero.</p>
+        <p class="note" id="upd"></p>
+      </div>
+      <p class="avmsg" id="avmsg" hidden></p>
+      <a class="cta" data-wa href="https://wa.me/393404845299" data-i18n="askWa">Chiedi le date su WhatsApp</a>
     </div>
   </section>
 
@@ -451,7 +511,16 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
       revH: "Cosa dicono gli ospiti", read: "Leggi le recensioni",
       copy: "© 2023 Rooms Add'e Criature – Napoli",
       waBtn: "Scrivici su WhatsApp",
-      waMsg: "Ciao! Vorrei informazioni sulla disponibilità di una camera."
+      waMsg: "Ciao! Vorrei informazioni sulla disponibilità di una camera.",
+      availH: "Disponibilità",
+      availSub: "Scegli la camera e guarda i giorni liberi. È indicativa: la conferma te la diamo noi.",
+      roomsLabel: "Camera", room1: "Camera 1", room2: "Camera 2",
+      free: "Libero", busy: "Occupato", past: "passato",
+      prevM: "Mese precedente", nextM: "Mese successivo",
+      legendNote: "Un giorno è libero se puoi dormire quella notte: il giorno di partenza risulta libero.",
+      updated: "Aggiornato il {d}",
+      noData: "Il calendario non è disponibile in questo momento. Scrivici e ti rispondiamo subito.",
+      askWa: "Chiedi le date su WhatsApp"
     },
     en: {
       title: "Rooms Add'e Criature – B&B in Naples, Materdei",
@@ -506,7 +575,16 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
       revH: "What our guests say", read: "Read reviews",
       copy: "© 2023 Rooms Add'e Criature – Naples",
       waBtn: "Message us on WhatsApp",
-      waMsg: "Hi! I'd like to ask about room availability."
+      waMsg: "Hi! I'd like to ask about room availability.",
+      availH: "Availability",
+      availSub: "Pick a room to see the free days. It's a guide: we confirm every booking ourselves.",
+      roomsLabel: "Room", room1: "Room 1", room2: "Room 2",
+      free: "Free", busy: "Booked", past: "past",
+      prevM: "Previous month", nextM: "Next month",
+      legendNote: "A day is free if you can sleep there that night: the check-out day shows as free.",
+      updated: "Updated {d}",
+      noData: "The calendar isn't available right now. Message us and we'll reply right away.",
+      askWa: "Ask about dates on WhatsApp"
     },
     es: {
       title: "Rooms Add'e Criature – B&B en Nápoles, Materdei",
@@ -561,7 +639,16 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
       revH: "Qué dicen los huéspedes", read: "Leer reseñas",
       copy: "© 2023 Rooms Add'e Criature – Nápoles",
       waBtn: "Escríbenos por WhatsApp",
-      waMsg: "¡Hola! Quisiera información sobre la disponibilidad de una habitación."
+      waMsg: "¡Hola! Quisiera información sobre la disponibilidad de una habitación.",
+      availH: "Disponibilidad",
+      availSub: "Elige la habitación y mira los días libres. Es orientativa: la confirmación te la damos nosotros.",
+      roomsLabel: "Habitación", room1: "Habitación 1", room2: "Habitación 2",
+      free: "Libre", busy: "Ocupado", past: "pasado",
+      prevM: "Mes anterior", nextM: "Mes siguiente",
+      legendNote: "Un día está libre si puedes dormir esa noche: el día de salida figura como libre.",
+      updated: "Actualizado el {d}",
+      noData: "El calendario no está disponible ahora. Escríbenos y te respondemos enseguida.",
+      askWa: "Pregunta por las fechas en WhatsApp"
     }
   };
 
@@ -605,6 +692,7 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
       b.setAttribute("aria-pressed", String(b.dataset.lang === l));
     });
     caption();
+    renderCal();
     if (save) { try { localStorage.setItem("lang", l); } catch (e) {} }
   }
   document.querySelectorAll(".langs button").forEach(function (b) {
@@ -678,6 +766,98 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
       wa.classList.toggle("show", !es[0].isIntersecting && es[0].boundingClientRect.top < 0);
     }).observe(document.getElementById("prenota"));
   } else { wa.classList.add("show"); }
+
+  /* Calendario disponibilità (dati da disponibilita.json, aggiornato dal calendario Gmail) */
+  var avail = null, availState = "loading", availRoom = "1", ym = null;
+  var MAX_AGE_H = 72;
+  var todayStr = new Intl.DateTimeFormat("en-CA", { timeZone: "Europe/Rome" }).format(new Date());
+  var pad2 = function (n) { return (n < 10 ? "0" : "") + n; };
+  ym = { y: +todayStr.slice(0, 4), m: +todayStr.slice(5, 7) - 1 };
+  var firstYm = { y: ym.y, m: ym.m };
+
+  function monthIndex(o) { return o.y * 12 + o.m; }
+  function isBusy(room, ds) {
+    return ((avail.rooms || {})[room] || []).some(function (r) { return r[0] <= ds && ds < r[1]; });
+  }
+  function renderCal() {
+    var box = document.getElementById("cal"), msg = document.getElementById("avmsg");
+    if (availState === "loading") { box.hidden = true; msg.hidden = true; return; }
+    if (availState !== "ok") {
+      box.hidden = true; msg.hidden = false; msg.textContent = T[lang].noData; return;
+    }
+    msg.hidden = true; box.hidden = false;
+    var t = T[lang], y = ym.y, m = ym.m;
+    document.getElementById("mtitle").textContent =
+      new Date(Date.UTC(y, m, 1)).toLocaleDateString(lang, { month: "long", year: "numeric", timeZone: "UTC" });
+    var rows = "<thead><tr>";
+    for (var i = 0; i < 7; i++) {
+      rows += "<th scope=\"col\">" + new Date(Date.UTC(2024, 0, 1 + i)).toLocaleDateString(lang, { weekday: "short", timeZone: "UTC" }) + "</th>";
+    }
+    rows += "</tr></thead><tbody><tr>";
+    var lead = (new Date(Date.UTC(y, m, 1)).getUTCDay() + 6) % 7;
+    var days = new Date(Date.UTC(y, m + 1, 0)).getUTCDate();
+    var cell = 0;
+    for (var e = 0; e < lead; e++, cell++) rows += "<td></td>";
+    for (var d = 1; d <= days; d++, cell++) {
+      if (cell % 7 === 0 && cell) rows += "</tr><tr>";
+      var ds = y + "-" + pad2(m + 1) + "-" + pad2(d);
+      var cls, word;
+      if (ds < todayStr) { cls = "past"; word = t.past; }
+      else if (isBusy(availRoom, ds)) { cls = "busy"; word = t.busy; }
+      else { cls = "free"; word = t.free; }
+      if (ds === todayStr) cls += " today";
+      var label = new Date(Date.UTC(y, m, d)).toLocaleDateString(lang, { day: "numeric", month: "long", timeZone: "UTC" }) + ": " + word;
+      rows += "<td class=\"" + cls + "\" aria-label=\"" + label + "\">" + d + "</td>";
+    }
+    while (cell % 7) { rows += "<td></td>"; cell++; }
+    rows += "</tr></tbody>";
+    document.getElementById("month").innerHTML = rows;
+    document.getElementById("mprev").disabled = monthIndex(ym) <= monthIndex(firstYm);
+    document.getElementById("mnext").disabled = monthIndex(ym) >= monthIndex(firstYm) + 11;
+    var when = new Date(avail.updated).toLocaleString(lang, { day: "numeric", month: "long", hour: "2-digit", minute: "2-digit" });
+    document.getElementById("upd").textContent = t.updated.replace("{d}", when);
+  }
+  function turn(dir) {
+    var tb = document.getElementById("month");
+    tb.style.setProperty("--dir", dir);
+    tb.classList.remove("turn"); void tb.offsetWidth; tb.classList.add("turn");
+  }
+  function shiftMonth(n) {
+    var idx = monthIndex(ym) + n;
+    if (idx < monthIndex(firstYm) || idx > monthIndex(firstYm) + 11) return;
+    ym = { y: Math.floor(idx / 12), m: idx % 12 };
+    renderCal(); turn(n);
+  }
+  document.getElementById("mprev").addEventListener("click", function () { shiftMonth(-1); });
+  document.getElementById("mnext").addEventListener("click", function () { shiftMonth(1); });
+  var tabs = Array.prototype.slice.call(document.querySelectorAll("#rtabs button"));
+  function pickRoom(r, focus) {
+    availRoom = r;
+    tabs.forEach(function (b) {
+      var on = b.dataset.room === r;
+      b.setAttribute("aria-checked", String(on)); b.tabIndex = on ? 0 : -1;
+      if (on && focus) b.focus();
+    });
+    renderCal();
+  }
+  tabs.forEach(function (b, i) {
+    b.addEventListener("click", function () { pickRoom(b.dataset.room); });
+    b.addEventListener("keydown", function (e) {
+      var d = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1 }[e.key];
+      if (!d) return;
+      e.preventDefault();
+      pickRoom(tabs[(i + d + tabs.length) % tabs.length].dataset.room, true);
+    });
+  });
+  pickRoom("1");
+  fetch("disponibilita.json?t=" + Math.floor(Date.now() / 600000))
+    .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+    .then(function (j) {
+      var age = j && j.updated ? (Date.now() - new Date(j.updated).getTime()) / 36e5 : Infinity;
+      if (!j || !j.rooms || !(age < MAX_AGE_H)) throw new Error("dati assenti o vecchi");
+      avail = j; availState = "ok"; renderCal();
+    })
+    .catch(function () { availState = "err"; renderCal(); });
 
   render();
   setLang(start, false);

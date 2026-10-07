@@ -1,0 +1,53 @@
+name: Aggiorna disponibilità
+
+on:
+  schedule:
+    - cron: "17 * * * *"   # ogni ora, al minuto 17
+  workflow_dispatch:        # si può lanciare anche a mano da Actions
+
+permissions:
+  contents: write
+
+concurrency:
+  group: disponibilita
+  cancel-in-progress: true
+
+jobs:
+  aggiorna:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Legge il calendario e scrive disponibilita.json
+        env:
+          CALENDAR_ICS_URL: ${{ secrets.CALENDAR_ICS_URL }}
+        run: node scripts/build-availability.mjs
+
+      - name: Salva solo se è cambiato qualcosa di sostanziale
+        run: |
+          # "updated" cambia a ogni giro: si committa solo se cambiano le camere,
+          # oppure se l'ultimo aggiornamento ha più di 12 ore (così la pagina non lo giudica vecchio).
+          python3 - <<'PY'
+          import json, subprocess, datetime, sys
+          new = json.load(open("disponibilita.json"))
+          try:
+              old = json.loads(subprocess.check_output(["git", "show", "HEAD:disponibilita.json"]))
+          except Exception:
+              old = None
+          if old and old.get("rooms") == new["rooms"] and old.get("updated"):
+              age = datetime.datetime.now(datetime.timezone.utc) - datetime.datetime.fromisoformat(old["updated"].replace("Z", "+00:00"))
+              if age < datetime.timedelta(hours=12):
+                  subprocess.check_call(["git", "checkout", "--", "disponibilita.json"])
+                  print("Nessun cambiamento: niente commit.")
+          PY
+          if [ -n "$(git status --porcelain disponibilita.json)" ]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add disponibilita.json
+            git commit -m "Aggiorna disponibilità camere"
+            git push
+          fi
