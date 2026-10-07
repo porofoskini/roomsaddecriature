@@ -1,5 +1,9 @@
 name: Aggiorna disponibilità
 
+# Legge il calendario Google "Rooms Add'e Criature" e pubblica disponibilita.json
+# sul ramo "dati" (non su main: main è protetto da pull request).
+# La pagina legge il file da raw.githubusercontent.com/<repo>/dati/disponibilita.json
+
 on:
   schedule:
     - cron: "17 * * * *"   # ogni ora, al minuto 17
@@ -10,7 +14,7 @@ permissions:
 
 concurrency:
   group: disponibilita
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   aggiorna:
@@ -22,32 +26,53 @@ jobs:
         with:
           node-version: 20
 
-      - name: Legge il calendario e scrive disponibilita.json
+      - name: Legge il calendario
         env:
           CALENDAR_ICS_URL: ${{ secrets.CALENDAR_ICS_URL }}
+          OUT_FILE: ${{ runner.temp }}/disponibilita.json
         run: node scripts/build-availability.mjs
 
-      - name: Salva solo se è cambiato qualcosa di sostanziale
+      - name: Pubblica sul ramo dati
+        env:
+          NUOVO: ${{ runner.temp }}/disponibilita.json
         run: |
-          # "updated" cambia a ogni giro: si committa solo se cambiano le camere,
-          # oppure se l'ultimo aggiornamento ha più di 12 ore (così la pagina non lo giudica vecchio).
-          python3 - <<'PY'
-          import json, subprocess, datetime, sys
-          new = json.load(open("disponibilita.json"))
-          try:
-              old = json.loads(subprocess.check_output(["git", "show", "HEAD:disponibilita.json"]))
-          except Exception:
-              old = None
-          if old and old.get("rooms") == new["rooms"] and old.get("updated"):
-              age = datetime.datetime.now(datetime.timezone.utc) - datetime.datetime.fromisoformat(old["updated"].replace("Z", "+00:00"))
-              if age < datetime.timedelta(hours=12):
-                  subprocess.check_call(["git", "checkout", "--", "disponibilita.json"])
-                  print("Nessun cambiamento: niente commit.")
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          # Prepara una cartella "dati" legata al ramo dati (lo crea vuoto la prima volta).
+          if git ls-remote --exit-code --heads origin dati >/dev/null 2>&1; then
+            git fetch --depth=1 origin dati
+            git worktree add --detach dati FETCH_HEAD
+            cd dati
+            git checkout -B dati
+          else
+            git worktree add --detach dati
+            cd dati
+            git checkout --orphan dati
+            git rm -rf . -q
+          fi
+
+          # "updated" cambia a ogni giro: si salva solo se cambiano le camere,
+          # oppure se l'ultimo salvataggio ha più di 12 ore (così la pagina non lo giudica vecchio).
+          python3 - "$NUOVO" <<'PY'
+          import datetime, json, os, shutil, sys
+          nuovo = json.load(open(sys.argv[1]))
+          target = "disponibilita.json"
+          copia = True
+          if os.path.exists(target):
+              vecchio = json.load(open(target))
+              if vecchio.get("rooms") == nuovo["rooms"] and vecchio.get("updated"):
+                  eta = datetime.datetime.now(datetime.timezone.utc) - datetime.datetime.fromisoformat(vecchio["updated"].replace("Z", "+00:00"))
+                  if eta < datetime.timedelta(hours=12):
+                      copia = False
+          if copia:
+              shutil.copy(sys.argv[1], target)
+          print("Aggiornato." if copia else "Nessun cambiamento: niente da salvare.")
           PY
-          if [ -n "$(git status --porcelain disponibilita.json)" ]; then
-            git config user.name "github-actions[bot]"
-            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-            git add disponibilita.json
+
+          git add disponibilita.json
+          if ! git diff --cached --quiet; then
             git commit -m "Aggiorna disponibilità camere"
-            git push
+            git push origin dati
           fi

@@ -361,7 +361,7 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
         <li class="flip" data-i18n="sv2">WiFi gratuito e veloce</li>
         <li class="flip" data-i18n="sv3">Frigorifero, microonde e macchina del caffè</li>
         <li class="flip" data-i18n="sv4">Lenzuola, asciugamani e set di cortesia</li>
-        <li class="flip" data-i18n="sv5">Scrivania</li>
+        <li class="flip" data-i18n="sv5">Tavolino</li>
         <li class="flip" data-i18n="sv6">Camere per famiglie</li>
         <li class="flip" data-i18n="sv7">Struttura interamente non fumatori</li>
       </ul>
@@ -489,7 +489,7 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
       sv2: "WiFi gratuito e veloce",
       sv3: "Frigorifero, microonde e macchina del caffè",
       sv4: "Lenzuola, asciugamani e set di cortesia",
-      sv5: "Scrivania",
+      sv5: "Tavolino",
       sv6: "Camere per famiglie",
       sv7: "Struttura interamente non fumatori",
       whereH: "Noi siamo qui",
@@ -553,7 +553,7 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
       sv2: "Free fast WiFi",
       sv3: "Fridge, microwave and coffee machine",
       sv4: "Linen, towels and toiletries",
-      sv5: "Desk",
+      sv5: "Small table",
       sv6: "Family rooms",
       sv7: "Fully non-smoking property",
       whereH: "You'll find us here",
@@ -617,7 +617,7 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
       sv2: "WiFi gratis y rápido",
       sv3: "Nevera, microondas y cafetera",
       sv4: "Sábanas, toallas y set de cortesía",
-      sv5: "Escritorio",
+      sv5: "Mesita",
       sv6: "Habitaciones familiares",
       sv7: "Alojamiento totalmente para no fumadores",
       whereH: "Estamos aquí",
@@ -850,7 +850,11 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
     });
   });
   pickRoom("1");
-  fetch("disponibilita.json?t=" + Math.floor(Date.now() / 600000))
+  // I dati stanno sul ramo "dati" (scritti dall'automatismo ogni ora). In locale si prova con un file accanto alla pagina.
+  var DATA_URL = /^(localhost|127\.0\.0\.1)$/.test(location.hostname)
+    ? "disponibilita.json"
+    : "https://raw.githubusercontent.com/porofoskini/roomsaddecriature/dati/disponibilita.json";
+  fetch(DATA_URL + "?t=" + Math.floor(Date.now() / 300000))
     .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
     .then(function (j) {
       var age = j && j.updated ? (Date.now() - new Date(j.updated).getTime()) / 36e5 : Infinity;
