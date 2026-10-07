@@ -1,0 +1,63 @@
+name: Promemoria punteggi
+
+# Il primo di ogni mese apre una segnalazione (ti arriva per email) per ricordarti di aggiornare
+# i punteggi di Booking e Airbnb in punteggi.json. Se una segnalazione è già aperta non ne apre un'altra.
+
+on:
+  schedule:
+    - cron: "0 7 1 * *"   # il primo del mese, alle 7 UTC (8-9 in Italia)
+  workflow_dispatch:        # si può lanciare anche a mano da Actions
+
+permissions:
+  issues: write
+  contents: read
+
+jobs:
+  promemoria:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Apre la segnalazione, se non c'è già
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+          gh label create punteggi --repo "$REPO" --color E8B84A \
+            --description "Promemoria: aggiornare i punteggi di Booking e Airbnb" 2>/dev/null || true
+
+          aperte=$(gh issue list --repo "$REPO" --label punteggi --state open --json number --jq length)
+          if [ "$aperte" != "0" ]; then
+            echo "C'è già una segnalazione aperta: non ne apro un'altra."
+            exit 0
+          fi
+
+          # Valori attuali del file, per confronto (se il file non esiste o è rotto, lo dice).
+          attuali=$(curl -fsS "https://raw.githubusercontent.com/$REPO/dati/punteggi.json" | python3 -c '
+          import json, sys
+          j = json.load(sys.stdin)
+          print("- Booking.com: {score} su {scale}, {reviews} recensioni".format(**j["booking"]))
+          print("- Airbnb: {score} su {scale}, {reviews} recensioni".format(**j["airbnb"]))
+          print("- Ultimo aggiornamento: " + j["updated"])
+          ' 2>/dev/null) || attuali="- (file punteggi.json non trovato o non leggibile)"
+
+          cat > corpo.md <<EOF
+          Ogni mese conviene controllare i punteggi mostrati sul sito.
+
+          **Valori scritti ora sul sito**
+
+          $attuali
+
+          **Cosa fare (un minuto)**
+
+          1. Apri la tua scheda su Booking.com e su Airbnb e leggi il punteggio e il numero di recensioni.
+          2. Apri il file dei punteggi: https://github.com/$REPO/edit/dati/punteggi.json
+          3. Cambia i numeri e il mese di "updated" (formato AAAA-MM, per esempio 2026-11).
+             Il punteggio si scrive con il **punto**, non con la virgola: 9.8
+          4. In alto a destra premi **Commit changes**, lascia "Commit directly to the dati branch" e conferma.
+          5. Chiudi questa segnalazione.
+
+          Se sbagli la forma del file, il controllo automatico ti avvisa entro un'ora e il sito continua a mostrare gli ultimi numeri di riserva.
+          EOF
+
+          gh issue create --repo "$REPO" --label punteggi \
+            --title "Aggiorna i punteggi di Booking e Airbnb" --body-file corpo.md

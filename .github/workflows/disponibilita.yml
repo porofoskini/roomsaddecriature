@@ -76,3 +76,8 @@ jobs:
             git commit -m "Aggiorna disponibilità camere"
             git push origin dati
           fi
+
+      - name: Controlla il file dei punteggi
+        env:
+          PUNTEGGI_FILE: dati/punteggi.json
+        run: node scripts/check-ratings.mjs

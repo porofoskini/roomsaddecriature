@@ -116,6 +116,8 @@ a { color: inherit; }
 .rating { display: inline-flex; align-items: baseline; gap: .6rem; padding: .5rem 1rem; background: var(--tufo); color: var(--ink); text-decoration: none; font-weight: 600; max-width: none; }
 .rating b { font-family: var(--display); font-weight: 400; font-size: 1.6rem; line-height: 1; }
 .rating:hover { background: var(--calce); }
+.asof { font-size: .85rem; margin-top: .6rem; color: var(--cielo); max-width: none; }
+.reviews .asof { color: var(--ink); margin-top: .9rem; }
 .seal-wrap { justify-self: center; width: min(100%, 400px); perspective: 900px; }
 .seal { aspect-ratio: 1; border-radius: 50%; background: var(--calce); padding: 6px; box-shadow: 0 0 0 6px var(--tufo), 0 30px 50px rgba(0,0,0,.35);
   transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)); transition: transform .2s ease-out; transform-style: preserve-3d; }
@@ -126,7 +128,7 @@ a { color: inherit; }
 .line { position: relative; margin-top: clamp(3rem, 7vw, 5rem); }
 .line svg { position: absolute; left: 0; top: 0; width: 100%; height: 40px; }
 .line path { fill: none; stroke: var(--calce); stroke-width: 2; opacity: .8; }
-.cloths { display: grid; grid-template-columns: repeat(4, 1fr); gap: clamp(.75rem, 2.5vw, 2rem); padding-top: 4px; align-items: start; }
+.cloths { display: grid; grid-template-columns: repeat(5, 1fr); gap: clamp(.75rem, 2.5vw, 2rem); padding-top: 4px; align-items: start; }
 .cloth {
   --r: 0deg; --sag: 0px;
   position: relative; display: block; text-decoration: none; color: var(--ink);
@@ -146,8 +148,11 @@ a { color: inherit; }
 .cloth:hover, .cloth:focus-visible { --r: 0deg; z-index: 2; box-shadow: 0 14px 22px rgba(0,0,0,.35); }
 .c1 { background: var(--tufo); --r: -2deg; --sag: 12px; --d: 0s;  min-height: 190px; }
 .c2 { background: var(--calce); --r: 1.5deg; --sag: 21px; --d: .15s; min-height: 160px; }
-.c3 { background: var(--pomodoro); color: var(--calce); --r: -1deg; --sag: 21px; --d: .3s; min-height: 205px; }
-.c4 { background: var(--verde); color: var(--calce); --r: 2.5deg; --sag: 12px; --d: .45s; min-height: 175px; }
+.c3 { background: var(--pomodoro); color: var(--calce); --r: -1deg; --sag: 21px; --d: .45s; min-height: 205px; }
+.c4 { background: var(--verde); color: var(--calce); --r: 2.5deg; --sag: 12px; --d: .6s; min-height: 175px; }
+.c3 span { font-size: .88rem; }
+.cs { background: var(--cielo); --r: 1deg; --d: .3s; min-height: 175px; }
+.cloth:nth-child(1) { --sag: 10px; } .cloth:nth-child(2) { --sag: 22px; } .cloth:nth-child(3) { --sag: 26px; } .cloth:nth-child(4) { --sag: 22px; } .cloth:nth-child(5) { --sag: 10px; }
 @keyframes sway {
   0% { transform: perspective(700px) rotate(calc(var(--r) * -4)) rotateY(40deg); }
   40% { transform: perspective(700px) rotate(calc(var(--r) * 2.5)) rotateY(-18deg); }
@@ -298,6 +303,18 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
   .know dl { grid-template-columns: 1fr 1fr; }
   .wa { left: 1rem; text-align: center; }
 }
+/* Tablet: cinque panni non ci stanno in fila */
+@media (min-width: 801px) and (max-width: 1059px) {
+  .cloths { display: flex; flex-wrap: wrap; justify-content: center; gap: 1.75rem 1.5rem; }
+  .cloth { flex: 0 0 calc((100% - 3rem) / 3); margin-top: 0; }
+  .line svg { display: none; }
+}
+@media (min-width: 1060px) and (max-width: 1180px) {
+  .cloth { padding-inline: .85rem; }
+  .cloth strong { font-size: 1.3rem; }
+  .cloth span { font-size: .9rem; }
+}
+
 /* Telefono: contenuti centrati e comodi da toccare */
 @media (max-width: 800px) {
   html { -webkit-text-size-adjust: 100%; }
@@ -312,7 +329,8 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
   .ratings { flex-direction: column; align-items: stretch; max-width: 420px; margin-inline: auto; }
   .rating { flex-direction: column; align-items: center; gap: .15rem; text-align: center; }
   .cloth { text-align: center; }
-  .c1 { min-height: 150px; } .c2 { min-height: 130px; } .c3 { min-height: 160px; } .c4 { min-height: 140px; }
+  .c1 { min-height: 150px; } .c2 { min-height: 130px; } .cs { min-height: 140px; } .c3 { min-height: 160px; } .c4 { min-height: 140px; }
+  .cloth:last-child { grid-column: 1 / -1; width: calc(50% - .375rem); justify-self: center; }
   .wa { left: 1rem; right: 1rem; margin-inline: auto; width: max-content; max-width: calc(100% - 2rem); padding: .75rem 1.25rem; }
   .hero .reply { text-align: center; margin-inline: auto; }
   .gallery .wrap, .avail .wrap, .where .wrap, .know .wrap, .reviews .wrap, .section > .wrap > h2, footer .wrap { text-align: center; }
@@ -368,9 +386,10 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
         <h1 data-i18n="h1">Un B&B nel cuore di Napoli</h1>
         <p class="lead" data-i18n="lead">Dove l'ospitalità incontra la tradizione. Relax, sole e magia partenopea ti aspettano.</p>
         <div class="ratings">
-          <a class="rating" href="https://www.booking.com/hotel/it/rooms-ad-e-criatur.it.html#tab-reviews"><b data-i18n="rn1">9,8</b><span data-i18n="rating">su 10 · 139 recensioni su Booking.com</span></a>
-          <a class="rating" href="https://www.airbnb.it/rooms/784407996587642336/reviews"><b data-i18n="rn2">4,99</b><span data-i18n="ratingAb">su 5 · 69 recensioni su Airbnb</span></a>
+          <a class="rating" data-r="booking" href="https://www.booking.com/hotel/it/rooms-ad-e-criatur.it.html#tab-reviews"><b>9,8</b><span>su 10 · 139 recensioni su Booking.com</span></a>
+          <a class="rating" data-r="airbnb" href="https://www.airbnb.it/rooms/784407996587642336/reviews"><b>4,99</b><span>su 5 · 69 recensioni su Airbnb</span></a>
         </div>
+        <p class="asof" data-asof>Punteggi aggiornati a ottobre 2026</p>
       </div>
       <div class="seal-wrap"><div class="seal" data-tilt="12"><picture><source srcset="img/logo.webp" type="image/webp"><img src="img/logo.png" data-i18n-alt="sealAlt" alt="Logo Rooms Add'e Criature: tre bambini giocano su una terrazza con vista sul Vesuvio" width="400" height="404"></picture></div></div>
     </div>
@@ -380,6 +399,7 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
       <div class="cloths">
         <a class="cloth c1" data-wa href="https://wa.me/393404845299"><strong>WhatsApp</strong><span class="tel">+39 340 484 5299</span></a>
         <a class="cloth c2" href="https://t.me/+393404845299"><strong>Telegram</strong><span class="tel">+39 340 484 5299</span></a>
+        <a class="cloth cs" href="https://signal.me/#p/+393404845299"><strong>Signal</strong><span class="tel">+39 340 484 5299</span></a>
         <a class="cloth c3" href="mailto:info@roomsaddecriature.it"><strong>Email</strong><span>info@<wbr>roomsaddecriature.it</span></a>
         <a class="cloth c4" href="https://instagram.com/porofoskini12"><strong>Instagram</strong><span>@porofoskini12</span></a>
       </div>
@@ -501,9 +521,10 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
       <h2 id="rec" data-i18n="revH">Cosa dicono gli ospiti</h2>
       <ul>
         <li class="flip"><a href="https://www.google.com/local/business/2933506296284337297/customers/reviews">Google <span data-i18n="read">Leggi le recensioni</span></a></li>
-        <li class="flip" style="--fd:.12s"><a href="https://www.booking.com/hotel/it/rooms-ad-e-criatur.it.html#tab-reviews">Booking.com <span data-i18n="revB">9,8 su 10 · 139 recensioni</span></a></li>
-        <li class="flip" style="--fd:.24s"><a href="https://www.airbnb.it/rooms/784407996587642336/reviews">Airbnb <span data-i18n="revA">4,99 su 5 · 69 recensioni</span></a></li>
+        <li class="flip" style="--fd:.12s"><a href="https://www.booking.com/hotel/it/rooms-ad-e-criatur.it.html#tab-reviews">Booking.com <span data-rv="booking">9,8 su 10 · 139 recensioni</span></a></li>
+        <li class="flip" style="--fd:.24s"><a href="https://www.airbnb.it/rooms/784407996587642336/reviews">Airbnb <span data-rv="airbnb">4,99 su 5 · 69 recensioni</span></a></li>
       </ul>
+      <p class="asof" data-asof>Punteggi aggiornati a ottobre 2026</p>
     </div>
   </section>
 </main>
@@ -526,10 +547,8 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
       skip: "Vai al contenuto",
       h1: "Un B&B nel cuore di Napoli",
       lead: "Dove l'ospitalità incontra la tradizione. Relax, sole e magia partenopea ti aspettano.",
-      rn1: "9,8", rn2: "4,99",
-      rating: "su 10 · 139 recensioni su Booking.com",
-      ratingAb: "su 5 · 69 recensioni su Airbnb",
-      revB: "9,8 su 10 · 139 recensioni", revA: "4,99 su 5 · 69 recensioni",
+      ratingLine: "su {s} · {n} recensioni su {p}", revLine: "{score} su {s} · {n} recensioni",
+      asOf: "Punteggi aggiornati a {m}",
       sealAlt: "Logo Rooms Add'e Criature: tre bambini giocano su una terrazza con vista sul Vesuvio",
       replyT: "Prenota subito!",
       replyP: "Contattaci su uno dei nostri canali e ti confermeremo la disponibilità in pochi minuti.",
@@ -595,10 +614,8 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
       skip: "Skip to content",
       h1: "A B&B in the heart of Naples",
       lead: "Where hospitality meets tradition. Relax, sunshine and Neapolitan magic await you.",
-      rn1: "9.8", rn2: "4.99",
-      rating: "out of 10 · 139 reviews on Booking.com",
-      ratingAb: "out of 5 · 69 reviews on Airbnb",
-      revB: "9.8 out of 10 · 139 reviews", revA: "4.99 out of 5 · 69 reviews",
+      ratingLine: "out of {s} · {n} reviews on {p}", revLine: "{score} out of {s} · {n} reviews",
+      asOf: "Scores updated {m}",
       sealAlt: "Rooms Add'e Criature logo: three children playing on a terrace with a view of Vesuvius",
       replyT: "Book now!",
       replyP: "Contact us on any of our channels and we'll confirm availability within minutes.",
@@ -664,10 +681,8 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
       skip: "Ir al contenido",
       h1: "Un B&B en el corazón de Nápoles",
       lead: "Donde la hospitalidad se encuentra con la tradición. Relax, sol y magia partenopea te esperan.",
-      rn1: "9,8", rn2: "4,99",
-      rating: "sobre 10 · 139 reseñas en Booking.com",
-      ratingAb: "sobre 5 · 69 reseñas en Airbnb",
-      revB: "9,8 sobre 10 · 139 reseñas", revA: "4,99 sobre 5 · 69 reseñas",
+      ratingLine: "sobre {s} · {n} reseñas en {p}", revLine: "{score} sobre {s} · {n} reseñas",
+      asOf: "Puntuaciones actualizadas a {m}",
       sealAlt: "Logo de Rooms Add'e Criature: tres niños juegan en una terraza con vistas al Vesubio",
       replyT: "¡Reserva ya!",
       replyP: "Contáctanos por cualquiera de nuestros canales y te confirmaremos la disponibilidad en pocos minutos.",
@@ -770,6 +785,7 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
     });
     caption();
     renderCal();
+    renderRatings();
     if (save) { try { localStorage.setItem("lang", l); } catch (e) {} }
   }
   document.querySelectorAll(".langs button").forEach(function (b) {
@@ -1042,6 +1058,39 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
       avail = j; availState = "ok"; renderCal();
     })
     .catch(function () { availState = "err"; renderCal(); });
+
+  /* Punteggi di Booking e Airbnb: letti da punteggi.json (ramo "dati"), che si modifica a mano da GitHub.
+     I numeri qui sotto sono quelli di riserva, usati se il file manca o ha un errore. */
+  var RATINGS_FALLBACK = { updated: "2026-10", booking: { score: 9.8, scale: 10, reviews: 139 }, airbnb: { score: 4.99, scale: 5, reviews: 69 } };
+  var ratings = RATINGS_FALLBACK, PROVIDERS = { booking: "Booking.com", airbnb: "Airbnb" };
+  function fill(tpl, o) { return tpl.replace(/\{(\w+)\}/g, function (_, k) { return o[k]; }); }
+  function validRatings(j) {
+    function ok(x) {
+      return x && typeof x.score === "number" && typeof x.scale === "number" && x.scale > 0 &&
+        x.score > 0 && x.score <= x.scale && Number.isInteger(x.reviews) && x.reviews >= 0;
+    }
+    return !!(j && ok(j.booking) && ok(j.airbnb) && /^\d{4}-\d{2}(-\d{2})?$/.test(j.updated || ""));
+  }
+  function renderRatings() {
+    var t = T[lang], nf = new Intl.NumberFormat(lang, { maximumFractionDigits: 2 });
+    var u = ratings.updated.length === 7 ? ratings.updated + "-01" : ratings.updated;
+    var month = new Date(u + "T00:00:00Z").toLocaleDateString(lang, { month: "long", year: "numeric", timeZone: "UTC" });
+    ["booking", "airbnb"].forEach(function (k) {
+      var r = ratings[k], vars = { score: nf.format(r.score), s: nf.format(r.scale), n: nf.format(r.reviews), p: PROVIDERS[k] };
+      var pill = document.querySelector('.rating[data-r="' + k + '"]');
+      pill.querySelector("b").textContent = vars.score;
+      pill.querySelector("span").textContent = fill(t.ratingLine, vars);
+      document.querySelector('[data-rv="' + k + '"]').textContent = fill(t.revLine, vars);
+    });
+    document.querySelectorAll("[data-asof]").forEach(function (e) { e.textContent = fill(t.asOf, { m: month }); });
+  }
+  var RATINGS_URL = /^(localhost|127\.0\.0\.1)$/.test(location.hostname)
+    ? "punteggi.json"
+    : "https://raw.githubusercontent.com/porofoskini/roomsaddecriature/dati/punteggi.json";
+  fetch(RATINGS_URL + "?t=" + Math.floor(Date.now() / 300000))
+    .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+    .then(function (j) { if (validRatings(j)) { ratings = j; renderRatings(); } })
+    .catch(function () { /* resta il testo di riserva */ });
 
   render();
   setLang(start, false);

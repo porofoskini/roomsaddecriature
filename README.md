@@ -16,13 +16,15 @@ Sito web del B&B **Rooms Add'e Criature** (Materdei, Napoli): pagina unica, stat
 | `img/` | Logo (`logo.webp`/`logo.png`, versione piccola `logo-small.*`), bandiere delle lingue, immagine per le anteprime social (`og.jpg`) |
 | `foto/` | Le 7 foto del carosello |
 | `scripts/build-availability.mjs` | Legge il calendario Google e produce `disponibilita.json` |
-| `.github/workflows/disponibilita.yml` | Esegue lo script ogni ora e salva il risultato sul ramo `dati` |
+| `scripts/check-ratings.mjs` | Controlla che `punteggi.json` sia scritto bene |
+| `.github/workflows/disponibilita.yml` | Ogni ora aggiorna il calendario sul ramo `dati` e controlla `punteggi.json` |
+| `.github/workflows/promemoria-punteggi.yml` | Il primo di ogni mese apre una segnalazione per ricordarti di aggiornare i punteggi |
 | `CNAME` | Dominio di GitHub Pages (`www.roomsaddecriature.it`) |
 | `robots.txt`, `sitemap.xml` | Indicazioni per Google |
 | `favicon*`, `apple-touch-icon.png`, `android-chrome-*` | Icone del sito |
 | `logoB&b.png`, `logoB&b_noBg.png` | Logo originale, ad alta risoluzione (non usato dalla pagina) |
 
-Sul ramo `dati` c'è un solo file, `disponibilita.json`. Non esiste su `main`.
+Sul ramo `dati` ci sono due file, che non esistono su `main`: `disponibilita.json` (scritto dall'automatismo ogni ora, non toccarlo) e `punteggi.json` (lo modifichi tu, vedi sezione 5).
 
 ---
 
@@ -32,7 +34,7 @@ Sezioni, dall'alto:
 
 1. **Intestazione:** logo, nome, **CIN**, selettore lingua IT/EN/ES.
 2. **Presentazione:** titolo, frase d'apertura, punteggi Booking e Airbnb, logo grande.
-3. **Contatti:** WhatsApp, Telegram, email e Instagram, appesi a un filo come il bucato dei vicoli napoletani.
+3. **Contatti:** WhatsApp, Telegram, Signal, email e Instagram, appesi a un filo come il bucato dei vicoli napoletani (su tablet vanno su due righe, su telefono su tre). Il numero di telefono è lo stesso per WhatsApp, Telegram e Signal.
 4. **Le nostre stanze:** carosello 3D con 7 foto.
 5. **In ogni camera:** servizi inclusi.
 6. **Disponibilità:** l'ospite sceglie arrivo e partenza e vede quante camere restano (vedi sezione 4).
@@ -70,8 +72,8 @@ Per ogni modifica di testo vanno aggiornati **due posti**: l'HTML (italiano) e i
 | Calendario (testi) | `availSub`, `hint1`, `hint2`, `rooms2`, `rooms1`, `full`, `askStay`, `waStay`, `noData` e le altre chiavi del blocco "Disponibilità" |
 | CIN | in due punti: sotto il nome in alto (`<small>` dentro `.brand`) e nel footer. Non è nelle traduzioni: è lo stesso in tutte le lingue |
 | Anno del copyright | chiave `copy` (HTML e 3 lingue). Oggi: 2023 |
-| Punteggi | chiavi `rn1`, `rn2`, `rating`, `ratingAb`, `revB`, `revA` (HTML e 3 lingue). **A mano**: vanno aggiornati se cambiano |
-| Telefono, email, Instagram | link nella sezione contatti (`.cloths`) e `waMsg`; in più nel JSON-LD in cima |
+| Punteggi | **non nel codice**: si modificano in `punteggi.json` sul ramo `dati` (sezione 5). Il testo delle frasi è nelle chiavi `ratingLine`, `revLine`, `asOf` |
+| Telefono, email, Instagram | link nella sezione contatti (`.cloths`: WhatsApp `wa.me/…`, Telegram `t.me/+…`, Signal `signal.me/#p/+…`) e `waMsg`; in più nel JSON-LD in cima |
 | Indirizzo | chiave `addr` (HTML e 3 lingue) e JSON-LD in cima |
 | Colori | variabili `:root` all'inizio dello `<style>` |
 
@@ -170,7 +172,57 @@ Nel calendario Google **"Rooms Add'e Criature"** (solo quello, non quello person
 
 ---
 
-## 5. Pubblicazione
+## 5. Punteggi di Booking e Airbnb
+
+I punteggi **non si aggiornano da soli**: né Airbnb né Booking offrono un modo ufficiale per leggere il punteggio di una scheda, e leggere le loro pagine con un programma è fragile e contrario ai loro termini d'uso. Per questo stanno in un file che si modifica a mano, in un minuto, **senza toccare il codice** e senza commit su `main`.
+
+### Il file
+
+`punteggi.json` sul ramo `dati`:
+
+```json
+{
+  "updated": "2026-10",
+  "booking": { "score": 9.8,  "scale": 10, "reviews": 139 },
+  "airbnb":  { "score": 4.99, "scale": 5,  "reviews": 69 }
+}
+```
+
+- `updated`: mese dell'ultimo controllo, nel formato `AAAA-MM`. Compare sul sito ("Punteggi aggiornati a ottobre 2026") accanto ai punteggi.
+- `score`: il punteggio **con il punto**, non con la virgola (`9.8`). `scale`: la scala (10 per Booking, 5 per Airbnb). `reviews`: il numero di recensioni, intero.
+- La pagina scrive i numeri nel formato della lingua ("9,8" in italiano, "9.8" in inglese).
+
+### Come si aggiorna
+
+1. Leggi punteggio e numero di recensioni sulle schede di Booking.com e Airbnb.
+2. Apri `https://github.com/porofoskini/roomsaddecriature/edit/dati/punteggi.json`.
+3. Cambia i numeri e `updated`.
+4. **Commit changes**, lasciando "Commit directly to the dati branch".
+
+Entro 5 minuti (cache) il sito mostra i nuovi numeri.
+
+### Promemoria e controlli
+
+- **Promemoria mensile.** Il primo di ogni mese il workflow `Promemoria punteggi` apre una segnalazione (issue) "Aggiorna i punteggi di Booking e Airbnb" con i valori attuali e il link per modificare. Ti arriva per email. Chiudila quando hai finito; finché è aperta non ne apre un'altra.
+- **Controllo di forma.** Ogni ora l'automatismo del calendario esegue `scripts/check-ratings.mjs`. Se il file ha un errore (una virgola di troppo, il punteggio scritto con la virgola, un numero mancante) l'esecuzione diventa **rossa** e ti arriva l'avviso con il motivo. Se il file è valido ma vecchio di più di 45 giorni, c'è solo un avviso giallo.
+- **Numeri di riserva.** Se il file manca, è rotto o non si legge, la pagina mostra gli ultimi numeri scritti in `index.html` (costante `RATINGS_FALLBACK`) con la loro data: non resta mai vuota e non mostra mai numeri incoerenti. Quando cambi i punteggi di molto, conviene aggiornare anche `RATINGS_FALLBACK`.
+
+### Perché c'è la data
+
+Mostrare un punteggio vecchio come se fosse attuale può essere considerato pubblicità ingannevole. La data accanto ai numeri è la protezione più semplice.
+
+### Se qualcosa non va
+
+| Sintomo | Causa e rimedio |
+|---|---|
+| Il sito mostra ancora i vecchi numeri | Cache di circa 5 minuti: aspetta e ricarica con Ctrl+F5. Se persiste, controlla che il commit sia sul ramo **dati** e non su `main` |
+| L'esecuzione di "Aggiorna disponibilità" è rossa al passo "Controlla il file dei punteggi" | Il file ha un errore: il messaggio dice quale. Correggilo da GitHub, oppure ripristina la versione precedente dalla cronologia del file |
+| Il file non esiste ancora | Va creato sul ramo `dati` con il formato qui sopra: fino ad allora il sito usa i numeri di riserva |
+| La segnalazione mensile non arriva | Controlla che il workflow `Promemoria punteggi` sia attivo in Actions e che tu segua il repo (Watch) |
+
+---
+
+## 6. Pubblicazione
 
 - Il sito è servito da GitHub Pages dal ramo `main`; il dominio è nel file `CNAME`.
 - `main` è protetto da regole (modifiche solo tramite pull request, ramo bloccato): chi ha il permesso di aggirarle può fare push diretto, e GitHub stampa un avviso "locked branch" anche quando il push riesce.
@@ -184,11 +236,11 @@ Nell'`<head>` di `index.html`: titolo e descrizione nelle tre lingue (si aggiorn
 
 ---
 
-## 6. Promemoria periodici
+## 7. Promemoria periodici
 
 | Cosa | Quando | Dove |
 |---|---|---|
-| Punteggi Booking e Airbnb | Quando cambiano di molto | `rn1`, `rn2`, `rating`, `ratingAb`, `revB`, `revA` |
+| Punteggi Booking e Airbnb | Ogni mese (ti arriva una segnalazione su GitHub) | `punteggi.json` sul ramo `dati` (sezione 5) |
 | Servizi, regole, distanze | Se cambiano | sezioni "In ogni camera", "Noi siamo qui" e "Da sapere" |
 | Traduzioni | Quando aggiungi testo | dizionario `T`, tre lingue |
 | Esecuzioni dell'automatismo | Ogni tanto | scheda Actions: verde? Se rosso, vedi la tabella sopra |
@@ -197,7 +249,7 @@ Nell'`<head>` di `index.html`: titolo e descrizione nelle tre lingue (si aggiorn
 
 ---
 
-## 7. Cosa è stato fatto e perché
+## 8. Cosa è stato fatto e perché
 
 - **Direzione del design:** blu maiolica, giallo tufo, rosso pomodoro, verde. Titoli in Alfa Slab One, come l'insegna di una bottega; testo in Nunito Sans. Il filo con i panni dei contatti nasce dal bucato del logo e dei vicoli di Napoli.
 - **Logo e foto:** il logo è quello originale (`logoB&b_noBg.png`), ottimizzato da 800 KB a 96 KB in WebP. Le foto vengono dalla scheda Booking del B&B, ricompresse.
@@ -205,3 +257,4 @@ Nell'`<head>` di `index.html`: titolo e descrizione nelle tre lingue (si aggiorn
 - **Responsive e accessibilità:** provato a 390 px e a 1280 px senza scroll orizzontale; link "Vai al contenuto", focus visibile, descrizioni delle foto, effetti spenti con "riduci movimento", contrasti controllati.
 - **Perché il calendario passa dal ramo `dati`:** `main` richiede pull request e non permette push al bot di GitHub. Un ramo separato, escluso dalle regole, evita pull request ogni ora e non sporca la cronologia del sito.
 - **Perché un evento senza camera blocca entrambe:** un errore di battitura nel titolo deve mostrare "occupato", mai "libero", per non causare doppie prenotazioni.
+- **Perché i punteggi stanno in un file con la data:** non c'è un modo affidabile e consentito per leggerli in automatico da Booking e Airbnb; tenerli in un file separato li rende modificabili in un minuto senza toccare il sito, e la data li rende onesti anche se ti dimentichi di aggiornarli.
