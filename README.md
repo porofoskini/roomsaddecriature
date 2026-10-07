@@ -14,7 +14,7 @@ Sito web del B&B **Rooms Add'e Criature** (Materdei, Napoli): pagina unica, stat
 |---|---|
 | `index.html` | L'intera pagina: HTML, CSS, JavaScript e traduzioni |
 | `img/` | Logo (`logo.webp`/`logo.png`, versione piccola `logo-small.*`), bandiere delle lingue, immagine per le anteprime social (`og.jpg`) |
-| `foto/` | Le 7 foto del carosello |
+| `foto/` | Le 11 foto del carosello (camere, bagni, spazi comuni), ritagliate in formato verticale |
 | `scripts/build-availability.mjs` | Legge il calendario Google e produce `disponibilita.json` |
 | `scripts/check-ratings.mjs` | Controlla che `punteggi.json` sia scritto bene |
 | `.github/workflows/disponibilita.yml` | Ogni ora aggiorna il calendario sul ramo `dati` e controlla `punteggi.json` |
@@ -35,7 +35,7 @@ Sezioni, dall'alto:
 1. **Intestazione:** logo, nome, **CIN**, selettore lingua IT/EN/ES.
 2. **Presentazione:** titolo, frase d'apertura, punteggi Booking e Airbnb, logo grande.
 3. **Contatti:** WhatsApp, Telegram, Signal, email e Instagram, appesi a un filo come il bucato dei vicoli napoletani (su tablet vanno su due righe, su telefono su tre). Il numero di telefono è lo stesso per WhatsApp, Telegram e Signal.
-4. **Le nostre stanze:** carosello 3D con 7 foto.
+4. **Le nostre stanze:** carosello 3D con 11 foto, in quest'ordine: camere, bagni, corridoio e angolo ristoro.
 5. **In ogni camera:** servizi inclusi.
 6. **Disponibilità:** l'ospite sceglie arrivo e partenza e vede quante camere restano (vedi sezione 4).
 7. **Noi siamo qui:** indirizzo, distanze, mappa.
@@ -79,7 +79,7 @@ Per ogni modifica di testo vanno aggiornati **due posti**: l'HTML (italiano) e i
 
 ### Aggiungere o cambiare una foto
 
-1. Copia il file (meglio JPG, circa 1000 px di altezza, sotto 150 KB) in `foto/`.
+1. Copia il file (meglio JPG, circa 1000 px di altezza, sotto 150 KB) in `foto/`. Il carosello è **verticale** (larghezza:altezza circa 7:10): ritaglia prima le foto orizzontali sulla parte che conta, altrimenti vengono tagliate ai lati.
 2. In `index.html`, nella sezione `.stage`, aggiungi un `<button class="card">` come gli altri, con `width` e `height` reali.
 3. Aggiungi la descrizione nell'array `p` di **tutte e tre** le lingue, **nello stesso ordine** delle foto.
 4. Se tocchi le prime foto, ricorda che la prima viene caricata subito, le altre solo quando servono.
