@@ -1,226 +1,685 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="it">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Rooms Add'e Criature – B&B Napoli</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rooms Add'e Criature – B&B a Napoli, Materdei</title>
+<meta name="description" content="B&B a Materdei, Napoli: camere con bagno privato, aria condizionata e WiFi gratuito. Scrivici su WhatsApp e ti confermiamo la disponibilità in pochi minuti.">
+<link rel="canonical" href="https://www.roomsaddecriature.it/">
+<meta name="theme-color" content="#17386b">
 
-  <!-- Font Awesome (CDN gratuito) -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Rooms Add'e Criature">
+<meta property="og:title" content="Rooms Add'e Criature – B&B a Napoli, Materdei">
+<meta property="og:description" content="Camere con bagno privato, aria condizionata e WiFi gratuito a Materdei, Napoli. Prenota direttamente con noi.">
+<meta property="og:url" content="https://www.roomsaddecriature.it/">
+<meta property="og:image" content="https://www.roomsaddecriature.it/img/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="it_IT">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:locale:alternate" content="es_ES">
+<meta name="twitter:card" content="summary_large_image">
 
-  <style>
-  :root{
-    --primary: #2a9df4;  /* azzurro più brillante */
-    --accent: #ff7b25;   /* arancio acceso “Napoli” */
-    --bg: #e6f4ff;
-    --text: #222;        /* nero leggermente più scuro */
-  }
-
-  *{box-sizing:border-box;margin:0;padding:0;font-family:"Segoe UI",Tahoma,Geneva,Verdana,sans-serif;color:var(--text)}
-
-  body{background:linear-gradient(to bottom, var(--bg), #fff);text-align:center;line-height:1.6}
-
-  header{padding:40px 20px 20px;animation:fade .8s ease}
-  @keyframes fade{from{opacity:0;transform:translateY(-15px)}}
-
-  header img{max-width:240px;border-radius:50%;box-shadow:0 6px 18px rgba(0,0,0,.15)}
-
-  h1{margin-top:20px;font-size:2.2rem;color:var(--primary)}
-
-  p{margin:10px auto 30px;font-size:1.15rem;max-width:650px}
-
-  /* icone social: cerchi più chiari */
-  .social-links{display:flex;justify-content:center;gap:25px;margin:30px 0 50px}
-  .social-links a{
-    text-decoration:none;
-    font-size:2rem;
-    color:#fff;
-    background:var(--primary);
-    width:60px;height:60px;border-radius:50%;
-    display:flex;align-items:center;justify-content:center;
-    box-shadow:0 4px 10px rgba(42,157,244,.35);
-    transition:transform .25s, background .25s, box-shadow .25s;
-  }
-  .social-links a:hover{
-    transform:scale(1.12);
-    background:var(--accent);
-    box-shadow:0 6px 20px rgba(255,123,37,.45);
-  }
-
-  .map-container{
-    width:90%;max-width:700px;margin:0 auto 50px;
-    border-radius:5%;overflow:hidden;box-shadow:0 6px 18px rgba(0,0,0,.15)
-  }
-  .map-container iframe{width:100%;height:320px;border:0}
-
-  footer{padding:20px;font-size:.85rem;background:#f0f8ff;color:#666}
-
-    .review-buttons{
-  display:flex;
-  justify-content:center;
-  flex-wrap:wrap;
-  gap:18px;
-  margin:40px 0 50px;
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BedAndBreakfast",
+  "name": "Rooms Add'e Criature",
+  "url": "https://www.roomsaddecriature.it/",
+  "image": ["https://www.roomsaddecriature.it/img/og.jpg", "https://www.roomsaddecriature.it/foto/foto-1.jpg"],
+  "logo": "https://www.roomsaddecriature.it/img/logo.png",
+  "telephone": "+39 340 4845299",
+  "email": "info@roomsaddecriature.it",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Vico San Gennaro a Materdei 15",
+    "addressLocality": "Napoli",
+    "postalCode": "80136",
+    "addressCountry": "IT"
+  },
+  "geo": { "@type": "GeoCoordinates", "latitude": 40.855271, "longitude": 14.245142 },
+  "checkinTime": "14:00",
+  "checkoutTime": "10:30",
+  "petsAllowed": false,
+  "availableLanguage": ["it", "en", "es"],
+  "amenityFeature": [
+    { "@type": "LocationFeatureSpecification", "name": "Aria condizionata", "value": true },
+    { "@type": "LocationFeatureSpecification", "name": "WiFi gratuito", "value": true },
+    { "@type": "LocationFeatureSpecification", "name": "Bagno privato", "value": true },
+    { "@type": "LocationFeatureSpecification", "name": "Camere familiari", "value": true }
+  ],
+  "sameAs": [
+    "https://instagram.com/porofoskini12",
+    "https://www.booking.com/hotel/it/rooms-ad-e-criatur.it.html",
+    "https://www.airbnb.it/rooms/784407996587642336"
+  ]
 }
-.review-btn{
-  display:inline-flex;
-  align-items:center;
-  gap:8px;
-  padding:12px 22px;
-  border-radius:30px;
-  font-size:1rem;
-  font-weight:600;
-  text-decoration:none;
-  color:#fff;
-  transition:.25s;
-  box-shadow:0 4px 12px rgba(0,0,0,.15);
-}
-.review-btn.g{background:#4285F4}   /* Google blue */
-.review-btn.b{background:#003580}   /* Booking blu notte */
-.review-btn.a{background:#FF5A5F}   /* Airbnb coral */
-.review-btn:hover{transform:scale(1.05);box-shadow:0 6px 18px rgba(0,0,0,.25)}
-/* bandierine */
-.lang-switch{
-  position:fixed;   /* fermo in viewport */
-  top:15px;
-  right:15px;
-  z-index:9999;     /* sopra ogni altro elemento */
-  display:flex;
-  gap:8px;
-}
-.lang-switch button{
-  width:34px;
-  height:24px;
-  border:none;
-  border-radius:4px;
-  cursor:pointer;
-  background-size:cover;
-  background-position:center;
-  box-shadow:0 2px 6px rgba(0,0,0,.30);
-}
- .it-btn{background-image:url(img/it.svg)}
- .en-btn{background-image:url(img/gb.svg)} /* United-Kingdom flag */
- .es-btn{background-image:url(img/es.svg)}  /* mostra/nascondi lingua */
-  .lang{display:block}
-  .lang.hidden{display:none}
+</script>
 
- .map-caption{margin-top: 10px;font-size: .9rem;color: var(--text)}
-  .map-caption i{color: rgb(11, 142, 241);margin-right: 6px}
+<script>document.documentElement.classList.add("js")</script>
+<link rel="icon" href="favicon.ico" sizes="48x48">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Nunito+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --maiolica: #17386b;
+  --maiolica-deep: #0f2750;
+  --calce: #f7f5ef;
+  --tufo: #e8b84a;
+  --pomodoro: #c13a25;
+  --verde: #2e7d6b;
+  --cielo: #8fb4e3;
+  --legno: #a9733a;
+  --ink: #12244a;
+  --display: "Alfa Slab One", Georgia, serif;
+  --text: "Nunito Sans", system-ui, sans-serif;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0; background: var(--calce); color: var(--ink);
+  font: 400 1.0625rem/1.6 var(--text); -webkit-font-smoothing: antialiased;
+}
+h1, h2, h3 { font-family: var(--display); font-weight: 400; line-height: 1.05; margin: 0; }
+p { margin: 0; max-width: 60ch; }
+a { color: inherit; }
+:focus-visible { outline: 3px solid var(--tufo); outline-offset: 3px; }
+.wrap { width: min(1100px, 100% - 2rem); margin-inline: auto; }
+.skip { position: absolute; left: 1rem; top: -4rem; background: var(--tufo); color: var(--ink); padding: .6rem 1rem; font-weight: 700; z-index: 100; }
+.skip:focus { top: 1rem; }
+
+/* Hero */
+.hero { background: var(--maiolica); color: var(--calce); padding-bottom: clamp(3rem, 8vw, 6rem); overflow: hidden; }
+.top { display: flex; justify-content: space-between; align-items: center; gap: 1rem; padding-block: 1.25rem; flex-wrap: wrap; }
+.brand { display: inline-flex; align-items: center; gap: .75rem; font-family: var(--display); font-size: 1.25rem; text-decoration: none; }
+.brand img { width: 44px; height: 44px; border-radius: 50%; background: var(--calce); padding: 2px; }
+.langs { display: flex; gap: .35rem; }
+.langs button {
+  display: inline-flex; align-items: center; gap: .4rem; background: transparent; color: var(--cielo);
+  border: 2px solid transparent; border-radius: 999px; padding: .3rem .6rem; cursor: pointer; font: 700 .9rem var(--text);
+}
+.langs button:hover { color: var(--calce); }
+.langs button[aria-pressed="true"] { border-color: var(--tufo); color: var(--calce); }
+.langs img { width: 20px; height: 14px; object-fit: cover; border-radius: 2px; }
+.intro { display: grid; grid-template-columns: 1.35fr 1fr; gap: clamp(1.5rem, 5vw, 4rem); align-items: center; margin-top: clamp(1.5rem, 4vw, 3rem); }
+.hero h1 { font-size: clamp(2.6rem, 7vw, 5.5rem); max-width: 12ch; }
+.hero .lead { font-size: 1.25rem; margin-top: 1.5rem; color: var(--cielo); }
+.ratings { display: flex; flex-wrap: wrap; gap: .5rem .75rem; margin-top: 1.5rem; }
+.rating { display: inline-flex; align-items: baseline; gap: .6rem; padding: .5rem 1rem; background: var(--tufo); color: var(--ink); text-decoration: none; font-weight: 600; max-width: none; }
+.rating b { font-family: var(--display); font-weight: 400; font-size: 1.6rem; line-height: 1; }
+.rating:hover { background: var(--calce); }
+.seal-wrap { justify-self: center; width: min(100%, 400px); perspective: 900px; }
+.seal { aspect-ratio: 1; border-radius: 50%; background: var(--calce); padding: 6px; box-shadow: 0 0 0 6px var(--tufo), 0 30px 50px rgba(0,0,0,.35);
+  transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)); transition: transform .2s ease-out; transform-style: preserve-3d; }
+.seal img { display: block; width: 100%; height: 100%; object-fit: contain; animation: float 7s ease-in-out infinite; }
+@keyframes float { 0%, 100% { transform: translateZ(30px) rotateY(-5deg) translateY(0); } 50% { transform: translateZ(30px) rotateY(5deg) translateY(-6px); } }
+
+/* Bucato: contact channels hung on a line */
+.line { position: relative; margin-top: clamp(3rem, 7vw, 5rem); }
+.line svg { position: absolute; left: 0; top: 0; width: 100%; height: 40px; }
+.line path { fill: none; stroke: var(--calce); stroke-width: 2; opacity: .8; }
+.cloths { display: grid; grid-template-columns: repeat(4, 1fr); gap: clamp(.75rem, 2.5vw, 2rem); padding-top: 4px; align-items: start; }
+.cloth {
+  --r: 0deg; --sag: 0px;
+  position: relative; display: block; text-decoration: none; color: var(--ink);
+  padding: 2.2rem 1.1rem 1.4rem; margin-top: var(--sag);
+  transform: perspective(700px) rotate(var(--r)) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)); transform-origin: 50% 0;
+  transition: transform .25s ease-out;
+  animation: sway 2.4s ease-out backwards; animation-delay: var(--d, 0s);
+  box-shadow: 0 2px 0 rgba(0,0,0,.18);
+}
+.cloth::before {
+  content: ""; position: absolute; top: -8px; left: 50%; translate: -50% 0;
+  width: 12px; height: 26px; background: var(--legno); border-radius: 2px;
+}
+.cloth strong { display: block; font-family: var(--display); font-weight: 400; font-size: 1.45rem; line-height: 1.1; }
+.cloth span { display: block; margin-top: .6rem; font-weight: 600; overflow-wrap: anywhere; }
+.cloth .tel { white-space: nowrap; }
+.cloth:hover, .cloth:focus-visible { --r: 0deg; z-index: 2; box-shadow: 0 14px 22px rgba(0,0,0,.35); }
+.c1 { background: var(--tufo); --r: -2deg; --sag: 12px; --d: 0s;  min-height: 190px; }
+.c2 { background: var(--calce); --r: 1.5deg; --sag: 21px; --d: .15s; min-height: 160px; }
+.c3 { background: var(--pomodoro); color: var(--calce); --r: -1deg; --sag: 21px; --d: .3s; min-height: 205px; }
+.c4 { background: var(--verde); color: var(--calce); --r: 2.5deg; --sag: 12px; --d: .45s; min-height: 175px; }
+@keyframes sway {
+  0% { transform: perspective(700px) rotate(calc(var(--r) * -4)) rotateY(40deg); }
+  40% { transform: perspective(700px) rotate(calc(var(--r) * 2.5)) rotateY(-18deg); }
+  100% { transform: perspective(700px) rotate(var(--r)); }
+}
+.hero .reply { margin-top: 2.5rem; font-size: 1.05rem; }
+.hero .reply b { font-family: var(--display); font-weight: 400; font-size: 1.5rem; display: block; margin-bottom: .25rem; }
+
+/* Galleria 3D */
+.gallery { background: var(--maiolica-deep); color: var(--calce); padding-block: clamp(3rem, 8vw, 5rem); overflow: hidden; }
+.gallery h2 { font-size: clamp(2rem, 5vw, 3.25rem); margin-bottom: .75rem; }
+.gallery .sub { color: var(--cielo); }
+.stage { position: relative; height: min(105vw, 540px); margin-top: 2rem; perspective: 1100px; outline-offset: 6px; touch-action: pan-y; }
+.card {
+  --o: 0; --a: 0;
+  position: absolute; top: 0; left: 50%; height: 100%; width: min(66vw, 380px);
+  transform: translateX(-50%) translateX(calc(var(--o) * 58%)) translateZ(calc(var(--a) * -140px)) rotateY(calc(var(--o) * -38deg));
+  transition: transform .7s cubic-bezier(.2,.7,.2,1), opacity .5s, filter .5s;
+  z-index: calc(10 - var(--a)); opacity: calc(1 - var(--a) * .22); filter: brightness(calc(1 - var(--a) * .18));
+  border: 0; padding: 0; background: var(--cielo); cursor: pointer; box-shadow: 0 24px 40px rgba(0,0,0,.4);
+}
+.card[data-far] { opacity: 0; pointer-events: none; }
+.card img { width: 100%; height: 100%; object-fit: cover; display: block; user-select: none; -webkit-user-drag: none; }
+.gcontrols { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-top: 1.75rem; }
+.gcontrols p { color: var(--cielo); min-height: 3.2em; }
+.gbtns { display: flex; gap: .5rem; flex-shrink: 0; }
+.gbtns button { width: 48px; height: 48px; border: 2px solid var(--tufo); background: transparent; color: var(--tufo); font: 700 1.4rem/1 var(--text); cursor: pointer; border-radius: 50%; }
+.gbtns button:hover { background: var(--tufo); color: var(--ink); }
+
+/* Entrata 3D allo scroll */
+.js .flip { opacity: 0; transform: perspective(900px) rotateX(-16deg) translateY(30px); transform-origin: 50% 0; transition: transform .9s cubic-bezier(.2,.7,.2,1), opacity .6s; transition-delay: var(--fd, 0s); }
+.js .flip.in { opacity: 1; transform: none; }
+
+/* Sezioni chiare */
+.section { padding-block: clamp(3rem, 8vw, 5.5rem); }
+.section h2 { font-size: clamp(2rem, 5vw, 3.25rem); margin-bottom: 1.5rem; }
+
+/* Servizi */
+.amen { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 0 clamp(1.5rem, 5vw, 4rem); border-top: 2px solid var(--ink); }
+.amen li { padding: 1rem .25rem 1rem 1.75rem; border-bottom: 2px solid var(--ink); position: relative; font-weight: 600; }
+.amen li::before { content: ""; position: absolute; left: .25rem; top: 1.45rem; width: .7rem; height: .7rem; background: var(--tufo); border: 2px solid var(--ink); }
+
+/* Dove */
+.where { background: #fff; }
+.where .wrap { display: grid; grid-template-columns: 1fr 1.2fr; gap: clamp(1.5rem, 5vw, 4rem); align-items: start; }
+.where p + p { margin-top: 1rem; }
+.where address { font-style: normal; font-weight: 700; margin-top: 1.25rem; }
+.where .link { display: inline-block; margin-top: .5rem; font-weight: 700; text-underline-offset: 4px; }
+.where h3 { font-size: 1.5rem; margin: 2rem 0 .5rem; }
+.dist { list-style: none; margin: 0; padding: 0; }
+.dist li { display: flex; justify-content: space-between; gap: 1rem; padding: .6rem 0; border-bottom: 1px solid var(--cielo); }
+.dist b { font-weight: 700; white-space: nowrap; }
+.note { font-size: .9rem; margin-top: .75rem; opacity: .75; }
+.map { width: 100%; height: 100%; min-height: 420px; border: 0; border-top: 8px solid var(--maiolica); background: var(--cielo); }
+
+/* Da sapere */
+.know dl { margin: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem clamp(1.5rem, 4vw, 3rem); }
+.know dt { font-family: var(--display); font-size: 1.3rem; margin-bottom: .35rem; }
+.know dd { margin: 0; }
+
+/* Recensioni */
+.reviews { background: var(--tufo); padding-block: clamp(2.5rem, 6vw, 4.5rem); }
+.reviews h2 { font-size: clamp(1.75rem, 4vw, 2.5rem); margin-bottom: 1.5rem; }
+.reviews ul { list-style: none; margin: 0; padding: 0; border-top: 2px solid var(--ink); }
+.reviews li { border-bottom: 2px solid var(--ink); }
+.reviews a { display: flex; justify-content: space-between; gap: 1rem; padding: 1rem .25rem; text-decoration: none; font-weight: 700; font-size: 1.15rem; }
+.reviews a:hover { background: var(--ink); color: var(--tufo); }
+.reviews a span { font-weight: 400; }
+
+footer { background: var(--maiolica-deep); color: var(--cielo); padding-block: 1.75rem 6rem; font-size: .95rem; }
+footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: .5rem 2rem; }
+
+/* WhatsApp fisso */
+.wa {
+  position: fixed; right: max(1rem, env(safe-area-inset-right)); bottom: max(1rem, env(safe-area-inset-bottom)); z-index: 50;
+  background: var(--tufo); color: var(--ink); text-decoration: none; font-weight: 700;
+  padding: .85rem 1.25rem; box-shadow: 0 8px 20px rgba(0,0,0,.3);
+  transform: translateY(150%); transition: transform .4s cubic-bezier(.2,.7,.2,1);
+}
+.wa.show { transform: none; }
+.wa:hover { background: var(--ink); color: var(--tufo); }
+
+@media (max-width: 800px) {
+  .cloths { grid-template-columns: 1fr 1fr; row-gap: 1.75rem; }
+  .cloth { margin-top: 0; padding: 2.2rem .8rem 1.2rem; }
+  .cloth strong { font-size: 1.3rem; }
+  .cloth span { font-size: .9rem; }
+  .line svg { display: none; }
+  .intro { grid-template-columns: 1fr; }
+  .seal-wrap { width: min(100%, 300px); justify-self: start; order: -1; }
+  .card { transform: translateX(-50%) translateX(calc(var(--o) * 62%)) translateZ(calc(var(--a) * -140px)) rotateY(calc(var(--o) * -32deg)); }
+  .gcontrols { flex-direction: column; align-items: flex-start; }
+  .amen { grid-template-columns: 1fr; }
+  .where .wrap { grid-template-columns: 1fr; }
+  .map { min-height: 300px; height: 300px; }
+  .know dl { grid-template-columns: 1fr 1fr; }
+  .wa { left: 1rem; text-align: center; }
+}
+@media (max-width: 480px) { .know dl { grid-template-columns: 1fr; } }
+@media (prefers-reduced-motion: reduce) {
+  .cloth { animation: none; transition: none; }
+  .seal, .card, .wa { transition: none; }
+  .seal img { animation: none; transform: translateZ(30px); }
+  .js .flip { opacity: 1; transform: none; transition: none; }
+  html { scroll-behavior: auto; }
+}
 </style>
 </head>
 <body>
-  <!-- SWITCH LINGUA -->
-  <div class="lang-switch">
-    <button class="it-btn" onclick="setLang('it')" title="Italiano"></button>
-    <button class="es-btn" onclick="setLang('es')" title="Español"></button>
-    <button class="en-btn" onclick="setLang('en')" title="English"></button>
-  </div>
-  <header>
-    <img src="logoB&b_noBg.png" alt="Rooms Add'e Criature">
-    <!--<h1>Benvenuti a Rooms Add'e Criature</h1>-->  
-    <p class="lang it">
-      Un B&B nel cuore di Napoli, dove l’ospitalità incontra la tradizione.<br>
-      Relax, sole e magia partenopea ti aspettano.
-    </p>
-    <p class="lang en hidden">
-      A B&B in the heart of Naples where hospitality meets tradition.<br>
-      Relax, sunshine and Neapolitan magic await you.
-    </p>
-    <p class="lang es hidden">
-      Un B&B en el corazón de Nápoles donde la hospitalidad se encuentra con la tradición.<br>
-      Relajación, sol y magia napolitana te esperan.
-    </p>
-  </header>
+<a class="skip" href="#foto" data-i18n="skip">Vai al contenuto</a>
 
-
-  <!-- CALL-TO-ACTION -->
-  <div class="cta-box">
-      <h3 class="lang it">Prenota subito!</h3>
-      <h3 class="lang en hidden">Book now!</h3>
-      <h3 class="lang es hidden">¡Reserva ya!</h3>
-
-      <div class="social-links">
-          <a href="https://wa.me/393404845299" target="_blank" title="WhatsApp">
-              <i class="fab fa-whatsapp"></i>
-          </a>
-          <a href="https://instagram.com/porofoskini12" target="_blank" title="Instagram">
-              <i class="fab fa-instagram"></i>
-          </a>
-          <a href="https://t.me/+393404845299" target="_blank" title="Telegram">
-              <i class="fab fa-telegram"></i>
-          </a>
-          <a href="mailto:info@roomsaddecriature.it" target="_blank" title="Email">
-              <i class="fas fa-envelope"></i>
-          </a>
+<header class="hero">
+  <div class="wrap">
+    <div class="top">
+      <a class="brand" href="#"><img src="img/logo-small.png" alt="" width="44" height="44">Rooms Add'e Criature</a>
+      <div class="langs" role="group" aria-label="Lingua / Language / Idioma">
+        <button type="button" data-lang="it" aria-pressed="true"><img src="img/it.svg" alt="" width="20" height="14">IT</button>
+        <button type="button" data-lang="en" aria-pressed="false"><img src="img/gb.svg" alt="" width="20" height="14">EN</button>
+        <button type="button" data-lang="es" aria-pressed="false"><img src="img/es.svg" alt="" width="20" height="14">ES</button>
       </div>
-      <p class="lang it">Contattaci su uno dei nostri canali e ti confermeremo la disponibilità in pochi minuti.</p>
-      <p class="lang en hidden">Contact us on any of our channels and we'll confirm availability within minutes.</p>
-      <p class="lang es hidden">Contáctanos por cualquiera de nuestros canales y confirmaremos la disponibilidad en pocos minutos.</p>
+    </div>
 
+    <div class="intro">
+      <div>
+        <h1 data-i18n="h1">Un B&B nel cuore di Napoli</h1>
+        <p class="lead" data-i18n="lead">Dove l'ospitalità incontra la tradizione. Relax, sole e magia partenopea ti aspettano.</p>
+        <div class="ratings">
+          <a class="rating" href="https://www.booking.com/hotel/it/rooms-ad-e-criatur.it.html#tab-reviews"><b data-i18n="rn1">9,8</b><span data-i18n="rating">su 10 · 139 recensioni su Booking.com</span></a>
+          <a class="rating" href="https://www.airbnb.it/rooms/784407996587642336/reviews"><b data-i18n="rn2">4,99</b><span data-i18n="ratingAb">su 5 · 69 recensioni su Airbnb</span></a>
+        </div>
+      </div>
+      <div class="seal-wrap"><div class="seal" data-tilt="12"><picture><source srcset="img/logo.webp" type="image/webp"><img src="img/logo.png" data-i18n-alt="sealAlt" alt="Logo Rooms Add'e Criature: tre bambini giocano su una terrazza con vista sul Vesuvio" width="400" height="404"></picture></div></div>
+    </div>
+
+    <div class="line" id="prenota">
+      <svg viewBox="0 0 1000 40" preserveAspectRatio="none" aria-hidden="true"><path d="M0 2 Q500 54 1000 2"/></svg>
+      <div class="cloths">
+        <a class="cloth c1" data-wa href="https://wa.me/393404845299"><strong>WhatsApp</strong><span class="tel">+39 340 484 5299</span></a>
+        <a class="cloth c2" href="https://t.me/+393404845299"><strong>Telegram</strong><span class="tel">+39 340 484 5299</span></a>
+        <a class="cloth c3" href="mailto:info@roomsaddecriature.it"><strong>Email</strong><span>info@roomsaddecriature.it</span></a>
+        <a class="cloth c4" href="https://instagram.com/porofoskini12"><strong>Instagram</strong><span>@porofoskini12</span></a>
+      </div>
+    </div>
+
+    <p class="reply"><b data-i18n="replyT">Prenota subito!</b><span data-i18n="replyP">Contattaci su uno dei nostri canali e ti confermeremo la disponibilità in pochi minuti.</span></p>
   </div>
-  <!-- GOOGLE MAPS -->
-  <div class="map-container">
-      <p class="map-caption">
-          <i class="fas fa-map-marker-alt"></i>
-          <span class="lang it">Noi siamo qui</span>
-          <span class="lang en hidden">We are here</span>
-          <span class="lang es hidden">Estamos aquí</span>
-      </p>
-    <iframe width="425" height="350" src="https://www.openstreetmap.org/export/embed.html?bbox=14.243372082710268%2C40.854317615648725%2C14.246912598609926%2C40.856224619347564&amp;layer=mapnik&amp;marker=40.85527112435992%2C14.245142340660095" style="border: 1px solid black"></iframe><br/><small><a href="https://www.openstreetmap.org/?mlat=40.855271&amp;mlon=14.245142#map=19/40.855271/14.245142">Visualizza mappa ingrandita</a></small>
+</header>
 
+<main>
+  <section class="gallery" id="foto" aria-labelledby="foto-t">
+    <div class="wrap">
+      <h2 id="foto-t" data-i18n="galH">Le nostre stanze</h2>
+      <p class="sub" data-i18n="galSub">Trascina, usa le frecce o tocca una foto per portarla in primo piano.</p>
+      <div class="stage" id="stage" tabindex="0" role="group" aria-roledescription="carosello" data-i18n-label="stageLabel" aria-label="Foto del B&B">
+        <button type="button" class="card"><img src="foto/foto-1.jpg" alt="" width="1214" height="900" draggable="false"></button>
+        <button type="button" class="card"><img src="foto/foto-8.jpg" alt="" width="1214" height="900" loading="lazy" draggable="false"></button>
+        <button type="button" class="card"><img src="foto/foto-3.jpg" alt="" width="667" height="900" loading="lazy" draggable="false"></button>
+        <button type="button" class="card"><img src="foto/foto-12.jpg" alt="" width="1270" height="900" loading="lazy" draggable="false"></button>
+        <button type="button" class="card"><img src="foto/foto-2.jpg" alt="" width="1214" height="900" loading="lazy" draggable="false"></button>
+        <button type="button" class="card"><img src="foto/foto-6.jpg" alt="" width="667" height="900" loading="lazy" draggable="false"></button>
+        <button type="button" class="card"><img src="foto/foto-11.jpg" alt="" width="1200" height="900" loading="lazy" draggable="false"></button>
+      </div>
+      <div class="gcontrols">
+        <p id="gcap" aria-live="polite"></p>
+        <div class="gbtns">
+          <button type="button" id="gprev" data-i18n-label="prev" aria-label="Foto precedente">&larr;</button>
+          <button type="button" id="gnext" data-i18n-label="next" aria-label="Foto successiva">&rarr;</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="amen-t">
+    <div class="wrap">
+      <h2 id="amen-t" data-i18n="amenH">In ogni camera</h2>
+      <ul class="amen">
+        <li class="flip" data-i18n="sv0">Aria condizionata e riscaldamento</li>
+        <li class="flip" data-i18n="sv1">Bagno privato con doccia, bidet e asciugacapelli</li>
+        <li class="flip" data-i18n="sv2">WiFi gratuito e veloce</li>
+        <li class="flip" data-i18n="sv3">Frigorifero, microonde e macchina del caffè</li>
+        <li class="flip" data-i18n="sv4">Lenzuola, asciugamani e set di cortesia</li>
+        <li class="flip" data-i18n="sv5">Scrivania</li>
+        <li class="flip" data-i18n="sv6">Camere per famiglie</li>
+        <li class="flip" data-i18n="sv7">Struttura interamente non fumatori</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section where" aria-labelledby="dove">
+    <div class="wrap">
+      <div>
+        <h2 id="dove" data-i18n="whereH">Noi siamo qui</h2>
+        <p data-i18n="whereP">Siamo a Materdei, a Napoli. Ti accogliamo noi, Chiara e Gennaro, e ti spieghiamo come arrivare dalla stazione, dall'aeroporto o dal porto.</p>
+        <address data-i18n="addr">Vico San Gennaro a Materdei 15, 3° piano<br>80136 Napoli</address>
+        <a class="link" data-i18n="mapLink" href="https://www.openstreetmap.org/?mlat=40.855271&amp;mlon=14.245142#map=19/40.855271/14.245142">Apri la mappa a schermo intero</a>
+        <h3 data-i18n="nearH">Nei dintorni</h3>
+        <ul class="dist">
+          <li><span data-i18n="n0">Stazione Materdei</span><b data-m="150">150 m</b></li>
+          <li><span data-i18n="n1">Pizzeria Starita</span><b data-m="150">150 m</b></li>
+          <li><span data-i18n="n2">Museo Archeologico Nazionale</span><b data-m="750">750 m</b></li>
+          <li><span data-i18n="n3">Catacombe di San Gaudioso</span><b data-m="750">750 m</b></li>
+          <li><span data-i18n="n4">Piazza Bellini</span><b data-m="1200">1,2 km</b></li>
+          <li><span data-i18n="n5">Cappella Sansevero</span><b data-m="1500">1,5 km</b></li>
+          <li><span data-i18n="n6">Piazza del Plebiscito</span><b data-m="2900">2,9 km</b></li>
+          <li><span data-i18n="n7">Aeroporto di Napoli</span><b data-m="7000">7 km</b></li>
+        </ul>
+        <p class="note" data-i18n="distNote">Distanze indicative.</p>
+      </div>
+      <iframe class="map flip" style="--fd:.15s" data-i18n-title="mapTitle" title="Mappa: posizione del B&B a Napoli" loading="lazy"
+        src="https://www.openstreetmap.org/export/embed.html?bbox=14.2411%2C40.8533%2C14.2491%2C40.8573&amp;layer=mapnik&amp;marker=40.855271%2C14.245142"></iframe>
+    </div>
+  </section>
+
+  <section class="section know" aria-labelledby="know-t">
+    <div class="wrap">
+      <h2 id="know-t" data-i18n="knowH">Da sapere</h2>
+      <dl>
+        <div class="flip"><dt data-i18n="k0t">Arrivo</dt><dd data-i18n="k0d">Dalle 14:00 alle 00:00</dd></div>
+        <div class="flip"><dt data-i18n="k1t">Partenza</dt><dd data-i18n="k1d">Dalle 06:00 alle 10:30</dd></div>
+        <div class="flip"><dt data-i18n="k2t">Bambini</dt><dd data-i18n="k2d">Benvenuti di tutte le età. Culle su richiesta; letti aggiuntivi non disponibili.</dd></div>
+        <div class="flip"><dt data-i18n="k3t">Animali</dt><dd data-i18n="k3d">Non ammessi</dd></div>
+        <div class="flip"><dt data-i18n="k4t">Fumo</dt><dd data-i18n="k4d">Non è consentito fumare</dd></div>
+        <div class="flip"><dt data-i18n="k5t">Feste</dt><dd data-i18n="k5d">Non sono ammesse feste ed eventi</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <section class="reviews" aria-labelledby="rec">
+    <div class="wrap">
+      <h2 id="rec" data-i18n="revH">Cosa dicono gli ospiti</h2>
+      <ul>
+        <li class="flip"><a href="https://www.google.com/local/business/2933506296284337297/customers/reviews">Google <span data-i18n="read">Leggi le recensioni</span></a></li>
+        <li class="flip" style="--fd:.12s"><a href="https://www.booking.com/hotel/it/rooms-ad-e-criatur.it.html#tab-reviews">Booking.com <span data-i18n="revB">9,8 su 10 · 139 recensioni</span></a></li>
+        <li class="flip" style="--fd:.24s"><a href="https://www.airbnb.it/rooms/784407996587642336/reviews">Airbnb <span data-i18n="revA">4,99 su 5 · 69 recensioni</span></a></li>
+      </ul>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span data-i18n="copy">© 2025 Rooms Add'e Criature – Napoli</span>
+    <span>CIN: IT063049C2UUTMPOCJ</span>
   </div>
-<!-- ===== RECENSIONI ===== -->
-<!-- ===== RECENSIONI ===== -->
-<!-- Italiano -->
-<div class="review-buttons lang it">
-  <a href="https://www.google.com/local/business/2933506296284337297/customers/reviews" target="_blank" class="review-btn g">
-    <i class="fab fa-google"></i> Recensioni Google
-  </a>
-  <a href="https://www.booking.com/hotel/it/rooms-ad-e-criatur.it.html#tab-reviews" target="_blank" class="review-btn b">
-    <i class="fas fa-bed"></i> Recensioni Booking
-  </a>
-  <a href="https://www.airbnb.it/rooms/784407996587642336/reviews" target="_blank" class="review-btn a">
-    <i class="fab fa-airbnb"></i> Recensioni Airbnb
-  </a>
-</div>
+</footer>
 
-<!-- English -->
-<div class="review-buttons lang en hidden">
-  <a href="https://www.google.com/local/business/2933506296284337297/customers/reviews" target="_blank" class="review-btn g">
-    <i class="fab fa-google"></i> Google Reviews
-  </a>
-  <a href="https://www.booking.com/hotel/it/rooms-ad-e-criatur.it.html#tab-reviews" target="_blank" class="review-btn b">
-    <i class="fas fa-bed"></i> Booking Reviews
-  </a>
-  <a href="https://www.airbnb.it/rooms/784407996587642336/reviews" target="_blank" class="review-btn a">
-    <i class="fab fa-airbnb"></i> Airbnb Reviews
-  </a>
-</div>
+<a class="wa" id="wa" data-wa href="https://wa.me/393404845299" data-i18n="waBtn">Scrivici su WhatsApp</a>
 
-<!-- Español -->
-<div class="review-buttons lang es hidden">
-  <a href="https://www.google.com/local/business/2933506296284337297/customers/reviews" target="_blank" class="review-btn g">
-    <i class="fab fa-google"></i> Opiniones Google
-  </a>
-  <a href="https://www.booking.com/hotel/it/rooms-ad-e-criatur.it.html#tab-reviews" target="_blank" class="review-btn b">
-    <i class="fas fa-bed"></i> Opiniones Booking
-  </a>
-  <a href="https://www.airbnb.it/rooms/784407996587642336/reviews" target="_blank" class="review-btn a">
-    <i class="fab fa-airbnb"></i> Opiniones Airbnb
-  </a>
-</div>
-  <footer>
-      &copy; 2025 Rooms Add'e Criature - Naples <br>
-      CIN: IT063049C2UUTMPOCJ
-  </footer>
 <script>
-  function setLang(l){
-    document.querySelectorAll('.lang').forEach(e=>e.classList.add('hidden'));
-    document.querySelectorAll('.'+l).forEach(e=>e.classList.remove('hidden'));
-    localStorage.setItem('lang',l);              // ricorda la scelta
+(function () {
+  var T = {
+    it: {
+      title: "Rooms Add'e Criature – B&B a Napoli, Materdei",
+      desc: "B&B a Materdei, Napoli: camere con bagno privato, aria condizionata e WiFi gratuito. Scrivici su WhatsApp e ti confermiamo la disponibilità in pochi minuti.",
+      skip: "Vai al contenuto",
+      h1: "Un B&B nel cuore di Napoli",
+      lead: "Dove l'ospitalità incontra la tradizione. Relax, sole e magia partenopea ti aspettano.",
+      rn1: "9,8", rn2: "4,99",
+      rating: "su 10 · 139 recensioni su Booking.com",
+      ratingAb: "su 5 · 69 recensioni su Airbnb",
+      revB: "9,8 su 10 · 139 recensioni", revA: "4,99 su 5 · 69 recensioni",
+      sealAlt: "Logo Rooms Add'e Criature: tre bambini giocano su una terrazza con vista sul Vesuvio",
+      replyT: "Prenota subito!",
+      replyP: "Contattaci su uno dei nostri canali e ti confermeremo la disponibilità in pochi minuti.",
+      galH: "Le nostre stanze",
+      galSub: "Trascina, usa le frecce o tocca una foto per portarla in primo piano.",
+      stageLabel: "Foto del B&B", carousel: "carosello", prev: "Foto precedente", next: "Foto successiva", photo: "Foto",
+      p: [
+        "Camera con letto matrimoniale, copriletto blu e tavolino pieghevole",
+        "Letto con asciugamani piegati e finestra luminosa",
+        "Bagno con piastrelle geometriche blu e bianche",
+        "Corridoio con la maglia del Napoli appesa in fondo",
+        "Camera con TV a parete e porta sul bagno privato",
+        "Bagno con doccia, finestra e lavabo in appoggio",
+        "Corridoio con fotografie in bianco e nero alle pareti"
+      ],
+      amenH: "In ogni camera",
+      sv0: "Aria condizionata e riscaldamento",
+      sv1: "Bagno privato con doccia, bidet e asciugacapelli",
+      sv2: "WiFi gratuito e veloce",
+      sv3: "Frigorifero, microonde e macchina del caffè",
+      sv4: "Lenzuola, asciugamani e set di cortesia",
+      sv5: "Scrivania",
+      sv6: "Camere per famiglie",
+      sv7: "Struttura interamente non fumatori",
+      whereH: "Noi siamo qui",
+      whereP: "Siamo a Materdei, a Napoli. Ti accogliamo noi, Chiara e Gennaro, e ti spieghiamo come arrivare dalla stazione, dall'aeroporto o dal porto.",
+      addr: "Vico San Gennaro a Materdei 15, 3° piano<br>80136 Napoli",
+      mapLink: "Apri la mappa a schermo intero",
+      mapTitle: "Mappa: posizione del B&B a Napoli",
+      nearH: "Nei dintorni",
+      n0: "Stazione Materdei", n1: "Pizzeria Starita", n2: "Museo Archeologico Nazionale", n3: "Catacombe di San Gaudioso",
+      n4: "Piazza Bellini", n5: "Cappella Sansevero", n6: "Piazza del Plebiscito", n7: "Aeroporto di Napoli",
+      distNote: "Distanze indicative.",
+      knowH: "Da sapere",
+      k0t: "Arrivo", k0d: "Dalle 14:00 alle 00:00",
+      k1t: "Partenza", k1d: "Dalle 06:00 alle 10:30",
+      k2t: "Bambini", k2d: "Benvenuti di tutte le età. Culle su richiesta; letti aggiuntivi non disponibili.",
+      k3t: "Animali", k3d: "Non ammessi",
+      k4t: "Fumo", k4d: "Non è consentito fumare",
+      k5t: "Feste", k5d: "Non sono ammesse feste ed eventi",
+      revH: "Cosa dicono gli ospiti", read: "Leggi le recensioni",
+      copy: "© 2025 Rooms Add'e Criature – Napoli",
+      waBtn: "Scrivici su WhatsApp",
+      waMsg: "Ciao! Vorrei informazioni sulla disponibilità di una camera."
+    },
+    en: {
+      title: "Rooms Add'e Criature – B&B in Naples, Materdei",
+      desc: "B&B in Materdei, Naples: rooms with private bathroom, air conditioning and free WiFi. Message us on WhatsApp and we'll confirm availability within minutes.",
+      skip: "Skip to content",
+      h1: "A B&B in the heart of Naples",
+      lead: "Where hospitality meets tradition. Relax, sunshine and Neapolitan magic await you.",
+      rn1: "9.8", rn2: "4.99",
+      rating: "out of 10 · 139 reviews on Booking.com",
+      ratingAb: "out of 5 · 69 reviews on Airbnb",
+      revB: "9.8 out of 10 · 139 reviews", revA: "4.99 out of 5 · 69 reviews",
+      sealAlt: "Rooms Add'e Criature logo: three children playing on a terrace with a view of Vesuvius",
+      replyT: "Book now!",
+      replyP: "Contact us on any of our channels and we'll confirm availability within minutes.",
+      galH: "Our rooms",
+      galSub: "Drag, use the arrow keys, or tap a photo to bring it to the front.",
+      stageLabel: "B&B photos", carousel: "carousel", prev: "Previous photo", next: "Next photo", photo: "Photo",
+      p: [
+        "Room with a double bed, blue bedspread and a folding table",
+        "Bed with folded towels and a bright window",
+        "Bathroom with blue and white geometric tiles",
+        "Corridor with a Napoli football shirt hanging at the end",
+        "Room with a wall-mounted TV and a door to the private bathroom",
+        "Bathroom with shower, window and countertop basin",
+        "Corridor with black-and-white photographs on the walls"
+      ],
+      amenH: "In every room",
+      sv0: "Air conditioning and heating",
+      sv1: "Private bathroom with shower, bidet and hairdryer",
+      sv2: "Free fast WiFi",
+      sv3: "Fridge, microwave and coffee machine",
+      sv4: "Linen, towels and toiletries",
+      sv5: "Desk",
+      sv6: "Family rooms",
+      sv7: "Fully non-smoking property",
+      whereH: "You'll find us here",
+      whereP: "We're in Materdei, Naples. Chiara and Gennaro will welcome you, and we'll tell you how to get here from the station, the airport or the port.",
+      addr: "Vico San Gennaro a Materdei 15, 3rd floor<br>80136 Naples",
+      mapLink: "Open the full-size map",
+      mapTitle: "Map: location of the B&B in Naples",
+      nearH: "Nearby",
+      n0: "Materdei train station", n1: "Pizzeria Starita", n2: "National Archaeological Museum", n3: "Catacombs of San Gaudioso",
+      n4: "Piazza Bellini", n5: "Sansevero Chapel", n6: "Piazza del Plebiscito", n7: "Naples Airport",
+      distNote: "Approximate distances.",
+      knowH: "Good to know",
+      k0t: "Check-in", k0d: "From 2:00 pm to midnight",
+      k1t: "Check-out", k1d: "From 6:00 am to 10:30 am",
+      k2t: "Children", k2d: "Children of all ages are welcome. Cots on request; extra beds are not available.",
+      k3t: "Pets", k3d: "Not allowed",
+      k4t: "Smoking", k4d: "Smoking is not allowed",
+      k5t: "Parties", k5d: "Parties and events are not allowed",
+      revH: "What our guests say", read: "Read reviews",
+      copy: "© 2025 Rooms Add'e Criature – Naples",
+      waBtn: "Message us on WhatsApp",
+      waMsg: "Hi! I'd like to ask about room availability."
+    },
+    es: {
+      title: "Rooms Add'e Criature – B&B en Nápoles, Materdei",
+      desc: "B&B en Materdei, Nápoles: habitaciones con baño privado, aire acondicionado y WiFi gratis. Escríbenos por WhatsApp y te confirmamos la disponibilidad en pocos minutos.",
+      skip: "Ir al contenido",
+      h1: "Un B&B en el corazón de Nápoles",
+      lead: "Donde la hospitalidad se encuentra con la tradición. Relax, sol y magia partenopea te esperan.",
+      rn1: "9,8", rn2: "4,99",
+      rating: "sobre 10 · 139 reseñas en Booking.com",
+      ratingAb: "sobre 5 · 69 reseñas en Airbnb",
+      revB: "9,8 sobre 10 · 139 reseñas", revA: "4,99 sobre 5 · 69 reseñas",
+      sealAlt: "Logo de Rooms Add'e Criature: tres niños juegan en una terraza con vistas al Vesubio",
+      replyT: "¡Reserva ya!",
+      replyP: "Contáctanos por cualquiera de nuestros canales y te confirmaremos la disponibilidad en pocos minutos.",
+      galH: "Nuestras habitaciones",
+      galSub: "Arrastra, usa las flechas o toca una foto para traerla al frente.",
+      stageLabel: "Fotos del B&B", carousel: "carrusel", prev: "Foto anterior", next: "Foto siguiente", photo: "Foto",
+      p: [
+        "Habitación con cama de matrimonio, colcha azul y mesita plegable",
+        "Cama con toallas dobladas y ventana luminosa",
+        "Baño con azulejos geométricos azules y blancos",
+        "Pasillo con la camiseta del Nápoles colgada al fondo",
+        "Habitación con televisor en la pared y puerta al baño privado",
+        "Baño con ducha, ventana y lavabo sobre encimera",
+        "Pasillo con fotografías en blanco y negro en las paredes"
+      ],
+      amenH: "En cada habitación",
+      sv0: "Aire acondicionado y calefacción",
+      sv1: "Baño privado con ducha, bidé y secador de pelo",
+      sv2: "WiFi gratis y rápido",
+      sv3: "Nevera, microondas y cafetera",
+      sv4: "Sábanas, toallas y set de cortesía",
+      sv5: "Escritorio",
+      sv6: "Habitaciones familiares",
+      sv7: "Alojamiento totalmente para no fumadores",
+      whereH: "Estamos aquí",
+      whereP: "Estamos en Materdei, Nápoles. Te recibimos Chiara y Gennaro, y te explicamos cómo llegar desde la estación, el aeropuerto o el puerto.",
+      addr: "Vico San Gennaro a Materdei 15, 3.º piso<br>80136 Nápoles",
+      mapLink: "Abrir el mapa a pantalla completa",
+      mapTitle: "Mapa: ubicación del B&B en Nápoles",
+      nearH: "Cerca de aquí",
+      n0: "Estación de Materdei", n1: "Pizzeria Starita", n2: "Museo Arqueológico Nacional", n3: "Catacumbas de San Gaudioso",
+      n4: "Piazza Bellini", n5: "Capilla Sansevero", n6: "Piazza del Plebiscito", n7: "Aeropuerto de Nápoles",
+      distNote: "Distancias aproximadas.",
+      knowH: "Conviene saber",
+      k0t: "Llegada", k0d: "De 14:00 a 00:00",
+      k1t: "Salida", k1d: "De 06:00 a 10:30",
+      k2t: "Niños", k2d: "Niños de todas las edades bienvenidos. Cunas bajo petición; no hay camas supletorias.",
+      k3t: "Mascotas", k3d: "No se admiten",
+      k4t: "Fumar", k4d: "No se permite fumar",
+      k5t: "Fiestas", k5d: "No se permiten fiestas ni eventos",
+      revH: "Qué dicen los huéspedes", read: "Leer reseñas",
+      copy: "© 2025 Rooms Add'e Criature – Nápoles",
+      waBtn: "Escríbenos por WhatsApp",
+      waMsg: "¡Hola! Quisiera información sobre la disponibilidad de una habitación."
+    }
+  };
+
+  var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var stage = document.getElementById("stage");
+  var cards = Array.prototype.slice.call(stage.querySelectorAll(".card"));
+  var cap = document.getElementById("gcap");
+  var cur = 0, lang = "it";
+
+  /* Lingua */
+  function dist(m, l) {
+    if (m < 1000) return m + " m";
+    var km = m / 1000;
+    var s = (km % 1 === 0) ? String(km) : km.toFixed(1);
+    return (l === "en" ? s : s.replace(".", ",")) + " km";
   }
-  // imposta la lingua salvata (o italiano di default)
-  setLang(localStorage.getItem('lang')||'it');
+  function caption() { cap.textContent = (cur + 1) + " / " + cards.length + " · " + T[lang].p[cur]; }
+  function setLang(l, save) {
+    lang = l;
+    var t = T[l];
+    document.documentElement.lang = l;
+    document.title = t.title;
+    document.querySelector('meta[name="description"]').setAttribute("content", t.desc);
+    document.querySelectorAll("[data-i18n]").forEach(function (e) {
+      var v = t[e.dataset.i18n];
+      if (e.dataset.i18n === "addr") e.innerHTML = v; else e.textContent = v;
+    });
+    document.querySelectorAll("[data-i18n-alt]").forEach(function (e) { e.alt = t[e.dataset.i18nAlt]; });
+    document.querySelectorAll("[data-i18n-label]").forEach(function (e) { e.setAttribute("aria-label", t[e.dataset.i18nLabel]); });
+    document.querySelectorAll("[data-i18n-title]").forEach(function (e) { e.title = t[e.dataset.i18nTitle]; });
+    document.querySelectorAll("[data-m]").forEach(function (e) { e.textContent = dist(+e.dataset.m, l); });
+    document.querySelectorAll("[data-wa]").forEach(function (e) {
+      e.href = "https://wa.me/393404845299?text=" + encodeURIComponent(t.waMsg);
+    });
+    stage.setAttribute("aria-roledescription", t.carousel);
+    cards.forEach(function (c, i) {
+      c.setAttribute("aria-label", t.photo + " " + (i + 1));
+      c.querySelector("img").alt = t.p[i];
+    });
+    document.querySelectorAll(".langs button").forEach(function (b) {
+      b.setAttribute("aria-pressed", String(b.dataset.lang === l));
+    });
+    caption();
+    if (save) { try { localStorage.setItem("lang", l); } catch (e) {} }
+  }
+  document.querySelectorAll(".langs button").forEach(function (b) {
+    b.addEventListener("click", function () { setLang(b.dataset.lang, true); });
+  });
+  var saved = null;
+  try { saved = localStorage.getItem("lang"); } catch (e) {}
+  var nav = (navigator.language || "it").slice(0, 2).toLowerCase();
+  var start = T[saved] ? saved : (nav === "it" ? "it" : nav === "es" ? "es" : "en");
+
+  /* Inclinazione 3D col puntatore */
+  if (!reduce) {
+    document.querySelectorAll("[data-tilt], .cloth").forEach(function (el) {
+      var max = parseFloat(el.dataset.tilt || "10");
+      el.addEventListener("pointermove", function (e) {
+        if (e.pointerType === "touch") return;
+        var r = el.getBoundingClientRect();
+        var x = (e.clientX - r.left) / r.width - 0.5;
+        var y = (e.clientY - r.top) / r.height - 0.5;
+        el.style.setProperty("--ry", (x * max * 2).toFixed(1) + "deg");
+        el.style.setProperty("--rx", (-y * max * 2).toFixed(1) + "deg");
+      });
+      el.addEventListener("pointerleave", function () {
+        el.style.removeProperty("--rx"); el.style.removeProperty("--ry");
+      });
+    });
+  }
+
+  /* Galleria 3D */
+  function render() {
+    cards.forEach(function (c, i) {
+      var o = i - cur, a = Math.abs(o);
+      c.style.setProperty("--o", Math.max(-3, Math.min(3, o)));
+      c.style.setProperty("--a", Math.min(a, 3));
+      c.toggleAttribute("data-far", a > 3);
+      c.tabIndex = -1;
+    });
+    caption();
+  }
+  function go(n) { cur = Math.max(0, Math.min(cards.length - 1, n)); render(); }
+  cards.forEach(function (c, i) { c.addEventListener("click", function () { go(i); }); });
+  document.getElementById("gprev").addEventListener("click", function () { go(cur - 1); });
+  document.getElementById("gnext").addEventListener("click", function () { go(cur + 1); });
+  stage.addEventListener("keydown", function (e) {
+    if (e.key === "ArrowRight") { e.preventDefault(); go(cur + 1); }
+    if (e.key === "ArrowLeft") { e.preventDefault(); go(cur - 1); }
+  });
+  var sx = null;
+  stage.addEventListener("pointerdown", function (e) { sx = e.clientX; });
+  stage.addEventListener("pointerup", function (e) {
+    if (sx === null) return;
+    var d = e.clientX - sx; sx = null;
+    if (Math.abs(d) > 40) go(cur + (d < 0 ? 1 : -1));
+  });
+
+  /* Entrata 3D allo scroll */
+  var flips = document.querySelectorAll(".flip");
+  if (!("IntersectionObserver" in window) || reduce) {
+    flips.forEach(function (f) { f.classList.add("in"); });
+  } else {
+    var io = new IntersectionObserver(function (es) {
+      es.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add("in"); io.unobserve(en.target); } });
+    }, { threshold: 0.15 });
+    flips.forEach(function (f) { io.observe(f); });
+  }
+
+  /* WhatsApp fisso: compare quando i contatti in alto escono dallo schermo */
+  var wa = document.getElementById("wa");
+  if ("IntersectionObserver" in window) {
+    new IntersectionObserver(function (es) {
+      wa.classList.toggle("show", !es[0].isIntersecting && es[0].boundingClientRect.top < 0);
+    }).observe(document.getElementById("prenota"));
+  } else { wa.classList.add("show"); }
+
+  render();
+  setLang(start, false);
+})();
 </script>
 </body>
 </html>
