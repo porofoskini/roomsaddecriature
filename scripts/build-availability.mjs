@@ -7,8 +7,12 @@
 //    (così non si pubblica per errore un calendario personale);
 //  - nel titolo di ogni prenotazione c'è "Camera 1" o "Camera 2" (anche "Stanza 1", "Room 2");
 //  - "entrambe", "tutte" o "both" blocca tutte e due le camere;
+//  - "Camera 1 e 2", "Camera 1/2" o "Camera 1 + Camera 2" bloccano tutte e due le camere;
+//    "camera 2 persone" o "2 ospiti" non sono numeri di camera;
 //  - un evento senza camera riconoscibile blocca ENTRAMBE le camere (meglio "occupato" che
 //    "libero" per errore); il log ne dice solo il numero;
+//  - due eventi sovrapposti sulla stessa notte bloccano entrambe le camere, qualunque sia il titolo
+//    (un cambio in giornata, partenza e arrivo lo stesso giorno, non conta: non condividono la notte);
 //  - un evento da A a B occupa le notti da A a B escluso: il giorno di partenza resta libero.
 //
 // Uso:  CALENDAR_ICS_URL=https://... node scripts/build-availability.mjs
@@ -78,11 +82,29 @@ function parseEvents(ics) {
   return events;
 }
 
+// Come si capisce la camera dal titolo:
+//  - "entrambe", "tutte", "both"... -> tutte e due;
+//  - "Camera 1", "Stanza n°2", "Room 2" -> quella camera;
+//  - "Camera 1 e 2", "Camera 1/2", "Camera 1 + Camera 2", "Camere 1, 2" -> tutte e due;
+//  - "camera 2 persone", "2 ospiti", "1 notte" NON sono numeri di camera: si ignorano;
+//  - nessun numero riconosciuto -> lista vuota (il chiamante blocca entrambe le camere).
+const GUEST_WORDS = "persone|persona|pers|ospiti|ospite|adulti|adulto|bambini|bambino|notti|notte|letti|letto|posti|pax|persons?|people|guests?|nights?|personas?|noches?|adults?|kids?|children";
+const NUM = "[12]|uno|due|one|two|dos";
+const KEY = "camer[ae]|stanz[ae]|rooms?|habitaci[oó]n(?:es)?";
+const SEP = "(?:e|ed|and|y|&|\\+|/|,)";
+const NUM_TOKEN = { "1": "1", uno: "1", one: "1", "2": "2", due: "2", two: "2", dos: "2" };
+const GUESTS_RE = new RegExp(`\\b(?:${NUM})\\s*(?:${GUEST_WORDS})\\b`, "giu");
+const ROOM_GROUP_RE = new RegExp(
+  `\\b(?:${KEY})\\s*(?:n[°o.]?\\s*)?((?:${NUM})(?:\\s*${SEP}\\s*(?:(?:${KEY})\\s*)?(?:n[°o.]?\\s*)?(?:${NUM}))*)(?![\\d\\p{L}])`,
+  "giu"
+);
+
 function roomsOf(summary) {
   if (/\b(entrambe|entrambi|tutte|tutti|both|ambas)\b/i.test(summary)) return ROOMS;
+  const text = summary.replace(GUESTS_RE, " "); // "camera 2 persone" non è la camera 2
   const found = new Set();
-  for (const m of summary.matchAll(/\b(?:camera|stanza|room|habitaci[oó]n)\s*(?:n[°o.]?\s*)?([12])(?!\d)/gi)) {
-    found.add(m[1]);
+  for (const m of text.matchAll(ROOM_GROUP_RE)) {
+    for (const t of m[1].toLowerCase().match(new RegExp(NUM, "g")) || []) found.add(NUM_TOKEN[t]);
   }
   return [...found];
 }
@@ -146,7 +168,8 @@ if (!normalize(calName).includes("addecriature")) {
 const events = parseEvents(ics);
 
 const ranges = Object.fromEntries(ROOMS.map((r) => [r, []]));
-let unassigned = 0, recurring = 0, used = 0;
+const intervals = []; // le notti di tutte le prenotazioni, per trovare quelle con due eventi insieme
+let unassigned = 0, recurring = 0, used = 0, overlaps = 0;
 
 for (const ev of events) {
   if (ev.cancelled || !ev.start) continue;
@@ -156,7 +179,21 @@ for (const ev of events) {
   if (!rooms.length) { unassigned++; rooms = ROOMS; }
   if (ev.recurring) recurring++;
   used++;
-  for (const r of rooms) ranges[r].push([ev.start < today ? today : ev.start, to > horizon ? horizon : to]);
+  const from = ev.start < today ? today : ev.start, until = to > horizon ? horizon : to;
+  for (const r of rooms) ranges[r].push([from, until]);
+  intervals.push([from, until]);
+}
+
+// Due eventi sulla stessa NOTTE: sono le due camere (di solito una "1" e l'altra "2", ma anche se i titoli
+// non lo dicono), quindi quella notte sono occupate entrambe. Un cambio in giornata (uno parte il 15 e un altro
+// arriva il 15) non conta: condividono il giorno, non la notte.
+const points = [...new Set(intervals.flat())].sort();
+for (let i = 0; i < points.length - 1; i++) {
+  const a = points[i], b = points[i + 1];
+  if (intervals.filter(([s, e]) => s <= a && e >= b).length >= 2) {
+    for (const r of ROOMS) ranges[r].push([a, b]);
+    overlaps++;
+  }
 }
 
 const result = {
@@ -168,5 +205,6 @@ await writeFile(OUT, JSON.stringify(result, null, 2) + "\n");
 
 console.log(`Calendario: "${unescapeText(calName.trim())}". Eventi letti: ${events.length}; usati: ${used}.`);
 if (unassigned) console.log(`Attenzione: ${unassigned} eventi senza "Camera 1/2" nel titolo: bloccano entrambe le camere.`);
+if (overlaps) console.log(`Notti con due prenotazioni sovrapposte (${overlaps} periodi): bloccano entrambe le camere.`);
 if (recurring) console.log(`Attenzione: ${recurring} eventi ricorrenti contati una volta sola.`);
 for (const r of ROOMS) console.log(`Camera ${r}: ${result.rooms[r].length} periodi occupati.`);

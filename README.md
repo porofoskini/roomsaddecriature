@@ -49,6 +49,7 @@ In più, un pulsante **WhatsApp fisso** compare quando i contatti in alto escono
 
 **Effetti 3D** (tutti spenti se il sistema ha "riduci movimento"):
 - il logo si inclina seguendo il mouse e fluttua piano;
+- le stelle dei punteggi ruotano un poco al passaggio del mouse;
 - i panni dei contatti oscillano all'ingresso e si inclinano al passaggio del mouse;
 - il carosello delle foto ruota in prospettiva;
 - il cambio mese del calendario gira come una pagina;
@@ -74,7 +75,8 @@ Per ogni modifica di testo vanno aggiornati **due posti**: l'HTML (italiano) e i
 | Calendario (testi) | `availSub`, `hint1`, `hint2`, `rooms2`, `rooms1`, `full`, `askStay`, `waStay`, `noData` e le altre chiavi del blocco "Disponibilità" |
 | CIN | in due punti: sotto il nome in alto (`<small>` dentro `.brand`) e nel footer. Non è nelle traduzioni: è lo stesso in tutte le lingue |
 | Anno del copyright | chiave `copy` (HTML e 3 lingue). Oggi: 2023 |
-| Punteggi | **non nel codice**: si modificano in `punteggi.json` sul ramo `dati` (sezione 5). Il testo delle frasi è nelle chiavi `ratingLine`, `revLine`, `asOf` |
+| Punteggi | **non nel codice**: si modificano in `punteggi.json` sul ramo `dati` (sezione 5). Il testo delle frasi è nelle chiavi `scoreScale`, `scoreReviews`, `scoreLabel`, `asOf` |
+| Loghi delle piattaforme | sprite SVG all'inizio del `<body>` (`#lg-google`, `#lg-booking`, `#lg-airbnb`), usati nella striscia delle recensioni. Il testo per i lettori di schermo è nella chiave `revOn` |
 | Telefono, email, Instagram | link nella sezione contatti (`.cloths`: WhatsApp `wa.me/…`, Telegram `t.me/+…`, Signal `signal.me/#p/+…`) e `waMsg`; in più nel JSON-LD in cima |
 | Indirizzo | chiave `addr` (HTML e 3 lingue) e JSON-LD in cima |
 | Colori | variabili `:root` all'inizio dello `<style>` |
@@ -130,14 +132,71 @@ Le due camere sono **identiche**, quindi il calendario non parla di "Camera 1/2"
 
 ### Come segnare le prenotazioni sul calendario
 
-Nel calendario Google **"Rooms Add'e Criature"** (solo quello, non quello personale):
+Nel calendario Google **"Rooms Add'e Criature"** (solo quello, non quello personale) **un evento = una prenotazione**, dal giorno di arrivo al giorno di partenza.
 
-- **Il titolo deve contenere "Camera 1" o "Camera 2"**, ad esempio `Rossi - Camera 1`. Vanno bene anche `Stanza 1`, `Room 2`. Maiuscole e minuscole non contano.
-- **`entrambe`, `tutte` o `both`** nel titolo blocca tutte e due le camere.
-- **Un evento senza numero di camera blocca entrambe le camere.** È voluto: meglio "occupato" che "libero" per errore. Il log dell'automatismo dice quanti sono, senza i titoli.
-- **Le notti.** Una prenotazione dal 12 al 15 occupa le notti del 12, 13 e 14: il **15, giorno di partenza, risulta libero**. Gli eventi "tutto il giorno" funzionano così in modo naturale.
-- Gli eventi **annullati**, **passati** e oltre i 18 mesi vengono ignorati.
+**Il titolo dice a quale camera appartiene.** Formato consigliato: `Cognome - Camera 1`. Tutti i casi sotto sono stati provati con lo script:
+
+| Titolo | Cosa blocca |
+|---|---|
+| `Rossi - Camera 1` · `Stanza 1` · `Camera n°1` · `Room 1` | solo la Camera 1 |
+| `Rossi - Camera 2` · `Camera due` (e le stesse varianti con 2) | solo la Camera 2 |
+| `Rossi - entrambe` · `tutte le camere` · `both` | tutte e due |
+| `Rossi - Camera 1 e Camera 2` · `Camera 1 + Camera 2` · `Camera 1 e 2` · `Camera 1/2` · `Camera 1 + 2` · `Camere 1, 2` · `Camera 1 & 2` · `Camera uno e due` | tutte e due |
+| `Rossi` (nessun numero di camera) | **tutte e due**, per prudenza |
+| `Camera 12` · `C1 Rossi` | numero non riconosciuto: **tutte e due** |
+| `Rossi - camera 2 persone` · `Rossi 2 ospiti` · `camera 1 notte` | "2 persone", "2 ospiti", "1 notte" **non sono numeri di camera**: se non c'è un altro numero, **tutte e due** |
+| `Rossi - Camera 1 - 2 ospiti` · `Camera 2 - 3 notti` · `Camera 1 con 2 adulti` | solo la camera indicata: gli ospiti e le notti si ignorano |
+
+Maiuscole e minuscole non contano. Il numero di camera conta solo come **1 o 2**.
+
+Altre regole:
+
+- **Le notti.** Una prenotazione dal 12 al 15 occupa le notti del 12, 13 e 14: il **15, giorno di partenza, risulta libero**. Gli eventi "tutto il giorno" funzionano così in modo naturale. Un evento con orario (per esempio 10 marzo alle 14:00, 13 marzo alle 10:00) conta per giorno di calendario, nel fuso di Roma: occupa le notti del 10, 11 e 12. Un evento di poche ore nella stessa giornata occupa **quella notte**.
+- Gli eventi **annullati**, **già finiti** e oltre i 18 mesi vengono ignorati.
 - Gli eventi **ricorrenti** vengono contati una sola volta (il log lo segnala).
+- **Due eventi sulla stessa notte bloccano entrambe le camere**, qualunque sia il titolo: di solito sono una Camera 1 e una Camera 2, e anche se i titoli non lo dicono la notte risulta completa. Vale pure se i titoli sono uguali (due eventi nella stessa camera sarebbero una doppia prenotazione: per prudenza risultano occupate tutte e due). **Un cambio in giornata non conta**: se un ospite parte il 15 e un altro arriva il 15 non condividono nessuna notte, quindi non si blocca niente.
+- Se c'è **un evento senza numero di camera**, blocca entrambe le camere: è voluto, meglio "occupato" che "libero" per errore. Il log dell'automatismo dice quanti sono, senza i titoli.
+
+### Come ragiona il calendario, passo per passo
+
+**1. Da Google al file (lo script, ogni ora)**
+
+1. Controlla che il calendario si chiami "Rooms Add'e Criature". Se no, si ferma e non scrive niente.
+2. Scarta gli eventi annullati, già finiti o oltre i 18 mesi.
+3. Per ogni evento calcola le **notti occupate**: dalla data di inizio a quella di fine **esclusa**.
+4. Dal titolo decide a **quale camera** appartiene (tabella sopra). Nessun numero riconosciuto = entrambe.
+5. Cerca le notti in cui ci sono **due eventi insieme**, anche con camere diverse o senza camera: quelle notti blocca **entrambe** le camere. Un cambio in giornata non conta.
+6. Per ogni camera unisce i periodi che si toccano o si sovrappongono (12–15 e 15–17 diventano 12–17).
+7. Salva su `disponibilita.json` **solo intervalli di date** per camera, mai titoli o nomi.
+
+**2. Dal file all'ospite (la pagina)**
+
+Le due camere sono identiche, quindi per ogni notte la pagina conta solo **quante camere sono libere** (2, 1 o 0). Da qui:
+
+- **Colore del giorno:** bianco = 2 libere, giallo = 1 libera, a righe blu = completo (0). "Il giorno" è la notte che inizia quel giorno.
+- **Arrivo:** si può scegliere un giorno solo se quella notte c'è almeno 1 camera libera. Un giorno "completo" non si può scegliere come arrivo.
+- **Partenza:** si può scegliere dal giorno dopo l'arrivo fino al primo giorno oltre il quale **nessuna camera** resterebbe libera per tutte le notti. Il giorno di partenza può anche essere "completo": è il giorno in cui si parte.
+- **Risposta ("n camere libere"):** quante camere sono libere per **tutte** le notti del soggiorno. "2 camere libere" vuol dire che entrambe sono libere dall'arrivo alla partenza.
+- Le camere **non vengono assegnate** all'ospite: "1 camera libera" non dice quale delle due.
+- Se i dati hanno più di 72 ore, la pagina non mostra giorni liberi (vedi "Misure di sicurezza").
+
+Esempio. La Camera 1 è occupata dal 15 al 19 novembre (notti 15, 16, 17, 18), la Camera 2 è libera:
+
+| Arrivo | Partenza | Cosa succede |
+|---|---|---|
+| 10 nov | 14 nov | 2 camere libere (nessuna notte occupata) |
+| 13 nov | 16 nov | **1 camera libera**: la Camera 1 è occupata dal 15, resta la 2 |
+| 15 nov (giallo) | 18 nov | 1 camera libera, solo la Camera 2 |
+| 19 nov | 21 nov | 2 camere libere: la Camera 1 si libera il 19, giorno di partenza dell'ospite precedente |
+
+Se invece **tutte e due** fossero occupate dal 12 al 14: il 12 e il 13 sono "completo" e non si possono scegliere come arrivo, il 14 è libero come arrivo, e chi arriva l'11 può partire al massimo il 12.
+
+**3. Cosa il sistema non fa**
+
+- Non importa le prenotazioni di Booking e Airbnb: vanno segnate a mano.
+- Non tiene conto del numero di ospiti né degli orari di arrivo e partenza.
+- Non distingue una doppia prenotazione sulla stessa camera da due prenotazioni su camere diverse: in entrambi i casi la notte risulta **completa**, senza avvisi.
+- La disponibilità è **indicativa**: la conferma resta tua.
 
 ### Prima configurazione
 
@@ -164,6 +223,7 @@ Nel calendario Google **"Rooms Add'e Criature"** (solo quello, non quello person
 | `Cannot update this protected ref` | `dati` è coperto da una regola: escludilo dal ruleset |
 | La pagina dice "il calendario non è disponibile" | Dati assenti o con più di 72 ore. Controlla Actions: l'ultima esecuzione è verde? I workflow pianificati si disattivano dopo 60 giorni senza attività nel repo: va riattivato da Actions |
 | Un giorno risulta "Completo" o "1 camera libera" senza motivo | C'è un evento senza "Camera 1/2" nel titolo, che blocca entrambe le camere |
+| Un giorno risulta "Completo" ma una camera è libera | Ci sono **due eventi sulla stessa notte** (magari la stessa prenotazione inserita due volte, o una prenotazione e un promemoria): bloccano entrambe le camere. Cerca l'evento in più nel calendario |
 | Un giorno risulta libero ma non lo è | La prenotazione arriva da Booking o Airbnb e non è stata segnata a mano sul calendario, oppure l'ultimo aggiornamento è di meno di un'ora fa |
 
 ### Limiti da conoscere
@@ -259,4 +319,8 @@ Nell'`<head>` di `index.html`: titolo e descrizione nelle tre lingue (si aggiorn
 - **Responsive e accessibilità:** provato a 390 px e a 1280 px senza scroll orizzontale; link "Vai al contenuto", focus visibile, descrizioni delle foto, effetti spenti con "riduci movimento", contrasti controllati.
 - **Perché il calendario passa dal ramo `dati`:** `main` richiede pull request e non permette push al bot di GitHub. Un ramo separato, escluso dalle regole, evita pull request ogni ora e non sporca la cronologia del sito.
 - **Perché un evento senza camera blocca entrambe:** un errore di battitura nel titolo deve mostrare "occupato", mai "libero", per non causare doppie prenotazioni.
+- **Perché arrivo e partenza sono due campi grandi:** il calendario non deve spiegarsi a parole. Il campo da riempire è evidenziato, e la risposta (date, notti, camere libere) compare solo quando le date sono complete, con il pulsante WhatsApp già compilato.
+- **Perché il numero sta in una stella e i loghi solo nella striscia in fondo:** il numero è la prova più forte e deve restare piccolo e leggibile accanto al nome della piattaforma; i loghi servono a riconoscere dove si aprono le recensioni.
+- **Perché due eventi sulla stessa notte bloccano entrambe le camere:** con due sole camere, due prenotazioni insieme le riempiono; di solito una è la 1 e l'altra la 2, ma il titolo può essere scritto in modo diverso o sbagliato. Si guardano le notti e non i giorni, così un cambio in giornata non fa risultare tutto occupato.
+- **Perché i titoli sono letti con tolleranza:** `Camera 1 e 2` e `Camera 1/2` sono modi naturali di scrivere "tutte e due", mentre `camera 2 persone` non è la camera 2. Sbagliare in questi due casi faceva risultare libera una camera occupata, che è l'errore più costoso.
 - **Perché i punteggi stanno in un file con la data:** non c'è un modo affidabile e consentito per leggerli in automatico da Booking e Airbnb; tenerli in un file separato li rende modificabili in un minuto senza toccare il sito, e la data li rende onesti anche se ti dimentichi di aggiornarli.
